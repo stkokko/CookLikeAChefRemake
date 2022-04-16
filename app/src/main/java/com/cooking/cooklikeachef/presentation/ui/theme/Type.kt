@@ -1,4 +1,4 @@
-package com.cooking.cooklikeachef.ui.theme
+package com.cooking.cooklikeachef.presentation.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

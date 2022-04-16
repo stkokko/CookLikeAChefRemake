@@ -1,4 +1,4 @@
-package com.cooking.cooklikeachef.ui.theme
+package com.cooking.cooklikeachef.presentation.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
