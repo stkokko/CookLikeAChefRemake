@@ -35,7 +35,12 @@ fun LatestRecipesCard(url: String, title: String, onReadMoreClicked: (Recipe) ->
                     .width(100.dp)
                     .fillMaxHeight()
             ) {
-                AsyncImage(model = url, contentDescription = null, contentScale = ContentScale.Crop ,modifier = Modifier.fillMaxSize())
+                AsyncImage(
+                    model = url,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
+                )
             }
             Column(
                 modifier = Modifier
