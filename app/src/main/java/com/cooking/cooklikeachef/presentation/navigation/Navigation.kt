@@ -6,7 +6,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cooking.cooklikeachef.presentation.screens.categories_screen.CategoriesScreen
 import com.cooking.cooklikeachef.presentation.screens.favourites_screen.FavouritesScreen
+import com.cooking.cooklikeachef.presentation.screens.login_screen.LoginScreen
 import com.cooking.cooklikeachef.presentation.screens.main_screen.MainScreen
+import com.cooking.cooklikeachef.presentation.screens.register_screen.RegisterScreen
 import com.cooking.cooklikeachef.presentation.screens.splash_screen.SplashScreen
 
 @Composable
@@ -18,6 +20,14 @@ fun Navigation() {
 
         composable(route = Screens.Splash.name) {
             SplashScreen(navController = navController)
+        }
+
+        composable(route = Screens.Login.name) {
+            LoginScreen()
+        }
+
+        composable(route = Screens.Register.name) {
+            RegisterScreen()
         }
 
         composable(route = Screens.Main.name) {
