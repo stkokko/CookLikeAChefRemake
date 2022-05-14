@@ -23,11 +23,11 @@ fun Navigation() {
         }
 
         composable(route = Screens.Login.name) {
-            LoginScreen()
+            LoginScreen(navController = navController)
         }
 
         composable(route = Screens.Register.name) {
-            RegisterScreen()
+            RegisterScreen(navController = navController)
         }
 
         composable(route = Screens.Main.name) {

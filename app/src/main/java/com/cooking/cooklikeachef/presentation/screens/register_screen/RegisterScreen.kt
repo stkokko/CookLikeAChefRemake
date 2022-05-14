@@ -14,7 +14,6 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode.Companion.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -23,48 +22,29 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.cooking.cooklikeachef.R
+import com.cooking.cooklikeachef.presentation.navigation.Screens
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomButton
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomOutlinedTextField
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.LoginRegisterLayout
 import com.cooking.cooklikeachef.presentation.ui.theme.SkyBlue
 
 @Composable
-fun RegisterScreen() {
+fun RegisterScreen(navController: NavController) {
 
     LoginRegisterLayout(painter = painterResource(id = R.drawable.register_background_image)) {
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
             val boxWithConstraintsScope = this
             when {
                 boxWithConstraintsScope.maxHeight > 900.dp -> {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        RegisterContent(modifier = Modifier.fillMaxWidth(fraction = 0.7f))
-                    }
+                    RegisterForm(fraction = 0.7f, navController = navController)
                 }
                 boxWithConstraintsScope.maxHeight > 600.dp -> {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        RegisterContent(modifier = Modifier.fillMaxWidth(fraction = 0.8f))
-                    }
+                    RegisterForm(0.8f, navController = navController)
                 }
                 else -> {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        RegisterContent(
-                            modifier = Modifier.fillMaxWidth(fraction = 0.75f),
-                            textSize = 14.sp
-                        )
-                    }
+                    RegisterForm(fraction = 0.75f, textSize = 14.sp, navController = navController)
                 }
             }
         }
@@ -72,7 +52,18 @@ fun RegisterScreen() {
 }
 
 @Composable
-private fun RegisterContent(modifier: Modifier, textSize: TextUnit = 16.sp) {
+private fun RegisterForm(fraction: Float, textSize: TextUnit = 16.sp, navController: NavController) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        RegisterContent(modifier = Modifier.fillMaxWidth(fraction = fraction), textSize = textSize, navController)
+    }
+}
+
+@Composable
+private fun RegisterContent(modifier: Modifier, textSize: TextUnit = 16.sp, navController: NavController) {
     val localFocus = LocalFocusManager.current
     var email by remember {
         mutableStateOf("")
@@ -83,6 +74,7 @@ private fun RegisterContent(modifier: Modifier, textSize: TextUnit = 16.sp) {
     var password by remember {
         mutableStateOf("")
     }
+    //TODO
     var isPasswordValid by remember {
         mutableStateOf(true)
     }
@@ -238,7 +230,11 @@ private fun RegisterContent(modifier: Modifier, textSize: TextUnit = 16.sp) {
             color = SkyBlue,
             fontSize = textSize,
             modifier = Modifier.clickable {
-                //TODO
+                navController.navigate(Screens.Login.name) {
+                    popUpTo(Screens.Register.name) {
+                        inclusive = true
+                    }
+                }
             })
     }
 
