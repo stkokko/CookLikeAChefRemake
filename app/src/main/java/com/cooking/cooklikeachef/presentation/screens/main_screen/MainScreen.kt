@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.cooking.cooklikeachef.R
-import com.cooking.cooklikeachef.presentation.screens.main_screen.components.BottomNavigationBar
+import com.cooking.cooklikeachef.presentation.screens.common_compoments.BottomNavigationBar
 
 @Composable
 fun MainScreen(
@@ -27,9 +27,11 @@ fun MainScreen(
             navController = navController
         )
     }) { innerPadding ->
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(innerPadding)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.home_image_background),
                 contentScale = ContentScale.Crop,

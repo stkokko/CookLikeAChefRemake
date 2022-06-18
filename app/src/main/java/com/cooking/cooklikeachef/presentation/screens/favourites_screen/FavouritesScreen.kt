@@ -4,7 +4,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.cooking.cooklikeachef.presentation.screens.main_screen.components.BottomNavigationBar
+import com.cooking.cooklikeachef.presentation.screens.common_compoments.BottomNavigationBar
 
 @Composable
 fun FavouritesScreen(navController: NavController) {

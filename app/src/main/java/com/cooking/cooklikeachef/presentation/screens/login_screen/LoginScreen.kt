@@ -61,13 +61,21 @@ private fun LoginForm(fraction: Float, textSize: TextUnit = 16.sp, navController
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        LoginContent(modifier = Modifier.fillMaxWidth(fraction = fraction), textSize = textSize, navController= navController)
+        LoginContent(
+            modifier = Modifier.fillMaxWidth(fraction = fraction),
+            textSize = textSize,
+            navController = navController
+        )
     }
 }
 
 @Composable
-private fun LoginContent(modifier: Modifier, textSize: TextUnit = 16.sp, navController: NavController) {
-    var openDialog by remember{
+private fun LoginContent(
+    modifier: Modifier,
+    textSize: TextUnit = 16.sp,
+    navController: NavController
+) {
+    var openDialog by remember {
         mutableStateOf(false)
     }
     val localFocus = LocalFocusManager.current

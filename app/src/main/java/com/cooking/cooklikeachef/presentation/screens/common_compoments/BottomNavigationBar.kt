@@ -1,5 +1,7 @@
-package com.cooking.cooklikeachef.presentation.screens.main_screen.components
+package com.cooking.cooklikeachef.presentation.screens.common_compoments
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -14,6 +16,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -39,6 +42,25 @@ fun BottomNavigationBar(
         ),
         elevation = 6.dp
     ) {
+        // TODO: create a composable for all 3 items
+//        NavigationItem(
+//            navController = navController,
+//            currentRoot = currentRoot,
+//            root = Screens.Main.name,
+//            imageVector = Icons.Default.Home
+//        )
+//        NavigationItem(
+//            navController = navController,
+//            currentRoot = currentRoot,
+//            root = Screens.Categories.name,
+//            imageVector = Icons.Default.Category
+//        )
+//        NavigationItem(
+//            navController = navController,
+//            currentRoot = currentRoot,
+//            root = Screens.Categories.name,
+//            imageVector = Icons.Default.Favorite
+//        )
         BottomNavigationItem(
             selected = currentRoot == Screens.Main.name, onClick = {
                 navController.navigate(Screens.Main.name) {
@@ -115,3 +137,36 @@ fun BottomNavigationBar(
 
     }
 }
+
+//@Composable
+//fun NavigationItem(
+//    navController: NavController,
+//    currentRoot: String?,
+//    root: String,
+//    imageVector: ImageVector
+//) {
+//    BottomNavigationItem(
+//        selected = currentRoot == root, onClick = {
+//            navController.navigate(root) {
+//                navController.graph.startDestinationRoute?.let { screen_route ->
+//                    popUpTo(screen_route) {
+//                        saveState = true
+//                    }
+//                    launchSingleTop = true
+//                    restoreState = true
+//                }
+//            }
+//        }, icon = {
+//            Icon(
+//                imageVector = imageVector,
+//                modifier = Modifier.size(32.dp),
+//                contentDescription = null
+//            )
+//        },
+//        selectedContentColor = Color.White,
+//        unselectedContentColor = Color.White.copy(alpha = 0.4f),
+//        label = {
+//            Text(text = stringResource(id = R.string.home), fontSize = 14.sp)
+//        }
+//    )
+//}

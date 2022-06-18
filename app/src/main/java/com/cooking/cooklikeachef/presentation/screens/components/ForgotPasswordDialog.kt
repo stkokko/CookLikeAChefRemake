@@ -19,6 +19,8 @@ import com.cooking.cooklikeachef.R
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomButton
 import com.cooking.cooklikeachef.presentation.ui.theme.DarkCherry
 
+// TODO: components of login_screen
+
 @Composable
 fun ForgotPasswordDialog(onDismiss: () -> Unit) {
     var email by remember {
