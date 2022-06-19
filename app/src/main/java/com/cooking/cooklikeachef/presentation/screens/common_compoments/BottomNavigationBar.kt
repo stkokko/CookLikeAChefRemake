@@ -1,7 +1,5 @@
 package com.cooking.cooklikeachef.presentation.screens.common_compoments
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -25,6 +23,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.cooking.cooklikeachef.R
 import com.cooking.cooklikeachef.presentation.navigation.Screens
+import okhttp3.internal.immutableListOf
 
 @Composable
 fun BottomNavigationBar(
@@ -32,6 +31,14 @@ fun BottomNavigationBar(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoot = navBackStackEntry?.destination?.route
+    val mainValues = immutableListOf(Icons.Default.Home, R.string.home)
+    val categoriesValues = immutableListOf(Icons.Default.Category, R.string.categories)
+    val favouritesValues = immutableListOf(Icons.Default.Favorite, R.string.favourites)
+    val screens = mapOf(
+        Screens.Main.name to mainValues,
+        Screens.Categories.name to categoriesValues,
+        Screens.Favourites.name to favouritesValues
+    )
 
     BottomNavigation(
         modifier = Modifier
@@ -42,131 +49,31 @@ fun BottomNavigationBar(
         ),
         elevation = 6.dp
     ) {
-        // TODO: create a composable for all 3 items
-//        NavigationItem(
-//            navController = navController,
-//            currentRoot = currentRoot,
-//            root = Screens.Main.name,
-//            imageVector = Icons.Default.Home
-//        )
-//        NavigationItem(
-//            navController = navController,
-//            currentRoot = currentRoot,
-//            root = Screens.Categories.name,
-//            imageVector = Icons.Default.Category
-//        )
-//        NavigationItem(
-//            navController = navController,
-//            currentRoot = currentRoot,
-//            root = Screens.Categories.name,
-//            imageVector = Icons.Default.Favorite
-//        )
-        BottomNavigationItem(
-            selected = currentRoot == Screens.Main.name, onClick = {
-                navController.navigate(Screens.Main.name) {
-                    navController.graph.startDestinationRoute?.let { screen_route ->
-                        popUpTo(screen_route) {
-                            saveState = true
+        for (screen in screens) {
+            BottomNavigationItem(
+                selected = currentRoot == screen.key, onClick = {
+                    navController.navigate(screen.key) {
+                        navController.graph.startDestinationRoute?.let { screen_route ->
+                            popUpTo(screen_route) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
+                }, icon = {
+                    Icon(
+                        imageVector = screen.value[0] as ImageVector,
+                        modifier = Modifier.size(32.dp),
+                        contentDescription = null
+                    )
+                },
+                selectedContentColor = Color.White,
+                unselectedContentColor = Color.White.copy(alpha = 0.4f),
+                label = {
+                    Text(text = stringResource(id = screen.value[1] as Int), fontSize = 14.sp)
                 }
-            }, icon = {
-                Icon(
-                    imageVector = Icons.Default.Home,
-                    modifier = Modifier.size(32.dp),
-                    contentDescription = null
-                )
-            },
-            selectedContentColor = Color.White,
-            unselectedContentColor = Color.White.copy(alpha = 0.4f),
-            label = {
-                Text(text = stringResource(id = R.string.home), fontSize = 14.sp)
-            }
-        )
-        BottomNavigationItem(
-            selected = currentRoot == Screens.Categories.name, onClick = {
-                navController.navigate(Screens.Categories.name) {
-                    navController.graph.startDestinationRoute?.let { screen_route ->
-                        popUpTo(screen_route) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                }
-            }, icon = {
-                Icon(
-                    imageVector = Icons.Default.Category,
-                    modifier = Modifier.size(32.dp),
-                    contentDescription = null
-                )
-            },
-            selectedContentColor = Color.White,
-            unselectedContentColor = Color.White.copy(alpha = 0.4f),
-            label = {
-                Text(text = stringResource(id = R.string.categories), fontSize = 14.sp)
-            }
-        )
-        BottomNavigationItem(
-            selected = currentRoot == Screens.Favourites.name, onClick = {
-                navController.navigate(Screens.Favourites.name) {
-                    navController.graph.startDestinationRoute?.let { screen_route ->
-                        popUpTo(screen_route) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                }
-            }, icon = {
-                Icon(
-                    imageVector = Icons.Default.Favorite,
-                    modifier = Modifier.size(32.dp),
-                    contentDescription = null
-                )
-            },
-            selectedContentColor = Color.White,
-            unselectedContentColor = Color.White.copy(alpha = 0.4f),
-            label = {
-                Text(text = stringResource(id = R.string.favourites), fontSize = 14.sp)
-            }
-        )
-
-
+            )
+        }
     }
 }
-
-//@Composable
-//fun NavigationItem(
-//    navController: NavController,
-//    currentRoot: String?,
-//    root: String,
-//    imageVector: ImageVector
-//) {
-//    BottomNavigationItem(
-//        selected = currentRoot == root, onClick = {
-//            navController.navigate(root) {
-//                navController.graph.startDestinationRoute?.let { screen_route ->
-//                    popUpTo(screen_route) {
-//                        saveState = true
-//                    }
-//                    launchSingleTop = true
-//                    restoreState = true
-//                }
-//            }
-//        }, icon = {
-//            Icon(
-//                imageVector = imageVector,
-//                modifier = Modifier.size(32.dp),
-//                contentDescription = null
-//            )
-//        },
-//        selectedContentColor = Color.White,
-//        unselectedContentColor = Color.White.copy(alpha = 0.4f),
-//        label = {
-//            Text(text = stringResource(id = R.string.home), fontSize = 14.sp)
-//        }
-//    )
-//}
