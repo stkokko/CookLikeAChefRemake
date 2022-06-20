@@ -1,6 +1,7 @@
 package com.cooking.cooklikeachef.presentation.screens.login_screen
 
 import android.util.Log
+import android.util.Patterns
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
@@ -16,6 +17,7 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -82,26 +84,16 @@ private fun LoginContent(
     var email by remember {
         mutableStateOf("")
     }
-    var isEmailValid by remember {
-        mutableStateOf(true)
+    val isEmailValid by derivedStateOf {
+        Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
     var password by remember {
         mutableStateOf("")
     }
-    //TODO
-    var isPasswordValid by remember {
-        mutableStateOf(true)
+    val isPasswordValid by derivedStateOf {
+        password.length >= 6
     }
     var isPasswordVisible by remember {
-        mutableStateOf(false)
-    }
-    var confirmPassword by remember {
-        mutableStateOf("")
-    }
-    var isConfirmPasswordValid by remember {
-        mutableStateOf(true)
-    }
-    var isConfirmPasswordVisible by remember {
         mutableStateOf(false)
     }
 
@@ -121,9 +113,12 @@ private fun LoginContent(
             keyboardType = KeyboardType.Email,
             autoCorrect = false
         ),
+        keyboardActions = KeyboardActions(
+            onNext = { localFocus.moveFocus(FocusDirection.Down) }
+        ),
         label = "E-Mail",
         trailingIcon = {
-            if (!isEmailValid) {
+            if (!isEmailValid && email.isNotEmpty()) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_error),
                     contentDescription = "Error Icon"
@@ -131,7 +126,8 @@ private fun LoginContent(
             }
         },
         modifier = modifier,
-        placeholderSize = textSize
+        placeholderSize = textSize,
+        isError = isEmailValid
     )
     Spacer(modifier = Modifier.height(4.dp))
     CustomOutlinedTextField(
@@ -171,18 +167,19 @@ private fun LoginContent(
         ),
         label = "Password",
         keyboardActions = KeyboardActions(onDone = {
-            Log.d("LoginScreen", "LoginScreen: onDoneKB")
             localFocus.clearFocus()
-//                                viewModel.login(email, password)
+//          viewModel.login(email, password)
         }),
         isTextVisible = isPasswordVisible,
         modifier = modifier,
-        placeholderSize = textSize
+        placeholderSize = textSize,
+        isError = isPasswordValid,
     )
     Spacer(modifier = Modifier.height(20.dp))
     CustomButton(
         modifier = Modifier.width(140.dp),
-        stringResource(id = R.string.login_button_text)
+        enabled = isEmailValid && isPasswordValid,
+        text = stringResource(id = R.string.login_button_text)
     ) {
         //TODO
     }

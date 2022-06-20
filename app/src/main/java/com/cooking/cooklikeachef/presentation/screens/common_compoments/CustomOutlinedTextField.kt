@@ -30,7 +30,8 @@ fun CustomOutlinedTextField(
     label: String = "",
     modifier: Modifier = Modifier,
     isTextVisible: Boolean = true,
-    placeholderSize: TextUnit
+    placeholderSize: TextUnit,
+    isError: Boolean = false
 ) {
 
 
@@ -63,7 +64,8 @@ fun CustomOutlinedTextField(
         },
         trailingIcon = { trailingIcon() },
         visualTransformation = if (isTextVisible) VisualTransformation.None else PasswordVisualTransformation(),
-        keyboardActions = keyboardActions
+        keyboardActions = keyboardActions,
+        isError = isError
     )
 
 }

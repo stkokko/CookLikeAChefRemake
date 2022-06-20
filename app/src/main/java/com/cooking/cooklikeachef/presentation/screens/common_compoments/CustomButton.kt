@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 fun CustomButton(
     modifier: Modifier = Modifier,
     text: String = "",
+    enabled: Boolean = false,
     onClick: () -> Unit = {}
 ) {
 
@@ -19,6 +20,7 @@ fun CustomButton(
     Button(
         onClick = { onClick() },
         modifier = modifier,
+        enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = MaterialTheme.colors.primary,
             contentColor = Color.White,

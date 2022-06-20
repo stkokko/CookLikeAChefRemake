@@ -74,7 +74,6 @@ private fun RegisterContent(modifier: Modifier, textSize: TextUnit = 16.sp, navC
     var password by remember {
         mutableStateOf("")
     }
-    //TODO
     var isPasswordValid by remember {
         mutableStateOf(true)
     }

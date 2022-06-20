@@ -1,5 +1,6 @@
 package com.cooking.cooklikeachef.presentation.screens.categories_screen
 
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -17,9 +18,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.cooking.cooklikeachef.R
 import androidx.compose.ui.unit.sp
@@ -27,6 +31,7 @@ import androidx.navigation.NavController
 import com.cooking.cooklikeachef.presentation.screens.categories_screen.components.CategoriesLayout
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.BottomNavigationBar
 import com.cooking.cooklikeachef.presentation.ui.theme.LightCherry
+import kotlin.math.log
 
 @Composable
 fun CategoriesScreen(navController: NavController) {
@@ -52,7 +57,7 @@ fun CategoriesScreen(navController: NavController) {
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .fillMaxHeight(fraction = 0.35f)
+                                .fillMaxHeight(fraction = 0.38f)
                                 .background(
                                     color = LightCherry,
                                     shape = RoundedCornerShape(
@@ -66,7 +71,7 @@ fun CategoriesScreen(navController: NavController) {
                         ) {
                             Text(
                                 text = stringResource(id = R.string.categories),
-                                fontSize = 32.sp,
+                                fontSize = 54.sp,
                                 letterSpacing = 8.sp,
                                 color = Color.White
                             )
@@ -81,7 +86,7 @@ fun CategoriesScreen(navController: NavController) {
                                         Text(
                                             text = stringResource(id = R.string.search),
                                             color = Color.LightGray,
-                                            fontSize = 16.sp,
+                                            fontSize = 22.sp,
                                             modifier = Modifier
                                                 .fillMaxSize()
                                         )
@@ -101,15 +106,16 @@ fun CategoriesScreen(navController: NavController) {
                                     // TODO
                                 }),
                                 shape = RoundedCornerShape(26.dp),
+                                textStyle = TextStyle(fontSize = 22.sp),
                                 modifier = Modifier
-                                    .width(240.dp)
-                                    .height(52.dp)
+                                    .width(380.dp)
+                                    .height(64.dp)
                             )
                         }
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .fillMaxHeight(fraction = 0.7f)
+                                .fillMaxHeight(fraction = 0.66f)
                                 .align(alignment = Alignment.BottomCenter),
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically
@@ -117,25 +123,31 @@ fun CategoriesScreen(navController: NavController) {
                             Column(
                                 modifier = Modifier
                                     .fillMaxHeight()
-                                    .width(145.dp)
+                                    .width(200.dp)
                             ) {
                                 CategoryCard(
                                     drawable = R.drawable.brunch_icon,
-                                    categoryName = R.string.brunch
+                                    categoryName = R.string.brunch,
+                                    cardHeight = 170.dp,
+                                    fontSize = 20.sp
                                 ) {
 
                                 }
                                 Spacer(modifier = Modifier.height(8.dp))
                                 CategoryCard(
                                     drawable = R.drawable.main_dishes_icon,
-                                    categoryName = R.string.main_dishes
+                                    categoryName = R.string.main_dishes,
+                                    cardHeight = 170.dp,
+                                    fontSize = 20.sp
                                 ) {
 
                                 }
                                 Spacer(modifier = Modifier.height(8.dp))
                                 CategoryCard(
                                     drawable = R.drawable.desserts_icon,
-                                    categoryName = R.string.desserts
+                                    categoryName = R.string.desserts,
+                                    cardHeight = 170.dp,
+                                    fontSize = 20.sp
                                 ) {
 
                                 }
@@ -143,19 +155,23 @@ fun CategoriesScreen(navController: NavController) {
                             Spacer(modifier = Modifier.width(10.dp))
                             Column(
                                 modifier = Modifier
-                                    .fillMaxHeight(fraction = 0.7f)
-                                    .width(145.dp)
+                                    .fillMaxHeight(fraction = 0.78f)
+                                    .width(200.dp)
                             ) {
                                 CategoryCard(
                                     drawable = R.drawable.salads_icon,
-                                    categoryName = R.string.salads
+                                    categoryName = R.string.salads,
+                                    cardHeight = 170.dp,
+                                    fontSize = 20.sp
                                 ) {
 
                                 }
                                 Spacer(modifier = Modifier.height(8.dp))
                                 CategoryCard(
                                     drawable = R.drawable.burgers_icon,
-                                    categoryName = R.string.burgers
+                                    categoryName = R.string.burgers,
+                                    cardHeight = 170.dp,
+                                    fontSize = 20.sp
                                 ) {
 
                                 }
@@ -169,7 +185,7 @@ fun CategoriesScreen(navController: NavController) {
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .fillMaxHeight(fraction = 0.35f)
+                                .fillMaxHeight(fraction = 0.4f)
                                 .background(
                                     color = LightCherry,
                                     shape = RoundedCornerShape(
@@ -183,7 +199,7 @@ fun CategoriesScreen(navController: NavController) {
                         ) {
                             Text(
                                 text = stringResource(id = R.string.categories),
-                                fontSize = 32.sp,
+                                fontSize = 44.sp,
                                 letterSpacing = 8.sp,
                                 color = Color.White
                             )
@@ -198,7 +214,7 @@ fun CategoriesScreen(navController: NavController) {
                                         Text(
                                             text = stringResource(id = R.string.search),
                                             color = Color.LightGray,
-                                            fontSize = 16.sp,
+                                            fontSize = 20.sp,
                                             modifier = Modifier
                                                 .fillMaxSize()
                                         )
@@ -218,15 +234,16 @@ fun CategoriesScreen(navController: NavController) {
                                     // TODO
                                 }),
                                 shape = RoundedCornerShape(26.dp),
+                                textStyle = TextStyle(fontSize = 20.sp),
                                 modifier = Modifier
-                                    .width(240.dp)
-                                    .height(52.dp)
+                                    .width(310.dp)
+                                    .height(56.dp)
                             )
                         }
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .fillMaxHeight(fraction = 0.7f)
+                                .fillMaxHeight(fraction = 0.64f)
                                 .align(alignment = Alignment.BottomCenter),
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically
@@ -234,25 +251,28 @@ fun CategoriesScreen(navController: NavController) {
                             Column(
                                 modifier = Modifier
                                     .fillMaxHeight()
-                                    .width(145.dp)
+                                    .width(160.dp)
                             ) {
                                 CategoryCard(
                                     drawable = R.drawable.brunch_icon,
-                                    categoryName = R.string.brunch
+                                    categoryName = R.string.brunch,
+                                    cardHeight = 130.dp
                                 ) {
 
                                 }
                                 Spacer(modifier = Modifier.height(8.dp))
                                 CategoryCard(
                                     drawable = R.drawable.main_dishes_icon,
-                                    categoryName = R.string.main_dishes
+                                    categoryName = R.string.main_dishes,
+                                    cardHeight = 130.dp
                                 ) {
 
                                 }
                                 Spacer(modifier = Modifier.height(8.dp))
                                 CategoryCard(
                                     drawable = R.drawable.desserts_icon,
-                                    categoryName = R.string.desserts
+                                    categoryName = R.string.desserts,
+                                    cardHeight = 130.dp
                                 ) {
 
                                 }
@@ -260,19 +280,21 @@ fun CategoriesScreen(navController: NavController) {
                             Spacer(modifier = Modifier.width(10.dp))
                             Column(
                                 modifier = Modifier
-                                    .fillMaxHeight(fraction = 0.7f)
-                                    .width(145.dp)
+                                    .fillMaxHeight(fraction = 0.74f)
+                                    .width(160.dp)
                             ) {
                                 CategoryCard(
                                     drawable = R.drawable.salads_icon,
-                                    categoryName = R.string.salads
+                                    categoryName = R.string.salads,
+                                    cardHeight = 130.dp
                                 ) {
 
                                 }
                                 Spacer(modifier = Modifier.height(8.dp))
                                 CategoryCard(
                                     drawable = R.drawable.burgers_icon,
-                                    categoryName = R.string.burgers
+                                    categoryName = R.string.burgers,
+                                    cardHeight = 130.dp
                                 ) {
 
                                 }
@@ -281,12 +303,12 @@ fun CategoriesScreen(navController: NavController) {
                     }
                 }
                 else -> {
-//                    CategoriesLayout(searchValue = searchValue)
+//                    CategoriesLayout(modifier = Modifier, searchValue = searchValue)
                     Box(modifier = Modifier.fillMaxSize()) {
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .fillMaxHeight(fraction = 0.35f)
+                                .fillMaxHeight(fraction = 0.34f)
                                 .background(
                                     color = LightCherry,
                                     shape = RoundedCornerShape(
@@ -351,25 +373,28 @@ fun CategoriesScreen(navController: NavController) {
                             Column(
                                 modifier = Modifier
                                     .fillMaxHeight()
-                                    .width(145.dp)
+                                    .width(130.dp)
                             ) {
                                 CategoryCard(
                                     drawable = R.drawable.brunch_icon,
-                                    categoryName = R.string.brunch
+                                    categoryName = R.string.brunch,
+                                    cardHeight = 106.dp
                                 ) {
 
                                 }
                                 Spacer(modifier = Modifier.height(8.dp))
                                 CategoryCard(
                                     drawable = R.drawable.main_dishes_icon,
-                                    categoryName = R.string.main_dishes
+                                    categoryName = R.string.main_dishes,
+                                    cardHeight = 106.dp
                                 ) {
 
                                 }
                                 Spacer(modifier = Modifier.height(8.dp))
                                 CategoryCard(
                                     drawable = R.drawable.desserts_icon,
-                                    categoryName = R.string.desserts
+                                    categoryName = R.string.desserts,
+                                    cardHeight = 106.dp
                                 ) {
 
                                 }
@@ -378,18 +403,20 @@ fun CategoriesScreen(navController: NavController) {
                             Column(
                                 modifier = Modifier
                                     .fillMaxHeight(fraction = 0.7f)
-                                    .width(145.dp)
+                                    .width(130.dp)
                             ) {
                                 CategoryCard(
                                     drawable = R.drawable.salads_icon,
-                                    categoryName = R.string.salads
+                                    categoryName = R.string.salads,
+                                    cardHeight = 106.dp
                                 ) {
 
                                 }
                                 Spacer(modifier = Modifier.height(8.dp))
                                 CategoryCard(
                                     drawable = R.drawable.burgers_icon,
-                                    categoryName = R.string.burgers
+                                    categoryName = R.string.burgers,
+                                    cardHeight = 106.dp
                                 ) {
 
                                 }
@@ -403,10 +430,16 @@ fun CategoriesScreen(navController: NavController) {
 }
 
 @Composable
-fun CategoryCard(@DrawableRes drawable: Int, @StringRes categoryName: Int, onClick: () -> Unit) {
+fun CategoryCard(
+    @DrawableRes drawable: Int,
+    @StringRes categoryName: Int,
+    cardHeight: Dp,
+    fontSize: TextUnit = 16.sp,
+    onClick: () -> Unit
+) {
     Card(
         modifier = Modifier
-            .height(120.dp)
+            .height(cardHeight)
             .fillMaxWidth()
             .clickable {
                 onClick()
@@ -427,11 +460,12 @@ fun CategoryCard(@DrawableRes drawable: Int, @StringRes categoryName: Int, onCli
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(fraction = 0.75f)
+                    .fillMaxHeight(fraction = 0.7f)
             )
             Text(
                 text = stringResource(id = categoryName),
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.Medium,
+                fontSize = fontSize
             )
         }
     }
