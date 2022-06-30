@@ -1,6 +1,5 @@
 package com.cooking.cooklikeachef.presentation.screens.categories_screen
 
-import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image

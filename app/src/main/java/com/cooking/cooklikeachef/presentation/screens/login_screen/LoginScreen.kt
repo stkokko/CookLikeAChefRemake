@@ -1,6 +1,5 @@
 package com.cooking.cooklikeachef.presentation.screens.login_screen
 
-import android.util.Log
 import android.util.Patterns
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
