@@ -1,8 +1,8 @@
-package com.cooking.cooklikeachef.presentation
+package com.cooking.cooklikeachef.presentation.screens.main_screen
 
 import com.cooking.cooklikeachef.domain.model.Recipe
 
-data class CookLikeAChefState(
+data class MainScreenState(
     val recipesList: List<Recipe> = emptyList(),
     val latestRecipesList: List<Recipe> = emptyList(),
     val favouriteRecipesList: List<Recipe> = emptyList(),

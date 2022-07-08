@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.State
 import androidx.lifecycle.viewModelScope
 import com.cooking.cooklikeachef.domain.use_cases.GetFavouriteRecipes
-import com.cooking.cooklikeachef.presentation.CookLikeAChefState
+import com.cooking.cooklikeachef.presentation.screens.main_screen.MainScreenState
 import com.cooking.cooklikeachef.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -17,8 +17,8 @@ class ViewModelFavourites @Inject constructor(
     private val getFavouriteRecipes: GetFavouriteRecipes
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(CookLikeAChefState())
-    val state: State<CookLikeAChefState> = _state
+    private val _state = mutableStateOf(MainScreenState())
+    val state: State<MainScreenState> = _state
 
     init {
         initFavouriteRecipes()
@@ -30,7 +30,7 @@ class ViewModelFavourites @Inject constructor(
             when(result) {
 
                 is Resource.Loading -> {
-                    _state.value = CookLikeAChefState(isLoading = true)
+                    _state.value = MainScreenState(isLoading = true)
                 }
 
                 is Resource.Success -> {
@@ -38,7 +38,7 @@ class ViewModelFavourites @Inject constructor(
                 }
 
                 is Resource.Error -> {
-                    _state.value = CookLikeAChefState(message = result.message ?: "An unexpected error occurred.")
+                    _state.value = MainScreenState(message = result.message ?: "An unexpected error occurred.")
                 }
             }
         }.launchIn(viewModelScope)

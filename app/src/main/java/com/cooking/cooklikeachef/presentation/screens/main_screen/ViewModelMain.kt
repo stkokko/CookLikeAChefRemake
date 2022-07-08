@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cooking.cooklikeachef.domain.use_cases.GetLatestRecipes
-import com.cooking.cooklikeachef.presentation.CookLikeAChefState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.onEach
 import com.cooking.cooklikeachef.util.Resource
@@ -18,8 +17,8 @@ class ViewModelMain @Inject constructor(
     private val getLatestRecipes: GetLatestRecipes
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(CookLikeAChefState())
-    val state: State<CookLikeAChefState> = _state
+    private val _state = mutableStateOf(MainScreenState())
+    val state: State<MainScreenState> = _state
 
     init {
         initLatestRecipes()
@@ -31,7 +30,7 @@ class ViewModelMain @Inject constructor(
             when (result) {
 
                 is Resource.Loading -> {
-                    _state.value = CookLikeAChefState(isLoading = true)
+                    _state.value = MainScreenState(isLoading = true)
                     Log.d(
                         "initLatestRecipes",
                         "recipesList: ${_state}"
@@ -47,7 +46,7 @@ class ViewModelMain @Inject constructor(
                 }
 
                 is Resource.Error -> {
-                    _state.value = CookLikeAChefState(message = result.message ?: "An unexpected error occurred.")
+                    _state.value = MainScreenState(message = result.message ?: "An unexpected error occurred.")
                 }
             }
         }.launchIn(viewModelScope)
