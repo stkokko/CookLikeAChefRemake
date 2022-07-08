@@ -56,8 +56,14 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideGetFavouriteRecipesUseCase(firebaseCloudFirestoreRepo: FirebaseCloudFirestoreRepo): GetFavourites {
-        return GetFavourites(firebaseCloudFirestoreRepo)
+    fun provideGetLatestRecipesUseCase(firebaseCloudFirestoreRepo: FirebaseCloudFirestoreRepo): GetLatestRecipes {
+        return GetLatestRecipes(firebaseCloudFirestoreRepo)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetFavouriteRecipesUseCase(firebaseCloudFirestoreRepo: FirebaseCloudFirestoreRepo): GetFavouriteRecipes {
+        return GetFavouriteRecipes(firebaseCloudFirestoreRepo)
     }
 
     @Provides

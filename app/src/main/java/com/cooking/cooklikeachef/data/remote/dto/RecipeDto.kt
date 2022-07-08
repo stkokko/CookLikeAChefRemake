@@ -1,10 +1,12 @@
-package com.cooking.cooklikeachef.domain.model
+package com.cooking.cooklikeachef.data.remote.dto
 
-data class Recipe(
+import com.cooking.cooklikeachef.domain.model.Comment
+
+data class RecipeDto(
     val name: String = "",
     val category: String = "",
     val imageURL: String = "",
-    val ingredients: List<Ingredient> = emptyList<Ingredient>(),
+    val ingredients: Map<String, List<String>> = emptyMap(),
     val steps: String = "",
     val comment: List<Comment> = emptyList(),
     val language: String = "EN",

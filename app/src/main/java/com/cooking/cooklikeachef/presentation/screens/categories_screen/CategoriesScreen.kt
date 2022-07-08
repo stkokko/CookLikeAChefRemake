@@ -34,7 +34,6 @@ import kotlin.math.log
 
 @Composable
 fun CategoriesScreen(navController: NavController) {
-    Text(text = "Categories")
     Scaffold(bottomBar = {
         BottomNavigationBar(
             navController = navController
@@ -45,383 +44,202 @@ fun CategoriesScreen(navController: NavController) {
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            var searchValue by remember {
-                mutableStateOf("")
-            }
             val boxWithConstraintsScope = this
             when {
                 boxWithConstraintsScope.maxHeight > 900.dp -> {
-//                    CategoriesLayout(searchValue = searchValue)
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight(fraction = 0.38f)
-                                .background(
-                                    color = LightCherry,
-                                    shape = RoundedCornerShape(
-                                        bottomStart = 26.dp,
-                                        bottomEnd = 26.dp
-                                    )
-                                )
-                                .padding(bottom = 16.dp),
-                            verticalArrangement = Arrangement.SpaceEvenly,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = stringResource(id = R.string.categories),
-                                fontSize = 54.sp,
-                                letterSpacing = 8.sp,
-                                color = Color.White
-                            )
-                            OutlinedTextField(
-                                value = searchValue,
-                                onValueChange = { searchValue = it },
-                                placeholder = {
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                    ) {
-                                        Text(
-                                            text = stringResource(id = R.string.search),
-                                            color = Color.LightGray,
-                                            fontSize = 22.sp,
-                                            modifier = Modifier
-                                                .fillMaxSize()
-                                        )
-                                    }
-                                },
-                                singleLine = true,
-                                maxLines = 1,
-                                colors = TextFieldDefaults.textFieldColors(
-                                    backgroundColor = Color.White
-                                ),
-                                keyboardOptions = KeyboardOptions(
-                                    imeAction = ImeAction.Go,
-                                    keyboardType = KeyboardType.Text,
-                                    autoCorrect = true
-                                ),
-                                keyboardActions = KeyboardActions(onGo = {
-                                    // TODO
-                                }),
-                                shape = RoundedCornerShape(26.dp),
-                                textStyle = TextStyle(fontSize = 22.sp),
-                                modifier = Modifier
-                                    .width(380.dp)
-                                    .height(64.dp)
-                            )
-                        }
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight(fraction = 0.66f)
-                                .align(alignment = Alignment.BottomCenter),
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .width(200.dp)
-                            ) {
-                                CategoryCard(
-                                    drawable = R.drawable.brunch_icon,
-                                    categoryName = R.string.brunch,
-                                    cardHeight = 170.dp,
-                                    fontSize = 20.sp
-                                ) {
-
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-                                CategoryCard(
-                                    drawable = R.drawable.main_dishes_icon,
-                                    categoryName = R.string.main_dishes,
-                                    cardHeight = 170.dp,
-                                    fontSize = 20.sp
-                                ) {
-
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-                                CategoryCard(
-                                    drawable = R.drawable.desserts_icon,
-                                    categoryName = R.string.desserts,
-                                    cardHeight = 170.dp,
-                                    fontSize = 20.sp
-                                ) {
-
-                                }
-                            }
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxHeight(fraction = 0.78f)
-                                    .width(200.dp)
-                            ) {
-                                CategoryCard(
-                                    drawable = R.drawable.salads_icon,
-                                    categoryName = R.string.salads,
-                                    cardHeight = 170.dp,
-                                    fontSize = 20.sp
-                                ) {
-
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-                                CategoryCard(
-                                    drawable = R.drawable.burgers_icon,
-                                    categoryName = R.string.burgers,
-                                    cardHeight = 170.dp,
-                                    fontSize = 20.sp
-                                ) {
-
-                                }
-                            }
-                        }
-                    }
+                    CategoriesLayout(
+                        headerLayoutFraction = 0.38f,
+                        categoriesFontSize = 54.sp,
+                        searchPlaceholderFontSize = 22.sp,
+                        searchTextStyleFontSize = 22.sp,
+                        searchModifier = Modifier
+                            .width(380.dp)
+                            .height(64.dp),
+                        categoriesContainerFraction = 0.66f,
+                        categoriesLeftColumnModifier = Modifier
+                            .fillMaxHeight()
+                            .width(200.dp),
+                        categoriesRightColumnModifier = Modifier
+                            .fillMaxHeight(fraction = 0.78f)
+                            .width(200.dp),
+                        categoryCardHeight = 170.dp,
+                        categoryCardFontSize = 20.sp
+                    )
                 }
                 boxWithConstraintsScope.maxHeight > 600.dp -> {
-//                    CategoriesLayout(searchValue = searchValue)
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight(fraction = 0.4f)
-                                .background(
-                                    color = LightCherry,
-                                    shape = RoundedCornerShape(
-                                        bottomStart = 26.dp,
-                                        bottomEnd = 26.dp
-                                    )
-                                )
-                                .padding(bottom = 16.dp),
-                            verticalArrangement = Arrangement.SpaceEvenly,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = stringResource(id = R.string.categories),
-                                fontSize = 44.sp,
-                                letterSpacing = 8.sp,
-                                color = Color.White
-                            )
-                            OutlinedTextField(
-                                value = searchValue,
-                                onValueChange = { searchValue = it },
-                                placeholder = {
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                    ) {
-                                        Text(
-                                            text = stringResource(id = R.string.search),
-                                            color = Color.LightGray,
-                                            fontSize = 20.sp,
-                                            modifier = Modifier
-                                                .fillMaxSize()
-                                        )
-                                    }
-                                },
-                                singleLine = true,
-                                maxLines = 1,
-                                colors = TextFieldDefaults.textFieldColors(
-                                    backgroundColor = Color.White
-                                ),
-                                keyboardOptions = KeyboardOptions(
-                                    imeAction = ImeAction.Go,
-                                    keyboardType = KeyboardType.Text,
-                                    autoCorrect = true
-                                ),
-                                keyboardActions = KeyboardActions(onGo = {
-                                    // TODO
-                                }),
-                                shape = RoundedCornerShape(26.dp),
-                                textStyle = TextStyle(fontSize = 20.sp),
-                                modifier = Modifier
-                                    .width(310.dp)
-                                    .height(56.dp)
-                            )
-                        }
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight(fraction = 0.64f)
-                                .align(alignment = Alignment.BottomCenter),
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .width(160.dp)
-                            ) {
-                                CategoryCard(
-                                    drawable = R.drawable.brunch_icon,
-                                    categoryName = R.string.brunch,
-                                    cardHeight = 130.dp
-                                ) {
-
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-                                CategoryCard(
-                                    drawable = R.drawable.main_dishes_icon,
-                                    categoryName = R.string.main_dishes,
-                                    cardHeight = 130.dp
-                                ) {
-
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-                                CategoryCard(
-                                    drawable = R.drawable.desserts_icon,
-                                    categoryName = R.string.desserts,
-                                    cardHeight = 130.dp
-                                ) {
-
-                                }
-                            }
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxHeight(fraction = 0.74f)
-                                    .width(160.dp)
-                            ) {
-                                CategoryCard(
-                                    drawable = R.drawable.salads_icon,
-                                    categoryName = R.string.salads,
-                                    cardHeight = 130.dp
-                                ) {
-
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-                                CategoryCard(
-                                    drawable = R.drawable.burgers_icon,
-                                    categoryName = R.string.burgers,
-                                    cardHeight = 130.dp
-                                ) {
-
-                                }
-                            }
-                        }
-                    }
+                    CategoriesLayout(
+                        headerLayoutFraction = 0.4f,
+                        categoriesFontSize = 44.sp,
+                        searchPlaceholderFontSize = 20.sp,
+                        searchTextStyleFontSize = 20.sp,
+                        searchModifier = Modifier
+                            .width(310.dp)
+                            .height(56.dp),
+                        categoriesContainerFraction = 0.64f,
+                        categoriesLeftColumnModifier = Modifier
+                            .fillMaxHeight()
+                            .width(160.dp),
+                        categoriesRightColumnModifier = Modifier
+                            .fillMaxHeight(fraction = 0.74f)
+                            .width(160.dp),
+                        categoryCardHeight = 130.dp
+                    )
                 }
                 else -> {
-//                    CategoriesLayout(modifier = Modifier, searchValue = searchValue)
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        Column(
+                    CategoriesLayout(
+                        headerLayoutFraction = 0.34f,
+                        categoriesFontSize = 32.sp,
+                        searchPlaceholderFontSize = 16.sp,
+                        searchModifier = Modifier
+                            .width(240.dp)
+                            .height(52.dp),
+                        categoriesContainerFraction = 0.7f,
+                        categoriesLeftColumnModifier = Modifier
+                            .fillMaxHeight()
+                            .width(130.dp),
+                        categoriesRightColumnModifier = Modifier
+                            .fillMaxHeight(fraction = 0.7f)
+                            .width(130.dp),
+                        categoryCardHeight = 106.dp
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun CategoriesLayout(
+    headerLayoutFraction: Float,
+    categoriesFontSize: TextUnit = TextUnit.Unspecified,
+    searchPlaceholderFontSize: TextUnit = TextUnit.Unspecified,
+    searchTextStyleFontSize: TextUnit = 16.sp,
+    searchModifier: Modifier,
+    categoriesContainerFraction: Float,
+    categoriesLeftColumnModifier: Modifier,
+    categoriesRightColumnModifier: Modifier,
+    categoryCardHeight: Dp,
+    categoryCardFontSize: TextUnit = 16.sp
+) {
+    var searchValue by remember {
+        mutableStateOf("")
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(fraction = headerLayoutFraction)
+                .background(
+                    color = LightCherry,
+                    shape = RoundedCornerShape(
+                        bottomStart = 26.dp,
+                        bottomEnd = 26.dp
+                    )
+                )
+                .padding(bottom = 16.dp),
+            verticalArrangement = Arrangement.SpaceEvenly,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = stringResource(id = R.string.categories),
+                fontSize = categoriesFontSize,
+                letterSpacing = 8.sp,
+                color = Color.White
+            )
+            OutlinedTextField(
+                value = searchValue,
+                onValueChange = { searchValue = it },
+                placeholder = {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.search),
+                            color = Color.LightGray,
+                            fontSize = searchPlaceholderFontSize,
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight(fraction = 0.34f)
-                                .background(
-                                    color = LightCherry,
-                                    shape = RoundedCornerShape(
-                                        bottomStart = 26.dp,
-                                        bottomEnd = 26.dp
-                                    )
-                                )
-                                .padding(bottom = 16.dp),
-                            verticalArrangement = Arrangement.SpaceEvenly,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = stringResource(id = R.string.categories),
-                                fontSize = 32.sp,
-                                letterSpacing = 8.sp,
-                                color = Color.White
-                            )
-                            OutlinedTextField(
-                                value = searchValue,
-                                onValueChange = { searchValue = it },
-                                placeholder = {
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                    ) {
-                                        Text(
-                                            text = stringResource(id = R.string.search),
-                                            color = Color.LightGray,
-                                            fontSize = 16.sp,
-                                            modifier = Modifier
-                                                .fillMaxSize()
-                                        )
-                                    }
-                                },
-                                singleLine = true,
-                                maxLines = 1,
-                                colors = TextFieldDefaults.textFieldColors(
-                                    backgroundColor = Color.White
-                                ),
-                                keyboardOptions = KeyboardOptions(
-                                    imeAction = ImeAction.Go,
-                                    keyboardType = KeyboardType.Text,
-                                    autoCorrect = true
-                                ),
-                                keyboardActions = KeyboardActions(onGo = {
-                                    // TODO
-                                }),
-                                shape = RoundedCornerShape(26.dp),
-                                modifier = Modifier
-                                    .width(240.dp)
-                                    .height(52.dp)
-                            )
-                        }
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight(fraction = 0.7f)
-                                .align(alignment = Alignment.BottomCenter),
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .width(130.dp)
-                            ) {
-                                CategoryCard(
-                                    drawable = R.drawable.brunch_icon,
-                                    categoryName = R.string.brunch,
-                                    cardHeight = 106.dp
-                                ) {
-
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-                                CategoryCard(
-                                    drawable = R.drawable.main_dishes_icon,
-                                    categoryName = R.string.main_dishes,
-                                    cardHeight = 106.dp
-                                ) {
-
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-                                CategoryCard(
-                                    drawable = R.drawable.desserts_icon,
-                                    categoryName = R.string.desserts,
-                                    cardHeight = 106.dp
-                                ) {
-
-                                }
-                            }
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxHeight(fraction = 0.7f)
-                                    .width(130.dp)
-                            ) {
-                                CategoryCard(
-                                    drawable = R.drawable.salads_icon,
-                                    categoryName = R.string.salads,
-                                    cardHeight = 106.dp
-                                ) {
-
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-                                CategoryCard(
-                                    drawable = R.drawable.burgers_icon,
-                                    categoryName = R.string.burgers,
-                                    cardHeight = 106.dp
-                                ) {
-
-                                }
-                            }
-                        }
+                                .fillMaxSize()
+                        )
                     }
+                },
+                singleLine = true,
+                maxLines = 1,
+                colors = TextFieldDefaults.textFieldColors(
+                    backgroundColor = Color.White
+                ),
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Go,
+                    keyboardType = KeyboardType.Text,
+                    autoCorrect = true
+                ),
+                keyboardActions = KeyboardActions(onGo = {
+                    // TODO
+                }),
+                shape = RoundedCornerShape(26.dp),
+                textStyle = TextStyle(fontSize = searchTextStyleFontSize),
+                modifier = searchModifier
+            )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(fraction = categoriesContainerFraction)
+                .align(alignment = Alignment.BottomCenter),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = categoriesLeftColumnModifier
+            ) {
+                CategoryCard(
+                    drawable = R.drawable.brunch_icon,
+                    categoryName = R.string.brunch,
+                    cardHeight = categoryCardHeight,
+                    fontSize = categoryCardFontSize
+                ) {
+
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                CategoryCard(
+                    drawable = R.drawable.main_dishes_icon,
+                    categoryName = R.string.main_dishes,
+                    cardHeight = categoryCardHeight,
+                    fontSize = categoryCardFontSize
+                ) {
+
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                CategoryCard(
+                    drawable = R.drawable.desserts_icon,
+                    categoryName = R.string.desserts,
+                    cardHeight = categoryCardHeight,
+                    fontSize = categoryCardFontSize
+                ) {
+
+                }
+            }
+            Spacer(modifier = Modifier.width(10.dp))
+            Column(
+                modifier = categoriesRightColumnModifier
+            ) {
+                CategoryCard(
+                    drawable = R.drawable.salads_icon,
+                    categoryName = R.string.salads,
+                    cardHeight = categoryCardHeight,
+                    fontSize = categoryCardFontSize
+                ) {
+
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                CategoryCard(
+                    drawable = R.drawable.burgers_icon,
+                    categoryName = R.string.burgers,
+                    cardHeight = categoryCardHeight,
+                    fontSize = categoryCardFontSize
+                ) {
+
                 }
             }
         }

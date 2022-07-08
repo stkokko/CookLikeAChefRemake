@@ -25,7 +25,8 @@ fun LatestRecipesCard(url: String, title: String, onReadMoreClicked: (Recipe) ->
     Card(
         modifier = Modifier
             .width(200.dp)
-            .height(120.dp),
+            .height(120.dp)
+            .padding(end = 6.dp),
         elevation = 4.dp,
         shape = RoundedCornerShape(16.dp)
     ) {

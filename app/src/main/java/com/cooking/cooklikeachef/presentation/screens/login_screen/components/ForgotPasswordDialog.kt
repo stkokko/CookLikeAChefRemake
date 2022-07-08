@@ -1,4 +1,4 @@
-package com.cooking.cooklikeachef.presentation.screens.components
+package com.cooking.cooklikeachef.presentation.screens.login_screen.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

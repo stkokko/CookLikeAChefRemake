@@ -8,6 +8,8 @@ interface FirebaseCloudFirestoreRepo {
 
     fun getRecipes(): Flow<Resource<List<Recipe>>>
 
+    fun getLatestRecipes(): Flow<Resource<List<Recipe>>>
+
     fun getFavouriteRecipes(): Flow<Resource<List<Recipe>>>
 
 }

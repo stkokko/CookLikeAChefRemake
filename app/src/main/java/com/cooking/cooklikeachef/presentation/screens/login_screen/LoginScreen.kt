@@ -32,7 +32,7 @@ import com.cooking.cooklikeachef.presentation.navigation.Screens
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomButton
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomOutlinedTextField
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.LoginRegisterLayout
-import com.cooking.cooklikeachef.presentation.screens.components.ForgotPasswordDialog
+import com.cooking.cooklikeachef.presentation.screens.login_screen.components.ForgotPasswordDialog
 import com.cooking.cooklikeachef.presentation.ui.theme.SkyBlue
 
 @Composable

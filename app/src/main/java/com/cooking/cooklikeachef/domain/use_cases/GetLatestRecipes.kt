@@ -6,9 +6,8 @@ import com.cooking.cooklikeachef.util.Resource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetFavouriteRecipes @Inject constructor(
+class GetLatestRecipes @Inject constructor(
     private val firebaseCloudFirestoreRepo: FirebaseCloudFirestoreRepo
 ) {
-    operator fun invoke(): Flow<Resource<List<Recipe>>> =
-        firebaseCloudFirestoreRepo.getFavouriteRecipes()
+    operator fun invoke(): Flow<Resource<List<Recipe>>> = firebaseCloudFirestoreRepo.getLatestRecipes()
 }
