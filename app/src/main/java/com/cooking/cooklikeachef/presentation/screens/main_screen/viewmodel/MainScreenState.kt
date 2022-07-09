@@ -1,4 +1,4 @@
-package com.cooking.cooklikeachef.presentation.screens.main_screen
+package com.cooking.cooklikeachef.presentation.screens.main_screen.viewmodel
 
 import com.cooking.cooklikeachef.domain.model.Recipe
 

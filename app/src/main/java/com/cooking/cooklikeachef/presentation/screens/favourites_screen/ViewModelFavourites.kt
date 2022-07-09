@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.State
 import androidx.lifecycle.viewModelScope
 import com.cooking.cooklikeachef.domain.use_cases.GetFavouriteRecipes
-import com.cooking.cooklikeachef.presentation.screens.main_screen.MainScreenState
+import com.cooking.cooklikeachef.presentation.screens.main_screen.viewmodel.MainScreenState
 import com.cooking.cooklikeachef.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn

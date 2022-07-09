@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
-import java.lang.Exception
 import javax.inject.Inject
+import kotlin.Exception
 
 class FirebaseCloudFirestoreRepoImpl @Inject constructor(
     private val db: FirebaseFirestore
@@ -33,25 +33,19 @@ class FirebaseCloudFirestoreRepoImpl @Inject constructor(
 
     }.flowOn(Dispatchers.IO)
 
-    override fun getLatestRecipes(): Flow<Resource<List<Recipe>>> = flow {
-
-        emit(Resource.Loading())
-        Log.d("getLatestRecipes", "line 37")
-        try {
+    override suspend fun getLatestRecipes(): List<Recipe> {
+        return try {
             val recipesDtoList =
                 db.collection("Recipes").get().await().toObjects(RecipeDto::class.java)
             val recipesList = recipesDtoList.map {
                 Mappers.recipeDtoToModel(it)
             }
-            val latestRecipesList = recipesList.sortedByDescending { recipe ->
-                recipe.timestamp
-            }
-            emit(Resource.Success(latestRecipesList.subList(0, 4)))
+            recipesList
         } catch (e: Exception) {
-            Log.d("LatestRecipesRepoImpl", "${e.message}")
-            emit(Resource.Error(message = "Something went wrong, check your internet connection."))
+            Log.d("Repository", "getLatestRecipes: ${e.message} occurred when fetching recipes")
+            emptyList()
         }
-    }.flowOn(Dispatchers.IO)
+    }
 
     override fun getFavouriteRecipes(): Flow<Resource<List<Recipe>>> =
         flow<Resource<List<Recipe>>> {

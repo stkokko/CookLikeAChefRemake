@@ -1,8 +1,10 @@
 package com.cooking.cooklikeachef.domain.repository
 
+import com.google.firebase.auth.AuthResult
+
 interface FirebaseAuthRepo {
 
-    fun logIn(email: String, password: String)
+    suspend fun logIn(email: String, password: String) : AuthResult?
 
     fun register(email: String, password: String, confirmPassword: String)
 

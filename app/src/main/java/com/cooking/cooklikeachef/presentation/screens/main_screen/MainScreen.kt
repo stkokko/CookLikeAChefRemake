@@ -1,10 +1,11 @@
 package com.cooking.cooklikeachef.presentation.screens.main_screen
 
-import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -22,13 +23,14 @@ import androidx.navigation.NavController
 import com.cooking.cooklikeachef.R
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.BottomNavigationBar
 import com.cooking.cooklikeachef.presentation.screens.main_screen.components.LatestRecipesCard
+import com.cooking.cooklikeachef.presentation.screens.main_screen.viewmodel.MainScreenViewModel
 
 @Composable
 fun MainScreen(
     navController: NavController,
-    viewModelMain: ViewModelMain = hiltViewModel()
+    mainScreenViewModel: MainScreenViewModel = hiltViewModel()
 ) {
-    val state = viewModelMain.state.value
+    val state = mainScreenViewModel.state.value
 
     Scaffold(bottomBar = {
         BottomNavigationBar(
@@ -47,53 +49,57 @@ fun MainScreen(
                 modifier = Modifier.fillMaxSize()
             )
         }
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(
-                    start = 6.dp,
-                    top = 0.dp,
-                    end = 0.dp,
-                    bottom = innerPadding.calculateBottomPadding() + 6.dp
-                )
-        ) {
-            Text(
-                text = stringResource(id = R.string.welcome_to_appname),
-                color = Color.White,
-                fontWeight = FontWeight.Bold,
-                fontSize = 28.sp,
-                modifier = Modifier.align(alignment = Alignment.CenterStart)
-            )
+
+        if (state.isLoading) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .align(alignment = Alignment.BottomCenter)
+                    .fillMaxSize()
+                    .background(color = Color.Black.copy(alpha = 0.5f)),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                CircularProgressIndicator()
+            }
+        } else {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        start = 6.dp,
+                        top = 0.dp,
+                        end = 0.dp,
+                        bottom = innerPadding.calculateBottomPadding() + 6.dp
+                    )
             ) {
                 Text(
-                    text = stringResource(id = R.string.latest_recipes), color = Color.White,
+                    text = stringResource(id = R.string.welcome_to_appname),
+                    color = Color.White,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 22.sp
+                    fontSize = 28.sp,
+                    modifier = Modifier.align(alignment = Alignment.CenterStart)
                 )
-                // TODO: check Logcat, why there is 2 extra logs with empty recipesList
-                // TODO: one of them is from Loading??
-                // TODO: if we rotate screen to landscape then list is going out of screen
-                if (!state.latestRecipesList.isNullOrEmpty()) {
-                    LazyRow {
-                        items(state.latestRecipesList) { latestRecipe ->
-                            LatestRecipesCard(
-                                url = latestRecipe.imageURL,
-                                title = latestRecipe.name
-                            ) {
-                                // TODO: navigate to RecipeScreen which is a
-                                // TODO: fragment in the original implementation
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(alignment = Alignment.BottomCenter)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.latest_recipes), color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 22.sp
+                    )
+
+                    if(state.latestRecipesList.isNotEmpty()) {
+                        LazyRow {
+                            items(state.latestRecipesList) { latestRecipe ->
+                                LatestRecipesCard(
+                                    url = latestRecipe.imageURL,
+                                    title = latestRecipe.name
+                                ) {}
                             }
                         }
                     }
                 }
-                Log.d(
-                    "MainScreen",
-                    "recipesList: ${state}, isLoading: ${state.isLoading}"
-                )
             }
         }
     }

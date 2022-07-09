@@ -24,13 +24,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import com.cooking.cooklikeachef.R
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.cooking.cooklikeachef.presentation.screens.categories_screen.components.CategoriesLayout
+import com.cooking.cooklikeachef.R
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.BottomNavigationBar
 import com.cooking.cooklikeachef.presentation.ui.theme.LightCherry
-import kotlin.math.log
 
 @Composable
 fun CategoriesScreen(navController: NavController) {
