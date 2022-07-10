@@ -1,7 +1,7 @@
-package com.cooking.cooklikeachef.data.repository
+package com.cooking.cooklikeachef.data.repository.remote
 
 import android.util.Log
-import com.cooking.cooklikeachef.domain.repository.FirebaseAuthRepo
+import com.cooking.cooklikeachef.domain.repository.remote.FirebaseAuthRepo
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await

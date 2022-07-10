@@ -17,22 +17,35 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.airbnb.lottie.compose.*
 import com.cooking.cooklikeachef.R
 import com.cooking.cooklikeachef.presentation.navigation.Screens
+import com.cooking.cooklikeachef.presentation.screens.splash_screen.viewmodel.SplashScreenViewModel
 import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: SplashScreenViewModel = hiltViewModel()
 ) {
+
+    val state = viewModel.state
 
     LaunchedEffect(key1 = true) {
         delay(3500L)
-        navController.navigate(Screens.Login.name) {
-            popUpTo(Screens.Splash.name) {
-                inclusive = true
+        if(!state.value.isLoggedIn) {
+            navController.navigate(Screens.Login.name) {
+                popUpTo(Screens.Splash.name) {
+                    inclusive = true
+                }
+            }
+        } else {
+            navController.navigate(Screens.Main.name) {
+                popUpTo(Screens.Splash.name) {
+                    inclusive = true
+                }
             }
         }
     }

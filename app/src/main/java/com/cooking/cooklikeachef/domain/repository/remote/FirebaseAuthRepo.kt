@@ -1,4 +1,4 @@
-package com.cooking.cooklikeachef.domain.repository
+package com.cooking.cooklikeachef.domain.repository.remote
 
 import com.google.firebase.auth.AuthResult
 

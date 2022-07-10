@@ -1,7 +1,7 @@
 package com.cooking.cooklikeachef.domain.use_cases
 
 import com.cooking.cooklikeachef.domain.model.Recipe
-import com.cooking.cooklikeachef.domain.repository.FirebaseCloudFirestoreRepo
+import com.cooking.cooklikeachef.domain.repository.remote.FirebaseCloudFirestoreRepo
 import com.cooking.cooklikeachef.util.Resource
 import kotlinx.coroutines.flow.Flow
 

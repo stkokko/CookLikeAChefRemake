@@ -1,9 +1,9 @@
-package com.cooking.cooklikeachef.data.repository
+package com.cooking.cooklikeachef.data.repository.remote
 
 import android.util.Log
 import com.cooking.cooklikeachef.data.remote.dto.RecipeDto
 import com.cooking.cooklikeachef.domain.model.Recipe
-import com.cooking.cooklikeachef.domain.repository.FirebaseCloudFirestoreRepo
+import com.cooking.cooklikeachef.domain.repository.remote.FirebaseCloudFirestoreRepo
 import com.cooking.cooklikeachef.util.Mappers
 import com.cooking.cooklikeachef.util.Resource
 import com.google.firebase.firestore.FirebaseFirestore

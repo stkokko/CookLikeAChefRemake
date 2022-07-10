@@ -1,6 +1,6 @@
 package com.cooking.cooklikeachef.domain.use_cases
 
-import com.cooking.cooklikeachef.domain.repository.FirebaseAuthRepo
+import com.cooking.cooklikeachef.domain.repository.remote.FirebaseAuthRepo
 import javax.inject.Inject
 
 class LogOut @Inject constructor(
