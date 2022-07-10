@@ -1,11 +1,14 @@
 package com.cooking.cooklikeachef.presentation.screens.register_screen
 
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -48,6 +51,10 @@ fun RegisterScreen(navController: NavController) {
                 }
             }
         }
+    }
+
+    BackHandler {
+        //Should change the state and show the dialog
     }
 }
 

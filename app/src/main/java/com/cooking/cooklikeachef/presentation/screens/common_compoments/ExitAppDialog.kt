@@ -1,12 +1,10 @@
-package com.cooking.cooklikeachef.presentation.screens.login_screen.components
+package com.cooking.cooklikeachef.presentation.screens.common_compoments
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.runtime.*
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,15 +14,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.cooking.cooklikeachef.R
-import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomButton
-import com.cooking.cooklikeachef.presentation.ui.theme.DarkCherry
 
 @Composable
-fun ForgotPasswordDialog(onDismiss: () -> Unit) {
-    var email by remember {
-        mutableStateOf("")
-    }
+fun ExitAppDialog(
+    onDismiss: () -> Unit = {},
+    onExitClick: () -> Unit = {}
+) {
+
     Dialog(onDismissRequest = onDismiss) {
+
         Column(
             modifier = Modifier
                 .fillMaxWidth(fraction = 0.95f)
@@ -35,34 +33,14 @@ fun ForgotPasswordDialog(onDismiss: () -> Unit) {
                 .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             Text(
-                text = stringResource(id = R.string.reset_password_text),
+                text = stringResource(id = R.string.exit_app_message),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
             )
-            Spacer(modifier = Modifier.height(6.dp))
-            Text(
-                text = stringResource(id = R.string.reset_password_message),
-                fontSize = 14.sp
-            )
-            Spacer(modifier = Modifier.height(6.dp))
-            TextField(value = email, onValueChange = {
-                email = it
-            }, placeholder = {
-                Text(
-                    text = stringResource(id = R.string.e_mail),
-                    color = Color.LightGray
-                )
-            }, colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.White
-            ), leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Email, contentDescription = "",
-                    tint = DarkCherry
-                )
-            }, singleLine = true, modifier = Modifier.fillMaxWidth(fraction = 0.85f)
-            )
             Spacer(modifier = Modifier.height(10.dp))
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround,
@@ -70,10 +48,10 @@ fun ForgotPasswordDialog(onDismiss: () -> Unit) {
             ) {
                 CustomButton(
                     modifier = Modifier.width(80.dp),
-                    text = stringResource(id = R.string.send_text),
+                    text = stringResource(id = R.string.exit),
                     enabled = true
                 ) {
-                    //TODO
+                    onExitClick()
                 }
                 CustomButton(
                     modifier = Modifier.width(90.dp),
@@ -83,6 +61,9 @@ fun ForgotPasswordDialog(onDismiss: () -> Unit) {
                     onDismiss()
                 }
             }
+
         }
+
     }
+
 }

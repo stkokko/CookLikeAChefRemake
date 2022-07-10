@@ -54,6 +54,15 @@ fun LoginScreen(
                         loginViewModel = loginViewModel
                     )
                 }
+
+                boxWithConstraintsScope.maxHeight > 700.dp -> {
+                    LoginForm(
+                        fraction = 0.8f,
+                        navController = navController,
+                        loginViewModel = loginViewModel
+                    )
+                }
+
                 boxWithConstraintsScope.maxHeight > 600.dp -> {
                     LoginForm(
                         fraction = 0.8f,
@@ -183,6 +192,12 @@ private fun LoginContent(
         placeholderSize = textSize,
         isError = state.value.isPasswordValid,
     )
+
+    if(state.value.errorMessage.isNotEmpty()) {
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(text = stringResource(id = R.string.error_message_login), color = MaterialTheme.colors.primary)
+    }
+
     Spacer(modifier = Modifier.height(20.dp))
     CustomButton(
         modifier = Modifier.width(140.dp),

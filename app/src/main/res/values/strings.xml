@@ -120,4 +120,7 @@
     <string name="enter_password">Please enter your password.</string>
     <string name="category_recipe_image_view">category recipe image view</string>
     <string name="home_image_view">Home Image View</string>
+
+    <string name="exit_app_message">Are you sure you want to Exit?</string>
+    <string name="exit">Exit</string>
 </resources>

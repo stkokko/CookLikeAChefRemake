@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +24,13 @@ fun LoginRegisterLayout(painter: Painter, content: @Composable () -> Unit) {
                     content()
                 }
             }
+
+            boxWithConstraintsScope.maxHeight > 700.dp -> {
+                LoginRegisterContainer(imageHeight = 240.dp, fraction = 0.75f, painter = painter) {
+                    content()
+                }
+            }
+
             boxWithConstraintsScope.maxHeight > 600.dp -> {
                 LoginRegisterContainer(imageHeight = 240.dp, fraction = 0.7f, painter = painter) {
                     content()
