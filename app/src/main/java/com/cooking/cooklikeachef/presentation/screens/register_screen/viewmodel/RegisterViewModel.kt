@@ -1,12 +1,13 @@
-package com.cooking.cooklikeachef.presentation.screens.login_screen.viewmodel
+package com.cooking.cooklikeachef.presentation.screens.register_screen.viewmodel
 
+import android.util.Log
 import android.util.Patterns
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cooking.cooklikeachef.domain.use_cases.LogIn
-import com.cooking.cooklikeachef.presentation.screens.login_screen.events.LoginUIEvents
+import com.cooking.cooklikeachef.domain.use_cases.Register
+import com.cooking.cooklikeachef.presentation.screens.register_screen.events.RegisterUIEvents
 import com.cooking.cooklikeachef.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -14,17 +15,15 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val logIn: LogIn
+class RegisterViewModel @Inject constructor(
+    private val register: Register
 ) : ViewModel() {
+    private val _state = mutableStateOf(RegisterState())
+    val state: State<RegisterState> = _state
 
-    private val _state = mutableStateOf(LoginState())
-    val state: State<LoginState> = _state
-
-
-    fun onEvent(event: LoginUIEvents) {
+    fun onEvent(event: RegisterUIEvents) {
         when (event) {
-            is LoginUIEvents.EmailChanged -> {
+            is RegisterUIEvents.EmailChanged -> {
                 if (Patterns.EMAIL_ADDRESS.matcher(event.email).matches())
                     _state.value = _state.value.copy(isEmailValid = true)
                 else
@@ -32,7 +31,7 @@ class LoginViewModel @Inject constructor(
                 _state.value = _state.value.copy(email = event.email)
             }
 
-            is LoginUIEvents.PasswordChanged -> {
+            is RegisterUIEvents.PasswordChanged -> {
                 if (event.password.length >= 6)
                     _state.value = _state.value.copy(isPasswordValid = true)
                 else
@@ -40,24 +39,32 @@ class LoginViewModel @Inject constructor(
                 _state.value = _state.value.copy(password = event.password)
             }
 
-            is LoginUIEvents.SignIn -> {
-                handleLogin(event.email, event.password)
+            is RegisterUIEvents.ConfirmPasswordChanged -> {
+                if (event.confirmPassword.equals(event.password))
+                    _state.value = _state.value.copy(isConfirmPasswordValid = true)
+                else
+                    _state.value = _state.value.copy(isConfirmPasswordValid = false)
+                _state.value = _state.value.copy(confirmPassword = event.confirmPassword)
             }
 
-            is LoginUIEvents.ShowPasswordClick -> {
+            is RegisterUIEvents.CreateUser -> {
+                handleRegister(event.email, event.password)
+            }
+
+            is RegisterUIEvents.ShowPasswordClick -> {
                 _state.value =
                     _state.value.copy(isPasswordVisible = !_state.value.isPasswordVisible)
             }
 
-            is LoginUIEvents.DialogDismissed, LoginUIEvents.OpenDialogClicked -> {
-                _state.value = _state.value.copy(openDialog = !_state.value.openDialog)
+            is RegisterUIEvents.ShowConfirmPasswordClick -> {
+                _state.value =
+                    _state.value.copy(isConfirmPasswordVisible = !_state.value.isConfirmPasswordVisible)
             }
         }
     }
 
-    private fun handleLogin(email: String, password: String) {
-        logIn(email, password).onEach { result ->
-
+    private fun handleRegister(email: String, password: String) {
+        register(email, password).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
                     _state.value = _state.value.copy(isLoading = true)
@@ -65,19 +72,17 @@ class LoginViewModel @Inject constructor(
 
                 is Resource.Success -> {
                     _state.value =
-                        _state.value.copy(isLoading = false, isLoggedIn = result.data ?: false)
+                        _state.value.copy(isLoading = false, isRegistered = result.data ?: false)
                 }
 
                 is Resource.Error -> {
                     _state.value = _state.value.copy(
-                        isLoggedIn = false,
+                        isRegistered = false,
                         isLoading = false,
                         errorMessage = result.message ?: ""
                     )
                 }
             }
-
         }.launchIn(viewModelScope)
     }
-
 }

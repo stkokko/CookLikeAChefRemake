@@ -45,7 +45,7 @@ fun CategoriesScreen(navController: NavController) {
             val boxWithConstraintsScope = this
             when {
                 boxWithConstraintsScope.maxHeight > 900.dp -> {
-                    CategoriesLayout(
+                    CategoriesContent(
                         headerLayoutFraction = 0.38f,
                         categoriesFontSize = 54.sp,
                         searchPlaceholderFontSize = 22.sp,
@@ -65,7 +65,7 @@ fun CategoriesScreen(navController: NavController) {
                     )
                 }
                 boxWithConstraintsScope.maxHeight > 600.dp -> {
-                    CategoriesLayout(
+                    CategoriesContent(
                         headerLayoutFraction = 0.4f,
                         categoriesFontSize = 44.sp,
                         searchPlaceholderFontSize = 20.sp,
@@ -84,7 +84,7 @@ fun CategoriesScreen(navController: NavController) {
                     )
                 }
                 else -> {
-                    CategoriesLayout(
+                    CategoriesContent(
                         headerLayoutFraction = 0.34f,
                         categoriesFontSize = 32.sp,
                         searchPlaceholderFontSize = 16.sp,
@@ -107,7 +107,7 @@ fun CategoriesScreen(navController: NavController) {
 }
 
 @Composable
-fun CategoriesLayout(
+fun CategoriesContent(
     headerLayoutFraction: Float,
     categoriesFontSize: TextUnit = TextUnit.Unspecified,
     searchPlaceholderFontSize: TextUnit = TextUnit.Unspecified,

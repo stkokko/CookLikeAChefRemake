@@ -96,14 +96,14 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideRegisterUseCase(firebaseAuthRepo: FirebaseAuthRepo): Register {
-        return Register(firebaseAuthRepo)
+    fun provideRegisterUseCase(firebaseAuthRepo: FirebaseAuthRepo, dataStoreRepo: DataStoreRepo): Register {
+        return Register(firebaseAuthRepo, dataStoreRepo)
     }
 
     @Provides
     @Singleton
-    fun provideLogOutUseCase(firebaseAuthRepo: FirebaseAuthRepo): LogOut {
-        return LogOut(firebaseAuthRepo)
+    fun provideLogOutUseCase(firebaseAuthRepo: FirebaseAuthRepo, dataStoreRepo: DataStoreRepo): LogOut {
+        return LogOut(firebaseAuthRepo, dataStoreRepo)
     }
 
     @Provides

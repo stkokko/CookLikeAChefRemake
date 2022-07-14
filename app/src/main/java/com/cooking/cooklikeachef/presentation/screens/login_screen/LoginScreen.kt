@@ -55,7 +55,7 @@ fun LoginScreen(
                     )
                 }
 
-                boxWithConstraintsScope.maxHeight > 700.dp -> {
+                boxWithConstraintsScope.maxHeight > 780.dp -> {
                     LoginForm(
                         fraction = 0.8f,
                         navController = navController,
@@ -72,7 +72,7 @@ fun LoginScreen(
                 }
                 else -> {
                     LoginForm(
-                        fraction = 0.75f,
+                        fraction = 0.76f,
                         textSize = 14.sp,
                         navController = navController,
                         loginViewModel = loginViewModel
@@ -116,7 +116,7 @@ private fun LoginContent(
 
     CustomOutlinedTextField(
         value = state.value.email,
-        onValueChange = { email -> loginViewModel.onEvent(LoginUIEvents.EmailChanged(email)) },
+        onValueChange = { email -> loginViewModel.onEvent(LoginUIEvents.EmailChanged(email.trim())) },
         placeholder = "E-Mail",
         leadingIcon = {
             Icon(
@@ -144,12 +144,12 @@ private fun LoginContent(
         },
         modifier = modifier,
         placeholderSize = textSize,
-        isError = state.value.isEmailValid
+        isError = !state.value.isEmailValid
     )
     Spacer(modifier = Modifier.height(4.dp))
     CustomOutlinedTextField(
         value = state.value.password,
-        onValueChange = { password -> loginViewModel.onEvent(LoginUIEvents.PasswordChanged(password)) },
+        onValueChange = { password -> loginViewModel.onEvent(LoginUIEvents.PasswordChanged(password.trim())) },
         placeholder = "Password",
         leadingIcon = {
             Icon(
@@ -161,7 +161,7 @@ private fun LoginContent(
         trailingIcon = {
             if (!state.value.isPasswordVisible) {
                 Icon(
-                    imageVector = Icons.Filled.Visibility,
+                    imageVector = Icons.Filled.VisibilityOff,
                     contentDescription = "Password Icon",
                     modifier = Modifier.clickable {
                         loginViewModel.onEvent(LoginUIEvents.ShowPasswordClick)
@@ -169,7 +169,7 @@ private fun LoginContent(
                 )
             } else {
                 Icon(
-                    imageVector = Icons.Filled.VisibilityOff,
+                    imageVector = Icons.Filled.Visibility,
                     contentDescription = "Password Icon",
                     modifier = Modifier.clickable {
                         loginViewModel.onEvent(LoginUIEvents.ShowPasswordClick)
@@ -190,7 +190,7 @@ private fun LoginContent(
         isTextVisible = state.value.isPasswordVisible,
         modifier = modifier,
         placeholderSize = textSize,
-        isError = state.value.isPasswordValid,
+        isError = !state.value.isPasswordValid,
     )
 
     if(state.value.errorMessage.isNotEmpty()) {

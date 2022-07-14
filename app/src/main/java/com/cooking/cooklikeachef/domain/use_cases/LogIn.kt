@@ -15,8 +15,13 @@ class LogIn @Inject constructor(
         emit(Resource.Loading())
         try {
             val authResult = firebaseAuthRepo.logIn(email, password)
-            if (authResult?.user == null) emit(Resource.Error(null, "Could not login"))
-            else {
+            // TODO
+            if (authResult?.user == null) emit(
+                Resource.Error(
+                    null,
+                    "Could not login"
+                )
+            ) else {
                 dataStoreRepo.setUserLoginState(true)
                 emit(Resource.Success(true))
             }

@@ -26,18 +26,22 @@ class SplashScreenViewModel @Inject constructor(
     private fun initUserLoginState() {
         getUserLoginState().onEach { result ->
 
-            when(result) {
+            when (result) {
 
                 is Resource.Loading -> {
                     _state.value = _state.value.copy(isLoading = true)
                 }
 
                 is Resource.Success -> {
-                    _state.value = _state.value.copy(isLoggedIn = result.data ?: false, isLoading = false)
+                    _state.value =
+                        _state.value.copy(isLoggedIn = result.data ?: false, isLoading = false)
                 }
 
                 is Resource.Error -> {
-                    _state.value = SplashScreenState(errorMessage = result.message ?: "An unexpected error occurred.")
+                    _state.value = _state.value.copy(
+                        isLoading = false,
+                        errorMessage = result.message ?: "An unexpected error occurred."
+                    )
                 }
 
             }

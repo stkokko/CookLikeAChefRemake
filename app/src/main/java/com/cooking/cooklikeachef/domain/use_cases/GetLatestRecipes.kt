@@ -14,7 +14,7 @@ class GetLatestRecipes @Inject constructor(
         emit(Resource.Loading())
         try {
             val recipes = firebaseCloudFirestoreRepo.getLatestRecipes()
-            emit(Resource.Success(recipes))
+            emit(Resource.Success(recipes.subList(0,4)))
         } catch (e: Exception) {
             emit(Resource.Error(null, "An unexpected error occurred."))
         }

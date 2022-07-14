@@ -14,26 +14,29 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.cooking.cooklikeachef.R
 import coil.compose.AsyncImage
 import com.cooking.cooklikeachef.domain.model.Recipe
 
 @Composable
-fun LatestRecipesCard(url: String, title: String, onReadMoreClicked: (Recipe) -> Unit) {
+fun LatestRecipesCard(
+    modifier: Modifier,
+    url: String,
+    title: String,
+    textFontSize: TextUnit,
+    onReadMoreClicked: (Recipe) -> Unit
+) {
     Card(
-        modifier = Modifier
-            .width(200.dp)
-            .height(120.dp)
-            .padding(end = 6.dp),
+        modifier = modifier,
         elevation = 4.dp,
         shape = RoundedCornerShape(16.dp)
     ) {
         Row(modifier = Modifier.fillMaxSize()) {
             Column(
                 modifier = Modifier
-                    .width(100.dp)
+                    .fillMaxWidth(fraction = 0.46f)
                     .fillMaxHeight()
             ) {
                 AsyncImage(
@@ -45,14 +48,15 @@ fun LatestRecipesCard(url: String, title: String, onReadMoreClicked: (Recipe) ->
             }
             Column(
                 modifier = Modifier
-                    .width(100.dp)
-                    .fillMaxHeight(),
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .padding(horizontal = 2.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
                     text = title,
-                    fontSize = 10.sp,
+                    fontSize = textFontSize,
                     textAlign = TextAlign.Center,
                     fontFamily = FontFamily.SansSerif,
                     fontWeight = FontWeight.Medium,
@@ -61,7 +65,7 @@ fun LatestRecipesCard(url: String, title: String, onReadMoreClicked: (Recipe) ->
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     text = stringResource(id = R.string.read_more),
-                    fontSize = 10.sp,
+                    fontSize = textFontSize,
                     fontFamily = FontFamily.SansSerif,
                     fontWeight = FontWeight.Medium,
                     color = Color.Black,

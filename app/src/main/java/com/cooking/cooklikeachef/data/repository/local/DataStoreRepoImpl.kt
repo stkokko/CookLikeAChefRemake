@@ -6,8 +6,6 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import com.cooking.cooklikeachef.domain.repository.local.DataStoreRepo
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
-
 
 class DataStoreRepoImpl(private val dataStore: DataStore<Preferences>) : DataStoreRepo {
 

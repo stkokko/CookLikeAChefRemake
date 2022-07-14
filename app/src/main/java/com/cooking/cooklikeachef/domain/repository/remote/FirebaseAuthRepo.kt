@@ -1,13 +1,14 @@
 package com.cooking.cooklikeachef.domain.repository.remote
 
+import com.cooking.cooklikeachef.util.Resource
 import com.google.firebase.auth.AuthResult
 
 interface FirebaseAuthRepo {
 
     suspend fun logIn(email: String, password: String) : AuthResult?
 
-    fun register(email: String, password: String, confirmPassword: String)
+    suspend fun register(email: String, password: String) : Resource<AuthResult?>
 
-    fun logOut()
+    suspend fun logOut() : Resource<Unit?>
 
 }
