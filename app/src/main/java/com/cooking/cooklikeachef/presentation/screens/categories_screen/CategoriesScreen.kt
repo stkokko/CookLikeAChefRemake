@@ -37,6 +37,7 @@ fun CategoriesScreen(
     categoriesViewModel: CategoriesViewModel = hiltViewModel()
 ) {
     Scaffold(bottomBar = {
+        // TODO should we adjust somehow the size's of the bottom navigation bar too?
         BottomNavigationBar(
             navController = navController
         )
@@ -50,48 +51,72 @@ fun CategoriesScreen(
             when {
                 boxWithConstraintsScope.maxHeight > 900.dp -> {
                     CategoriesContent(
-                        headerLayoutFraction = 0.38f,
-                        categoriesFontSize = 54.sp,
-                        searchPlaceholderFontSize = 22.sp,
-                        searchTextStyleFontSize = 22.sp,
                         searchModifier = Modifier
                             .width(380.dp)
                             .height(64.dp),
-                        categoriesContainerFraction = 0.66f,
                         categoriesLeftColumnModifier = Modifier
                             .fillMaxHeight()
-                            .width(200.dp),
+                            .width(240.dp),
                         categoriesRightColumnModifier = Modifier
-                            .fillMaxHeight(fraction = 0.78f)
-                            .width(200.dp),
-                        categoryCardHeight = 170.dp,
-                        categoryCardFontSize = 20.sp,
+                            .fillMaxHeight(fraction = 0.76f)
+                            .width(240.dp),
+                        categoriesFontSize = 54.sp,
+                        searchPlaceholderFontSize = 22.sp, // TODO when search results implemented check the size
+                        searchTextStyleFontSize = 22.sp, // TODO same here for every screen
+                        categoryCardHeight = 200.dp,
+                        categoryCardFontSize = 22.sp,
+                        optionsMenuIconSize = 38.dp,
+                        optionsMenuDropdownWidth = 240.dp,
+                        optionsMenuDropdownItemFontSize = 28.sp,
                         navController = navController,
                         categoriesViewModel = categoriesViewModel
                     )
                 }
 
                 boxWithConstraintsScope.maxHeight > 780.dp -> {
-                    // TODO
-                }
-
-                boxWithConstraintsScope.maxHeight > 600.dp -> {
                     CategoriesContent(
-                        headerLayoutFraction = 0.38f,
-                        categoriesFontSize = 44.sp,
-                        searchPlaceholderFontSize = 20.sp,
-                        searchTextStyleFontSize = 20.sp,
                         searchModifier = Modifier
-                            .width(310.dp)
-                            .height(56.dp),
-                        categoriesContainerFraction = 0.62f,
+                            .width(350.dp)
+                            .height(60.dp),
                         categoriesLeftColumnModifier = Modifier
                             .fillMaxHeight()
-                            .width(160.dp),
+                            .width(200.dp),
                         categoriesRightColumnModifier = Modifier
                             .fillMaxHeight(fraction = 0.74f)
-                            .width(160.dp),
-                        categoryCardHeight = 130.dp,
+                            .width(200.dp),
+                        categoriesFontSize = 46.sp,
+                        searchPlaceholderFontSize = 22.sp,
+                        searchTextStyleFontSize = 22.sp,
+                        categoryCardHeight = 160.dp,
+                        categoryCardFontSize = 20.sp,
+                        optionsMenuIconSize = 34.dp,
+                        optionsMenuDropdownWidth = 200.dp,
+                        optionsMenuDropdownItemFontSize = 22.sp,
+                        navController = navController,
+                        categoriesViewModel = categoriesViewModel
+                    )
+                }
+
+                boxWithConstraintsScope.maxHeight > 620.dp -> {
+                    CategoriesContent(
+                        headerLayoutFraction = 0.40f,
+                        categoriesContainerFraction = 0.64f,
+                        searchModifier = Modifier
+                            .width(270.dp)
+                            .height(56.dp),
+                        categoriesLeftColumnModifier = Modifier
+                            .fillMaxHeight()
+                            .width(140.dp),
+                        categoriesRightColumnModifier = Modifier
+                            .fillMaxHeight(fraction = 0.74f)
+                            .width(140.dp),
+                        categoriesFontSize = 36.sp,
+                        searchPlaceholderFontSize = 20.sp,
+                        searchTextStyleFontSize = 20.sp,
+                        categoryCardHeight = 120.dp,
+                        optionsMenuIconSize = 26.dp,
+                        optionsMenuDropdownWidth = 160.dp,
+                        optionsMenuDropdownItemFontSize = 18.sp,
                         navController = navController,
                         categoriesViewModel = categoriesViewModel
                     )
@@ -99,19 +124,18 @@ fun CategoriesScreen(
                 else -> {
                     CategoriesContent(
                         headerLayoutFraction = 0.34f,
-                        categoriesFontSize = 32.sp,
-                        searchPlaceholderFontSize = 16.sp,
+                        categoriesContainerFraction = 0.68f,
                         searchModifier = Modifier
                             .width(240.dp)
                             .height(52.dp),
-                        categoriesContainerFraction = 0.7f,
                         categoriesLeftColumnModifier = Modifier
                             .fillMaxHeight()
-                            .width(130.dp),
+                            .width(120.dp),
                         categoriesRightColumnModifier = Modifier
                             .fillMaxHeight(fraction = 0.7f)
-                            .width(130.dp),
-                        categoryCardHeight = 106.dp,
+                            .width(120.dp),
+                        categoriesFontSize = 26.sp,
+                        searchPlaceholderFontSize = 16.sp,
                         navController = navController,
                         categoriesViewModel = categoriesViewModel
                     )
@@ -123,83 +147,106 @@ fun CategoriesScreen(
 
 @Composable
 fun CategoriesContent(
-    headerLayoutFraction: Float,
+    headerLayoutFraction: Float = 0.34f,
+    categoriesContainerFraction: Float = 0.7f,
+    searchModifier: Modifier,
+    categoriesLeftColumnModifier: Modifier,
+    categoriesRightColumnModifier: Modifier,
     categoriesFontSize: TextUnit = TextUnit.Unspecified,
     searchPlaceholderFontSize: TextUnit = TextUnit.Unspecified,
     searchTextStyleFontSize: TextUnit = 16.sp,
-    searchModifier: Modifier,
-    categoriesContainerFraction: Float,
-    categoriesLeftColumnModifier: Modifier,
-    categoriesRightColumnModifier: Modifier,
-    categoryCardHeight: Dp,
+    categoryCardHeight: Dp = 100.dp,
     categoryCardFontSize: TextUnit = 16.sp,
+    optionsMenuIconSize: Dp = 24.dp,
+    optionsMenuDropdownWidth: Dp = 146.dp,
+    optionsMenuDropdownItemFontSize: TextUnit = 16.sp,
     navController: NavController,
     categoriesViewModel: CategoriesViewModel
 ) {
     val state = categoriesViewModel.state
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    // TODO make it more readable
+
+    if (state.value.isLoading) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(fraction = headerLayoutFraction)
-                .background(
-                    color = LightCherry,
-                    shape = RoundedCornerShape(
-                        bottomStart = 26.dp,
-                        bottomEnd = 26.dp
-                    )
-                )
-                .padding(bottom = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxSize()
+                .background(color = Color.Black.copy(alpha = 0.5f)),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            OptionsMenu(
-                expandedOptionsMenu = state.value.displayOptionsMenu,
-                openOptionsMenu = {
-                    categoriesViewModel.onEvent(CategoriesUIEvents.DisplayOptionsMenu)
-                },
-                closeOptionsMenu = {
-                    categoriesViewModel.onEvent(CategoriesUIEvents.OptionsMenuDismissed)
-                }
-            ) {
-                categoriesViewModel.onEvent(CategoriesUIEvents.SignOff)
-            }
-            Text(
-                text = stringResource(id = R.string.categories),
-                fontSize = categoriesFontSize,
-                letterSpacing = 8.sp,
-                color = Color.White,
-                modifier = Modifier.offset(y = (-12).dp) // TODO
-            )
-            OutlinedTextField(
-                value = state.value.searchRecipe,
-                onValueChange = { searchRecipe ->
-                    categoriesViewModel.onEvent(
-                        CategoriesUIEvents.SearchRecipeChanged(
-                            searchRecipe.trim()
+            CircularProgressIndicator()
+        }
+    } else {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(fraction = headerLayoutFraction)
+                    .background(
+                        color = LightCherry,
+                        shape = RoundedCornerShape(
+                            bottomStart = 26.dp,
+                            bottomEnd = 26.dp
                         )
                     )
-                },
-                placeholder = {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.search),
-                            color = Color.LightGray,
-                            fontSize = searchPlaceholderFontSize,
-                            modifier = Modifier
-                                .fillMaxSize()
-                        )
+                    .padding(bottom = 16.dp)
+            ) {
+                OptionsMenu(
+                    expandedOptionsMenu = state.value.displayOptionsMenu,
+                    iconSize = optionsMenuIconSize,
+                    dropdownMenuWidth = optionsMenuDropdownWidth,
+                    dropdownItemFontSize = optionsMenuDropdownItemFontSize,
+                    openOptionsMenu = {
+                        categoriesViewModel.onEvent(CategoriesUIEvents.DisplayOptionsMenu)
+                    },
+                    closeOptionsMenu = {
+                        categoriesViewModel.onEvent(CategoriesUIEvents.OptionsMenuDismissed)
                     }
-                },
-                singleLine = true,
-                maxLines = 1,
-                colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color.White
-                ),
-                // TODO
+                ) {
+                    categoriesViewModel.onEvent(CategoriesUIEvents.SignOff)
+                }
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.categories),
+                        fontSize = categoriesFontSize,
+                        letterSpacing = 8.sp,
+                        color = Color.White,
+                        modifier = Modifier.offset(y = (-12).dp) // TODO
+                    )
+                    OutlinedTextField(
+                        value = state.value.searchRecipe,
+                        onValueChange = { searchRecipe ->
+                            categoriesViewModel.onEvent(
+                                CategoriesUIEvents.SearchRecipeChanged(
+                                    searchRecipe.trim()
+                                )
+                            )
+                        },
+                        placeholder = {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.search),
+                                    color = Color.LightGray,
+                                    fontSize = searchPlaceholderFontSize,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                )
+                            }
+                        },
+                        singleLine = true,
+                        maxLines = 1,
+                        colors = TextFieldDefaults.textFieldColors(
+                            backgroundColor = Color.White
+                        ),
+                        // TODO
 //                keyboardOptions = KeyboardOptions(
 //                    imeAction = ImeAction.Go,
 //                    keyboardType = KeyboardType.Text,
@@ -208,69 +255,71 @@ fun CategoriesContent(
 //                keyboardActions = KeyboardActions(onGo = {
 //                    categoriesViewModel.onEvent(CategoriesUIEvents.SearchRecipeResults(state.value.searchRecipe))
 //                }),
-                shape = RoundedCornerShape(26.dp),
-                textStyle = TextStyle(fontSize = searchTextStyleFontSize),
-                modifier = searchModifier
-            )
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(fraction = categoriesContainerFraction)
-                .align(alignment = Alignment.BottomCenter),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(
-                modifier = categoriesLeftColumnModifier
-            ) {
-                CategoryCard(
-                    drawable = R.drawable.brunch_icon,
-                    categoryName = R.string.brunch,
-                    cardHeight = categoryCardHeight,
-                    fontSize = categoryCardFontSize
-                ) {
-
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                CategoryCard(
-                    drawable = R.drawable.main_dishes_icon,
-                    categoryName = R.string.main_dishes,
-                    cardHeight = categoryCardHeight,
-                    fontSize = categoryCardFontSize
-                ) {
-
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                CategoryCard(
-                    drawable = R.drawable.desserts_icon,
-                    categoryName = R.string.desserts,
-                    cardHeight = categoryCardHeight,
-                    fontSize = categoryCardFontSize
-                ) {
-
+                        shape = RoundedCornerShape(26.dp),
+                        textStyle = TextStyle(fontSize = searchTextStyleFontSize),
+                        modifier = searchModifier
+                    )
                 }
             }
-            Spacer(modifier = Modifier.width(10.dp))
-            Column(
-                modifier = categoriesRightColumnModifier
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(fraction = categoriesContainerFraction)
+                    .align(alignment = Alignment.BottomCenter),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                CategoryCard(
-                    drawable = R.drawable.salads_icon,
-                    categoryName = R.string.salads,
-                    cardHeight = categoryCardHeight,
-                    fontSize = categoryCardFontSize
+                Column(
+                    modifier = categoriesLeftColumnModifier
                 ) {
+                    CategoryCard(
+                        drawable = R.drawable.brunch_icon,
+                        categoryName = R.string.brunch,
+                        cardHeight = categoryCardHeight,
+                        fontSize = categoryCardFontSize
+                    ) {
 
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    CategoryCard(
+                        drawable = R.drawable.main_dishes_icon,
+                        categoryName = R.string.main_dishes,
+                        cardHeight = categoryCardHeight,
+                        fontSize = categoryCardFontSize
+                    ) {
+
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    CategoryCard(
+                        drawable = R.drawable.desserts_icon,
+                        categoryName = R.string.desserts,
+                        cardHeight = categoryCardHeight,
+                        fontSize = categoryCardFontSize
+                    ) {
+
+                    }
                 }
-                Spacer(modifier = Modifier.height(8.dp))
-                CategoryCard(
-                    drawable = R.drawable.burgers_icon,
-                    categoryName = R.string.burgers,
-                    cardHeight = categoryCardHeight,
-                    fontSize = categoryCardFontSize
+                Spacer(modifier = Modifier.width(10.dp))
+                Column(
+                    modifier = categoriesRightColumnModifier
                 ) {
+                    CategoryCard(
+                        drawable = R.drawable.salads_icon,
+                        categoryName = R.string.salads,
+                        cardHeight = categoryCardHeight,
+                        fontSize = categoryCardFontSize
+                    ) {
 
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    CategoryCard(
+                        drawable = R.drawable.burgers_icon,
+                        categoryName = R.string.burgers,
+                        cardHeight = categoryCardHeight,
+                        fontSize = categoryCardFontSize
+                    ) {
+
+                    }
                 }
             }
         }

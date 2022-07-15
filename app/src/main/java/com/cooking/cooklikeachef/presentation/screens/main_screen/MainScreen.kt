@@ -15,6 +15,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,7 +39,11 @@ fun MainScreen(
             navController = navController
         )
     }) { innerPadding ->
-        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+        BoxWithConstraints(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
             val boxWithConstraintsScope = this
             when {
                 boxWithConstraintsScope.maxHeight > 900.dp -> {
@@ -50,7 +55,9 @@ fun MainScreen(
                         welcomeTextFontSize = 44.sp,
                         latestRecipesTextFontSize = 38.sp,
                         cardTextFontSize = 18.sp,
-                        innerPadding = innerPadding,
+                        optionsMenuIconSize = 38.dp,
+                        optionsMenuDropdownWidth = 240.dp,
+                        optionsMenuDropdownItemFontSize = 28.sp,
                         navController = navController,
                         mainViewModel = mainViewModel
                     )
@@ -65,13 +72,15 @@ fun MainScreen(
                         welcomeTextFontSize = 40.sp,
                         latestRecipesTextFontSize = 32.sp,
                         cardTextFontSize = 14.sp,
-                        innerPadding = innerPadding,
+                        optionsMenuIconSize = 34.dp,
+                        optionsMenuDropdownWidth = 200.dp,
+                        optionsMenuDropdownItemFontSize = 22.sp,
                         navController = navController,
                         mainViewModel = mainViewModel
                     )
                 }
 
-                boxWithConstraintsScope.maxHeight > 600.dp -> {
+                boxWithConstraintsScope.maxHeight > 620.dp -> {
                     MainContent(
                         modifier = Modifier
                             .width(200.dp)
@@ -80,7 +89,9 @@ fun MainScreen(
                         welcomeTextFontSize = 28.sp,
                         latestRecipesTextFontSize = 22.sp,
                         cardTextFontSize = 12.sp,
-                        innerPadding = innerPadding,
+                        optionsMenuIconSize = 26.dp,
+                        optionsMenuDropdownWidth = 160.dp,
+                        optionsMenuDropdownItemFontSize = 18.sp,
                         navController = navController,
                         mainViewModel = mainViewModel
                     )
@@ -95,7 +106,6 @@ fun MainScreen(
                         welcomeTextFontSize = 24.sp,
                         latestRecipesTextFontSize = 18.sp,
                         cardTextFontSize = 10.sp,
-                        innerPadding = innerPadding,
                         navController = navController,
                         mainViewModel = mainViewModel
                     )
@@ -105,13 +115,17 @@ fun MainScreen(
     }
 }
 
+// TODO should we move all composable like main content to components package?
+
 @Composable
 fun MainContent(
     modifier: Modifier,
     welcomeTextFontSize: TextUnit,
     latestRecipesTextFontSize: TextUnit,
     cardTextFontSize: TextUnit,
-    innerPadding: PaddingValues,
+    optionsMenuIconSize: Dp = 24.dp,
+    optionsMenuDropdownWidth: Dp = 146.dp,
+    optionsMenuDropdownItemFontSize: TextUnit = 16.sp,
     navController: NavController,
     mainViewModel: MainViewModel
 ) {
@@ -120,7 +134,6 @@ fun MainContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(innerPadding)
     ) {
         Image(
             painter = painterResource(id = R.drawable.home_image_background),
@@ -146,13 +159,14 @@ fun MainContent(
                 .fillMaxSize()
                 .padding(
                     start = 6.dp,
-                    top = 0.dp,
-                    end = 0.dp,
-                    bottom = innerPadding.calculateBottomPadding() + 6.dp
+                    bottom = 6.dp
                 )
         ) {
             OptionsMenu(
                 expandedOptionsMenu = state.value.displayOptionsMenu,
+                iconSize = optionsMenuIconSize,
+                dropdownMenuWidth = optionsMenuDropdownWidth,
+                dropdownItemFontSize = optionsMenuDropdownItemFontSize,
                 openOptionsMenu = {
                     mainViewModel.onEvent(MainUIEvents.DisplayOptionsMenu)
                 },
