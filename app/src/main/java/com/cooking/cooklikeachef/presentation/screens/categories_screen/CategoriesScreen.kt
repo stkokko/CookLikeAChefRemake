@@ -7,8 +7,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,19 +17,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.cooking.cooklikeachef.R
+import com.cooking.cooklikeachef.presentation.navigation.Screens
+import com.cooking.cooklikeachef.presentation.screens.categories_screen.events.CategoriesUIEvents
+import com.cooking.cooklikeachef.presentation.screens.categories_screen.viewmodel.CategoriesViewModel
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.BottomNavigationBar
+import com.cooking.cooklikeachef.presentation.screens.common_compoments.OptionsMenu
 import com.cooking.cooklikeachef.presentation.ui.theme.LightCherry
 
 @Composable
-fun CategoriesScreen(navController: NavController) {
+fun CategoriesScreen(
+    navController: NavController,
+    categoriesViewModel: CategoriesViewModel = hiltViewModel()
+) {
     Scaffold(bottomBar = {
         BottomNavigationBar(
             navController = navController
@@ -61,26 +65,35 @@ fun CategoriesScreen(navController: NavController) {
                             .fillMaxHeight(fraction = 0.78f)
                             .width(200.dp),
                         categoryCardHeight = 170.dp,
-                        categoryCardFontSize = 20.sp
+                        categoryCardFontSize = 20.sp,
+                        navController = navController,
+                        categoriesViewModel = categoriesViewModel
                     )
                 }
+
+                boxWithConstraintsScope.maxHeight > 780.dp -> {
+                    // TODO
+                }
+
                 boxWithConstraintsScope.maxHeight > 600.dp -> {
                     CategoriesContent(
-                        headerLayoutFraction = 0.4f,
+                        headerLayoutFraction = 0.38f,
                         categoriesFontSize = 44.sp,
                         searchPlaceholderFontSize = 20.sp,
                         searchTextStyleFontSize = 20.sp,
                         searchModifier = Modifier
                             .width(310.dp)
                             .height(56.dp),
-                        categoriesContainerFraction = 0.64f,
+                        categoriesContainerFraction = 0.62f,
                         categoriesLeftColumnModifier = Modifier
                             .fillMaxHeight()
                             .width(160.dp),
                         categoriesRightColumnModifier = Modifier
                             .fillMaxHeight(fraction = 0.74f)
                             .width(160.dp),
-                        categoryCardHeight = 130.dp
+                        categoryCardHeight = 130.dp,
+                        navController = navController,
+                        categoriesViewModel = categoriesViewModel
                     )
                 }
                 else -> {
@@ -98,7 +111,9 @@ fun CategoriesScreen(navController: NavController) {
                         categoriesRightColumnModifier = Modifier
                             .fillMaxHeight(fraction = 0.7f)
                             .width(130.dp),
-                        categoryCardHeight = 106.dp
+                        categoryCardHeight = 106.dp,
+                        navController = navController,
+                        categoriesViewModel = categoriesViewModel
                     )
                 }
             }
@@ -117,11 +132,11 @@ fun CategoriesContent(
     categoriesLeftColumnModifier: Modifier,
     categoriesRightColumnModifier: Modifier,
     categoryCardHeight: Dp,
-    categoryCardFontSize: TextUnit = 16.sp
+    categoryCardFontSize: TextUnit = 16.sp,
+    navController: NavController,
+    categoriesViewModel: CategoriesViewModel
 ) {
-    var searchValue by remember {
-        mutableStateOf("")
-    }
+    val state = categoriesViewModel.state
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -136,18 +151,35 @@ fun CategoriesContent(
                     )
                 )
                 .padding(bottom = 16.dp),
-            verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            OptionsMenu(
+                expandedOptionsMenu = state.value.displayOptionsMenu,
+                openOptionsMenu = {
+                    categoriesViewModel.onEvent(CategoriesUIEvents.DisplayOptionsMenu)
+                },
+                closeOptionsMenu = {
+                    categoriesViewModel.onEvent(CategoriesUIEvents.OptionsMenuDismissed)
+                }
+            ) {
+                categoriesViewModel.onEvent(CategoriesUIEvents.SignOff)
+            }
             Text(
                 text = stringResource(id = R.string.categories),
                 fontSize = categoriesFontSize,
                 letterSpacing = 8.sp,
-                color = Color.White
+                color = Color.White,
+                modifier = Modifier.offset(y = (-12).dp) // TODO
             )
             OutlinedTextField(
-                value = searchValue,
-                onValueChange = { searchValue = it },
+                value = state.value.searchRecipe,
+                onValueChange = { searchRecipe ->
+                    categoriesViewModel.onEvent(
+                        CategoriesUIEvents.SearchRecipeChanged(
+                            searchRecipe.trim()
+                        )
+                    )
+                },
                 placeholder = {
                     Box(
                         modifier = Modifier
@@ -167,14 +199,15 @@ fun CategoriesContent(
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = Color.White
                 ),
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Go,
-                    keyboardType = KeyboardType.Text,
-                    autoCorrect = true
-                ),
-                keyboardActions = KeyboardActions(onGo = {
-                    // TODO
-                }),
+                // TODO
+//                keyboardOptions = KeyboardOptions(
+//                    imeAction = ImeAction.Go,
+//                    keyboardType = KeyboardType.Text,
+//                    autoCorrect = true
+//                ),
+//                keyboardActions = KeyboardActions(onGo = {
+//                    categoriesViewModel.onEvent(CategoriesUIEvents.SearchRecipeResults(state.value.searchRecipe))
+//                }),
                 shape = RoundedCornerShape(26.dp),
                 textStyle = TextStyle(fontSize = searchTextStyleFontSize),
                 modifier = searchModifier
@@ -238,6 +271,20 @@ fun CategoriesContent(
                     fontSize = categoryCardFontSize
                 ) {
 
+                }
+            }
+        }
+    }
+
+    if (state.value.errorMessage.isNotEmpty()) {
+        // TODO: Snackbar
+    }
+
+    if (!state.value.isLoggedIn) {
+        LaunchedEffect(Unit) {
+            navController.navigate(Screens.Login.name) {
+                popUpTo(Screens.Categories.name) {
+                    inclusive = true
                 }
             }
         }

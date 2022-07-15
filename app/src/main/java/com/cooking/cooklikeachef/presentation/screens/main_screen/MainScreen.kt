@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -25,6 +23,7 @@ import androidx.navigation.NavController
 import com.cooking.cooklikeachef.R
 import com.cooking.cooklikeachef.presentation.navigation.Screens
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.BottomNavigationBar
+import com.cooking.cooklikeachef.presentation.screens.common_compoments.OptionsMenu
 import com.cooking.cooklikeachef.presentation.screens.main_screen.components.LatestRecipesCard
 import com.cooking.cooklikeachef.presentation.screens.main_screen.events.MainUIEvents
 import com.cooking.cooklikeachef.presentation.screens.main_screen.viewmodel.MainViewModel
@@ -106,48 +105,6 @@ fun MainScreen(
     }
 }
 
-// TODO
-@Composable
-fun OptionsMenu(
-    expandedOptionsMenu: Boolean,
-    openOptionsMenu: () -> Unit,
-    closeOptionsMenu: () -> Unit,
-    logOut: () -> Unit
-) {
-    TopAppBar(
-        title = { },
-        backgroundColor = Color.Transparent,
-        contentColor = Color.White,
-        elevation = 0.dp,
-        actions = {
-            IconButton(onClick = { openOptionsMenu() }) {
-                Icon(Icons.Default.MoreVert, "")
-            }
-
-            DropdownMenu(
-                expanded = expandedOptionsMenu,
-                onDismissRequest = { closeOptionsMenu() }
-            ) {
-
-                DropdownMenuItem(onClick = {
-                    // TODO: send email action
-                }) {
-                    Text(text = stringResource(id = R.string.contact_us))
-                }
-
-                DropdownMenuItem(onClick = {
-                    logOut()
-                }) {
-                    Text(text = stringResource(id = R.string.logout))
-                }
-            }
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-    )
-}
-
 @Composable
 fun MainContent(
     modifier: Modifier,
@@ -201,11 +158,10 @@ fun MainContent(
                 },
                 closeOptionsMenu = {
                     mainViewModel.onEvent(MainUIEvents.OptionsMenuDismissed)
-                },
-                logOut = {
-                    mainViewModel.onEvent(MainUIEvents.SignOff)
                 }
-            )
+            ) {
+                mainViewModel.onEvent(MainUIEvents.SignOff)
+            }
             Text(
                 text = stringResource(id = R.string.welcome_to_appname),
                 color = Color.White,
@@ -244,7 +200,6 @@ fun MainContent(
     }
 
     if (state.value.errorMessage.isNotEmpty()) {
-        Spacer(modifier = Modifier.height(20.dp))
         // TODO: Snackbar
     }
 
