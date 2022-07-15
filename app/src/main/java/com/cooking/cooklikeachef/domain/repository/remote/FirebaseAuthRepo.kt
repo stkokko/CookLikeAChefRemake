@@ -11,4 +11,6 @@ interface FirebaseAuthRepo {
 
     suspend fun logOut() : Resource<Unit?>
 
+    suspend fun resetPassword(email: String) : Resource<Void?>
+
 }

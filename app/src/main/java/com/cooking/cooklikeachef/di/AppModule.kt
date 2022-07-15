@@ -108,6 +108,12 @@ class AppModule {
 
     @Provides
     @Singleton
+    fun provideResetPasswordUseCase(firebaseAuthRepo: FirebaseAuthRepo): ResetPassword {
+        return ResetPassword(firebaseAuthRepo)
+    }
+
+    @Provides
+    @Singleton
     fun provideUpdateFavouriteRecipeUseCase(): UpdateFavouriteRecipe {
         return UpdateFavouriteRecipe()
     }

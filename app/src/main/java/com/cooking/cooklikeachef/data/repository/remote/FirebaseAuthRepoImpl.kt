@@ -1,11 +1,8 @@
 package com.cooking.cooklikeachef.data.repository.remote
 
-import android.util.Log
 import com.cooking.cooklikeachef.domain.repository.remote.FirebaseAuthRepo
 import com.cooking.cooklikeachef.util.Resource
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.*
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -20,7 +17,6 @@ class FirebaseAuthRepoImpl @Inject constructor(
                 .await()
             data
         } catch (e: Exception) {
-            Log.d("RepositoryImpl", "logIn: ${e.message}")
             null
         }
     }
@@ -42,6 +38,17 @@ class FirebaseAuthRepoImpl @Inject constructor(
         return try {
             val data = auth.signOut()
             Resource.Success(data)
+        } catch (e: Exception) {
+            Resource.Error(null, "A network error has occurred.")
+        }
+    }
+
+    override suspend fun resetPassword(email: String): Resource<Void?> { // TODO: error with Unit but not with Void(Java)
+        return try {
+            val data = auth.sendPasswordResetEmail(email).await()
+            Resource.Success(data)
+        } catch (e: FirebaseAuthInvalidUserException) {
+            Resource.Error(null, "There is no user with this email.")
         } catch (e: Exception) {
             Resource.Error(null, "A network error has occurred.")
         }

@@ -9,5 +9,8 @@ data class LoginState(
     val isPasswordValid: Boolean = false,
     val isPasswordVisible: Boolean = false,
     val openDialog: Boolean = false,
+    val dialogEmail: String = "",
+    val isDialogEmailValid: Boolean = false,
+    val isResetPasswordSent: Boolean = false,
     val isLoading: Boolean = false
 )

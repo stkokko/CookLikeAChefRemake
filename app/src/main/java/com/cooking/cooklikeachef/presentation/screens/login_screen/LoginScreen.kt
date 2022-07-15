@@ -36,6 +36,7 @@ import com.cooking.cooklikeachef.presentation.screens.login_screen.components.Fo
 import com.cooking.cooklikeachef.presentation.screens.login_screen.events.LoginUIEvents
 import com.cooking.cooklikeachef.presentation.screens.login_screen.viewmodel.LoginViewModel
 import com.cooking.cooklikeachef.presentation.ui.theme.SkyBlue
+import kotlin.math.log
 
 @Composable
 fun LoginScreen(
@@ -193,9 +194,15 @@ private fun LoginContent(
         isError = !state.value.isPasswordValid,
     )
 
-    if(state.value.errorMessage.isNotEmpty()) {
+    // TODO: if we try to reset password and something goes wrong and then we close the dialog
+    // TODO: then the error message would not be empty and thus the code block below displays
+    // TODO: wrong error message... && state.value.isEmailValid && state.value.isPasswordValid
+    if (state.value.errorMessage.isNotEmpty()) {
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text = stringResource(id = R.string.error_message_login), color = MaterialTheme.colors.primary)
+        Text(
+            text = stringResource(id = R.string.error_message_login),
+            color = MaterialTheme.colors.primary
+        )
     }
 
     Spacer(modifier = Modifier.height(20.dp))
@@ -238,8 +245,16 @@ private fun LoginContent(
                 }
             })
     }
+
+    // TODO: when resetPasswordSent is true crashes...probably cause its trying to close the dialog
+    // TODO: and it keep open back
+    if (state.value.isResetPasswordSent) {
+        loginViewModel.onEvent(LoginUIEvents.DialogDismissed)
+        // TODO: Snackbar
+    }
+
     if (state.value.openDialog) {
-        ForgotPasswordDialog {
+        ForgotPasswordDialog(loginViewModel = loginViewModel) {
             loginViewModel.onEvent(LoginUIEvents.DialogDismissed)
         }
     }
