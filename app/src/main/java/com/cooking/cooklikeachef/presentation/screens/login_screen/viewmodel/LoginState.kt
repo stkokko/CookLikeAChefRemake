@@ -3,6 +3,7 @@ package com.cooking.cooklikeachef.presentation.screens.login_screen.viewmodel
 data class LoginState(
     val isLoggedIn: Boolean = false,
     val errorMessage: String = "",
+    //TODO 2nd error message
     val email: String = "",
     val password: String = "",
     val isEmailValid: Boolean = false,

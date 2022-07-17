@@ -194,9 +194,7 @@ private fun LoginContent(
         isError = !state.value.isPasswordValid,
     )
 
-    // TODO: if we try to reset password and something goes wrong and then we close the dialog
-    // TODO: then the error message would not be empty and thus the code block below displays
-    // TODO: wrong error message... && state.value.isEmailValid && state.value.isPasswordValid
+    // TODO: 2nd error message
     if (state.value.errorMessage.isNotEmpty()) {
         Spacer(modifier = Modifier.height(20.dp))
         Text(
@@ -246,16 +244,17 @@ private fun LoginContent(
             })
     }
 
-    // TODO: when resetPasswordSent is true crashes...probably cause its trying to close the dialog
-    // TODO: and it keep open back
     if (state.value.isResetPasswordSent) {
-        loginViewModel.onEvent(LoginUIEvents.DialogDismissed)
-        // TODO: Snackbar
+        LaunchedEffect(Unit) {
+            loginViewModel.onEvent(LoginUIEvents.DialogDismissed)
+            // TODO: Snackbar
+        }
     }
 
     if (state.value.openDialog) {
         ForgotPasswordDialog(loginViewModel = loginViewModel) {
             loginViewModel.onEvent(LoginUIEvents.DialogDismissed)
+
         }
     }
 

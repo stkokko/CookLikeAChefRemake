@@ -163,6 +163,7 @@ fun MainContent(
                 )
         ) {
             OptionsMenu(
+                title = {},
                 expandedOptionsMenu = state.value.displayOptionsMenu,
                 iconSize = optionsMenuIconSize,
                 dropdownMenuWidth = optionsMenuDropdownWidth,

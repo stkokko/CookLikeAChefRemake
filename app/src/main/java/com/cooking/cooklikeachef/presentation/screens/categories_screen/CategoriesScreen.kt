@@ -37,7 +37,6 @@ fun CategoriesScreen(
     categoriesViewModel: CategoriesViewModel = hiltViewModel()
 ) {
     Scaffold(bottomBar = {
-        // TODO should we adjust somehow the size's of the bottom navigation bar too?
         BottomNavigationBar(
             navController = navController
         )
@@ -193,6 +192,7 @@ fun CategoriesContent(
                     .padding(bottom = 16.dp)
             ) {
                 OptionsMenu(
+                    title = {},
                     expandedOptionsMenu = state.value.displayOptionsMenu,
                     iconSize = optionsMenuIconSize,
                     dropdownMenuWidth = optionsMenuDropdownWidth,
@@ -216,7 +216,7 @@ fun CategoriesContent(
                         fontSize = categoriesFontSize,
                         letterSpacing = 8.sp,
                         color = Color.White,
-                        modifier = Modifier.offset(y = (-12).dp) // TODO
+                        modifier = Modifier.offset(y = (-12).dp)
                     )
                     OutlinedTextField(
                         value = state.value.searchRecipe,
@@ -246,15 +246,6 @@ fun CategoriesContent(
                         colors = TextFieldDefaults.textFieldColors(
                             backgroundColor = Color.White
                         ),
-                        // TODO
-//                keyboardOptions = KeyboardOptions(
-//                    imeAction = ImeAction.Go,
-//                    keyboardType = KeyboardType.Text,
-//                    autoCorrect = true
-//                ),
-//                keyboardActions = KeyboardActions(onGo = {
-//                    categoriesViewModel.onEvent(CategoriesUIEvents.SearchRecipeResults(state.value.searchRecipe))
-//                }),
                         shape = RoundedCornerShape(26.dp),
                         textStyle = TextStyle(fontSize = searchTextStyleFontSize),
                         modifier = searchModifier

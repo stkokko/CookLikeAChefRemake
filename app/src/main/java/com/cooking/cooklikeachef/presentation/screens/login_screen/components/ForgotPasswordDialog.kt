@@ -32,11 +32,13 @@ import com.cooking.cooklikeachef.presentation.ui.theme.LightCherry
 fun ForgotPasswordDialog(loginViewModel: LoginViewModel, onDismiss: () -> Unit) {
     val state = loginViewModel.state
     val localFocus = LocalFocusManager.current
+    val height = if (state.value.errorMessage.isNotEmpty()) 210.dp else 190.dp
 
     Dialog(onDismissRequest = onDismiss) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(fraction = 0.95f) // TODO when the error message is displayed, it pushed the buttons out of the dialog box
+                .fillMaxWidth(fraction = 0.95f)
+                .height(height)// TODO when the error message is displayed, it pushes the buttons out of the dialog box
                 .background(
                     color = Color.White,
                     shape = RoundedCornerShape(15.dp)
@@ -116,15 +118,7 @@ fun ForgotPasswordDialog(loginViewModel: LoginViewModel, onDismiss: () -> Unit) 
                     text = stringResource(id = R.string.cancel),
                     enabled = true
                 ) {
-                    loginViewModel.onEvent(LoginUIEvents.ResetDialogEmail)
-                    // TODO: does not work cause until we close the dialog the message display on login screen
-                    // TODO: but if we don't do this then when we open it again it will display the previous error message
-                    // TODO: so we need both resetErrorMessage and the alternate check in login screen when the error message
-                    // TODO: is not empty
-                    loginViewModel.onEvent(LoginUIEvents.ResetErrorMessage)
                     onDismiss()
-                    // TODO: if the dialog close cause we pressed elsewhere on the screen and not on cancel
-                    // TODO: then the error message does not reset
                 }
             }
         }

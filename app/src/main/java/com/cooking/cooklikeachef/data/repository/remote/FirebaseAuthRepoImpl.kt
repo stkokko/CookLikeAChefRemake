@@ -43,7 +43,7 @@ class FirebaseAuthRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun resetPassword(email: String): Resource<Void?> { // TODO: error with Unit but not with Void(Java)
+    override suspend fun resetPassword(email: String): Resource<Void?> {
         return try {
             val data = auth.sendPasswordResetEmail(email).await()
             Resource.Success(data)

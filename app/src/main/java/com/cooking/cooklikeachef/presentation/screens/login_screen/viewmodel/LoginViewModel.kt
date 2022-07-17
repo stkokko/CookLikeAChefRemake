@@ -58,25 +58,17 @@ class LoginViewModel @Inject constructor(
                 handleResetPassword(event.email)
             }
 
-            // TODO: should we reset both the email and password of login form,
-            // TODO: as when we open and then close the dialog if the fields
-            // TODO: were not empty then they would keep their values
-
-            is LoginUIEvents.ResetDialogEmail -> {
-                _state.value = state.value.copy(dialogEmail = "")
-            }
-
-            is LoginUIEvents.ResetErrorMessage -> {
-                _state.value = _state.value.copy(errorMessage = "")
-            }
-
             is LoginUIEvents.ShowPasswordClick -> {
                 _state.value =
                     _state.value.copy(isPasswordVisible = !_state.value.isPasswordVisible)
             }
 
             is LoginUIEvents.DialogDismissed, LoginUIEvents.OpenDialogClicked -> {
-                _state.value = _state.value.copy(openDialog = !_state.value.openDialog)
+                _state.value = _state.value.copy(
+                    openDialog = !_state.value.openDialog,
+                    dialogEmail = "",
+                    errorMessage = ""
+                )
             }
         }
     }

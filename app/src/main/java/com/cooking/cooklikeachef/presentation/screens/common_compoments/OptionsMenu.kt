@@ -23,13 +23,13 @@ fun OptionsMenu(
     dropdownMenuWidth: Dp = 146.dp,
     dropdownItemFontSize: TextUnit = 16.sp,
     expandedOptionsMenu: Boolean,
-    title: (() -> Unit)? = null,
+    title: @Composable () -> Unit,
     openOptionsMenu: () -> Unit,
     closeOptionsMenu: () -> Unit,
     logOut: () -> Unit
 ) {
     TopAppBar(
-        title = { title?.invoke() },
+        title = { title() },
         backgroundColor = backgroundColor,
         contentColor = Color.White,
         elevation = 0.dp,
