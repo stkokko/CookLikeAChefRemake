@@ -45,6 +45,7 @@ fun Content(
     state: State<CategoriesState>,
     eventDisplayOptionsMenu: () -> Unit,
     eventDismissOptionsMenu: () -> Unit,
+    eventContactUs: () -> Unit,
     eventSignOff: () -> Unit,
     eventSearchRecipe: (String) -> Unit
 ) {
@@ -76,7 +77,6 @@ fun Content(
                     .padding(bottom = 16.dp)
             ) {
                 OptionsMenu(
-                    title = {},
                     expandedOptionsMenu = state.value.displayOptionsMenu,
                     iconSize = optionsMenuIconSize,
                     dropdownMenuWidth = optionsMenuDropdownWidth,
@@ -84,8 +84,11 @@ fun Content(
                     openOptionsMenu = {
                         eventDisplayOptionsMenu()
                     },
-                    closeOptionsMenu = {
+                    dismissOptionsMenu = {
                         eventDismissOptionsMenu()
+                    },
+                    contactUs = {
+                        eventContactUs()
                     }
                 ) {
                     eventSignOff()

@@ -7,7 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.cooking.cooklikeachef.presentation.screens.categories_screen.CategoriesScreen
 import com.cooking.cooklikeachef.presentation.screens.favourites_screen.FavouritesScreen
 import com.cooking.cooklikeachef.presentation.screens.login_screen.LoginScreen
-import com.cooking.cooklikeachef.presentation.screens.main_screen.MainScreen
+import com.cooking.cooklikeachef.presentation.screens.home_screen.MainScreen
 import com.cooking.cooklikeachef.presentation.screens.register_screen.RegisterScreen
 import com.cooking.cooklikeachef.presentation.screens.splash_screen.SplashScreen
 
@@ -30,7 +30,7 @@ fun Navigation() {
             RegisterScreen(navController = navController)
         }
 
-        composable(route = Screens.Main.name) {
+        composable(route = Screens.Home.name) {
             MainScreen(navController = navController)
         }
 

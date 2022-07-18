@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.SnackbarHost
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -34,6 +35,7 @@ import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomOu
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.ExitAppDialog
 import com.cooking.cooklikeachef.presentation.screens.login_screen.viewmodel.LoginState
 import com.cooking.cooklikeachef.presentation.ui.theme.SkyBlue
+import kotlinx.coroutines.coroutineScope
 
 @Composable
 fun Content(
@@ -205,7 +207,7 @@ fun Content(
 
     if (state.value.isLoggedIn) {
         LaunchedEffect(Unit) {
-            navController.navigate(Screens.Main.name) {
+            navController.navigate(Screens.Home.name) {
                 popUpTo(Screens.Login.name) {
                     inclusive = true
                 }

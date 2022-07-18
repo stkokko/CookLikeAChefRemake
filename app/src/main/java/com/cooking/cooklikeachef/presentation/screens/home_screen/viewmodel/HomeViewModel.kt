@@ -1,12 +1,14 @@
-package com.cooking.cooklikeachef.presentation.screens.main_screen.viewmodel
+package com.cooking.cooklikeachef.presentation.screens.home_screen.viewmodel
 
+import android.content.Intent
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cooking.cooklikeachef.domain.use_cases.GetLatestRecipes
 import com.cooking.cooklikeachef.domain.use_cases.LogOut
-import com.cooking.cooklikeachef.presentation.screens.main_screen.events.MainUIEvents
+import com.cooking.cooklikeachef.presentation.screens.home_screen.events.HomeUIEvents
 import com.cooking.cooklikeachef.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -14,13 +16,13 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val getLatestRecipes: GetLatestRecipes,
     private val logOut: LogOut
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(MainState())
-    val state: State<MainState> = _state
+    private val _state = mutableStateOf(HomeState())
+    val state: State<HomeState> = _state
 
     init {
         initLatestRecipes()
@@ -58,13 +60,26 @@ class MainViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun onEvent(event: MainUIEvents) {
+    fun onEvent(event: HomeUIEvents) {
         when (event) {
-            is MainUIEvents.SignOff -> {
+
+            is HomeUIEvents.ContactUs -> {
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_EMAIL, arrayOf("cooklikeachef96@gmail.com"))
+                    type = "message/rfc822"
+                    //type = "plain/text"
+                }
+
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                ContextCompat.startActivity(event.context, shareIntent, null)
+            }
+
+            is HomeUIEvents.SignOff -> {
                 handleLogOut()
             }
 
-            is MainUIEvents.DisplayOptionsMenu, MainUIEvents.DismissOptionsMenu -> {
+            is HomeUIEvents.DisplayOptionsMenu, HomeUIEvents.DismissOptionsMenu -> {
                 _state.value =
                     _state.value.copy(displayOptionsMenu = !_state.value.displayOptionsMenu)
             }

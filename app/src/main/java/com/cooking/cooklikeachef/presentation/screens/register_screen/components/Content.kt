@@ -229,7 +229,7 @@ fun Content(
 
     if (state.value.isRegistered) {
         LaunchedEffect(Unit) {
-            navController.navigate(Screens.Main.name) {
+            navController.navigate(Screens.Home.name) {
                 popUpTo(Screens.Register.name) {
                     inclusive = true
                 }

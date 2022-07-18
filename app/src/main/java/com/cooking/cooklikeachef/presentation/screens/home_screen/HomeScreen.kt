@@ -1,22 +1,23 @@
-package com.cooking.cooklikeachef.presentation.screens.main_screen
+package com.cooking.cooklikeachef.presentation.screens.home_screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.BottomNavigationBar
-import com.cooking.cooklikeachef.presentation.screens.main_screen.components.Content
-import com.cooking.cooklikeachef.presentation.screens.main_screen.events.MainUIEvents
-import com.cooking.cooklikeachef.presentation.screens.main_screen.viewmodel.MainViewModel
+import com.cooking.cooklikeachef.presentation.screens.home_screen.components.Content
+import com.cooking.cooklikeachef.presentation.screens.home_screen.events.HomeUIEvents
+import com.cooking.cooklikeachef.presentation.screens.home_screen.viewmodel.HomeViewModel
 
 @Composable
 fun MainScreen(
     navController: NavController,
-    mainViewModel: MainViewModel = hiltViewModel()
+    homeViewModel: HomeViewModel = hiltViewModel()
 ) {
     Scaffold(bottomBar = {
         BottomNavigationBar(
@@ -29,6 +30,7 @@ fun MainScreen(
                 .padding(innerPadding)
         ) {
             val boxWithConstraintsScope = this
+            val context = LocalContext.current
             when {
                 boxWithConstraintsScope.maxHeight > 900.dp -> {
                     Content(
@@ -43,15 +45,18 @@ fun MainScreen(
                         optionsMenuDropdownWidth = 240.dp,
                         optionsMenuDropdownItemFontSize = 28.sp,
                         navController = navController,
-                        state = mainViewModel.state,
+                        state = homeViewModel.state,
                         eventDisplayOptionsMenu = {
-                            mainViewModel.onEvent(MainUIEvents.DisplayOptionsMenu)
+                            homeViewModel.onEvent(HomeUIEvents.DisplayOptionsMenu)
                         },
                         eventDismissOptionsMenu = {
-                            mainViewModel.onEvent(MainUIEvents.DismissOptionsMenu)
+                            homeViewModel.onEvent(HomeUIEvents.DismissOptionsMenu)
+                        },
+                        eventContactUs = {
+                            homeViewModel.onEvent(HomeUIEvents.ContactUs(context))
                         },
                         eventSignOff = {
-                            mainViewModel.onEvent(MainUIEvents.SignOff)
+                            homeViewModel.onEvent(HomeUIEvents.SignOff)
                         }
                     )
                 }
@@ -68,15 +73,18 @@ fun MainScreen(
                         optionsMenuDropdownWidth = 200.dp,
                         optionsMenuDropdownItemFontSize = 22.sp,
                         navController = navController,
-                        state = mainViewModel.state,
+                        state = homeViewModel.state,
                         eventDisplayOptionsMenu = {
-                            mainViewModel.onEvent(MainUIEvents.DisplayOptionsMenu)
+                            homeViewModel.onEvent(HomeUIEvents.DisplayOptionsMenu)
                         },
                         eventDismissOptionsMenu = {
-                            mainViewModel.onEvent(MainUIEvents.DismissOptionsMenu)
+                            homeViewModel.onEvent(HomeUIEvents.DismissOptionsMenu)
+                        },
+                        eventContactUs = {
+                            homeViewModel.onEvent(HomeUIEvents.ContactUs(context))
                         },
                         eventSignOff = {
-                            mainViewModel.onEvent(MainUIEvents.SignOff)
+                            homeViewModel.onEvent(HomeUIEvents.SignOff)
                         }
                     )
                 }
@@ -90,18 +98,21 @@ fun MainScreen(
                         latestRecipesTextFontSize = 22.sp,
                         cardTextFontSize = 12.sp,
                         optionsMenuIconSize = 26.dp,
-                        optionsMenuDropdownWidth = 160.dp,
+                        optionsMenuDropdownWidth = 170.dp,
                         optionsMenuDropdownItemFontSize = 18.sp,
                         navController = navController,
-                        state = mainViewModel.state,
+                        state = homeViewModel.state,
                         eventDisplayOptionsMenu = {
-                            mainViewModel.onEvent(MainUIEvents.DisplayOptionsMenu)
+                            homeViewModel.onEvent(HomeUIEvents.DisplayOptionsMenu)
                         },
                         eventDismissOptionsMenu = {
-                            mainViewModel.onEvent(MainUIEvents.DismissOptionsMenu)
+                            homeViewModel.onEvent(HomeUIEvents.DismissOptionsMenu)
+                        },
+                        eventContactUs = {
+                            homeViewModel.onEvent(HomeUIEvents.ContactUs(context))
                         },
                         eventSignOff = {
-                            mainViewModel.onEvent(MainUIEvents.SignOff)
+                            homeViewModel.onEvent(HomeUIEvents.SignOff)
                         }
                     )
                 }
@@ -115,15 +126,18 @@ fun MainScreen(
                         latestRecipesTextFontSize = 18.sp,
                         cardTextFontSize = 10.sp,
                         navController = navController,
-                        state = mainViewModel.state,
+                        state = homeViewModel.state,
                         eventDisplayOptionsMenu = {
-                            mainViewModel.onEvent(MainUIEvents.DisplayOptionsMenu)
+                            homeViewModel.onEvent(HomeUIEvents.DisplayOptionsMenu)
                         },
                         eventDismissOptionsMenu = {
-                            mainViewModel.onEvent(MainUIEvents.DismissOptionsMenu)
+                            homeViewModel.onEvent(HomeUIEvents.DismissOptionsMenu)
+                        },
+                        eventContactUs = {
+                            homeViewModel.onEvent(HomeUIEvents.ContactUs(context))
                         },
                         eventSignOff = {
-                            mainViewModel.onEvent(MainUIEvents.SignOff)
+                            homeViewModel.onEvent(HomeUIEvents.SignOff)
                         }
                     )
                 }

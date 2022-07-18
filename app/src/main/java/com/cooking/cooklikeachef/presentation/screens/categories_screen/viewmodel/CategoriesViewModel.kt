@@ -1,7 +1,9 @@
 package com.cooking.cooklikeachef.presentation.screens.categories_screen.viewmodel
 
+import android.content.Intent
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cooking.cooklikeachef.domain.use_cases.LogOut
@@ -28,6 +30,18 @@ class CategoriesViewModel @Inject constructor(
 
             is CategoriesUIEvents.SearchRecipeResults -> {
                 // TODO
+            }
+
+            is CategoriesUIEvents.ContactUs -> {
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_EMAIL, arrayOf("cooklikeachef96@gmail.com"))
+                    type = "message/rfc822"
+                    //type = "plain/text"
+                }
+
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                ContextCompat.startActivity(event.context, shareIntent, null)
             }
 
             is CategoriesUIEvents.SignOff -> {

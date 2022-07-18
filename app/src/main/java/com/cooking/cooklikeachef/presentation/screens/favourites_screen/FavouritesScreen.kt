@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -29,6 +30,7 @@ fun FavouritesScreen(
                 .padding(innerPadding)
         ) {
             val boxWithConstraintsScope = this
+            val context = LocalContext.current
             when {
                 boxWithConstraintsScope.maxHeight > 900.dp -> {
                     Content(
@@ -42,6 +44,9 @@ fun FavouritesScreen(
                         },
                         eventDismissOptionsMenu = {
                             favouritesViewModel.onEvent(FavouritesUIEvents.DismissOptionsMenu)
+                        },
+                        eventContactUs = {
+                            favouritesViewModel.onEvent(FavouritesUIEvents.ContactUs(context))
                         },
                         eventSignOff = {
                             favouritesViewModel.onEvent(FavouritesUIEvents.SignOff)
@@ -61,6 +66,9 @@ fun FavouritesScreen(
                         eventDismissOptionsMenu = {
                             favouritesViewModel.onEvent(FavouritesUIEvents.DismissOptionsMenu)
                         },
+                        eventContactUs = {
+                            favouritesViewModel.onEvent(FavouritesUIEvents.ContactUs(context))
+                        },
                         eventSignOff = {
                             favouritesViewModel.onEvent(FavouritesUIEvents.SignOff)
                         }
@@ -69,7 +77,7 @@ fun FavouritesScreen(
                 boxWithConstraintsScope.maxHeight > 620.dp -> {
                     Content(
                         optionsMenuIconSize = 26.dp,
-                        optionsMenuDropdownWidth = 160.dp,
+                        optionsMenuDropdownWidth = 170.dp,
                         optionsMenuDropdownItemFontSize = 18.sp,
                         navController = navController,
                         state = favouritesViewModel.state,
@@ -78,6 +86,9 @@ fun FavouritesScreen(
                         },
                         eventDismissOptionsMenu = {
                             favouritesViewModel.onEvent(FavouritesUIEvents.DismissOptionsMenu)
+                        },
+                        eventContactUs = {
+                            favouritesViewModel.onEvent(FavouritesUIEvents.ContactUs(context))
                         },
                         eventSignOff = {
                             favouritesViewModel.onEvent(FavouritesUIEvents.SignOff)
@@ -93,6 +104,9 @@ fun FavouritesScreen(
                         },
                         eventDismissOptionsMenu = {
                             favouritesViewModel.onEvent(FavouritesUIEvents.DismissOptionsMenu)
+                        },
+                        eventContactUs = {
+                            favouritesViewModel.onEvent(FavouritesUIEvents.ContactUs(context))
                         },
                         eventSignOff = {
                             favouritesViewModel.onEvent(FavouritesUIEvents.SignOff)

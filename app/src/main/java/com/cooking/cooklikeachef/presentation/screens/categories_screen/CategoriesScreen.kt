@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -29,6 +30,7 @@ fun CategoriesScreen(
                 .padding(innerPadding)
         ) {
             val boxWithConstraintsScope = this
+            val context = LocalContext.current
             when {
                 boxWithConstraintsScope.maxHeight > 900.dp -> {
                     Content(
@@ -56,6 +58,9 @@ fun CategoriesScreen(
                         },
                         eventDismissOptionsMenu = {
                             categoriesViewModel.onEvent(CategoriesUIEvents.DismissOptionsMenu)
+                        },
+                        eventContactUs = {
+                            categoriesViewModel.onEvent(CategoriesUIEvents.ContactUs(context))
                         },
                         eventSignOff = {
                             categoriesViewModel.onEvent(CategoriesUIEvents.SignOff)
@@ -96,6 +101,9 @@ fun CategoriesScreen(
                         eventDismissOptionsMenu = {
                             categoriesViewModel.onEvent(CategoriesUIEvents.DismissOptionsMenu)
                         },
+                        eventContactUs = {
+                            categoriesViewModel.onEvent(CategoriesUIEvents.ContactUs(context))
+                        },
                         eventSignOff = {
                             categoriesViewModel.onEvent(CategoriesUIEvents.SignOff)
                         },
@@ -126,7 +134,7 @@ fun CategoriesScreen(
                         searchTextStyleFontSize = 20.sp,
                         categoryCardHeight = 120.dp,
                         optionsMenuIconSize = 26.dp,
-                        optionsMenuDropdownWidth = 160.dp,
+                        optionsMenuDropdownWidth = 170.dp,
                         optionsMenuDropdownItemFontSize = 18.sp,
                         navController = navController,
                         state = categoriesViewModel.state,
@@ -135,6 +143,9 @@ fun CategoriesScreen(
                         },
                         eventDismissOptionsMenu = {
                             categoriesViewModel.onEvent(CategoriesUIEvents.DismissOptionsMenu)
+                        },
+                        eventContactUs = {
+                            categoriesViewModel.onEvent(CategoriesUIEvents.ContactUs(context))
                         },
                         eventSignOff = {
                             categoriesViewModel.onEvent(CategoriesUIEvents.SignOff)
@@ -170,6 +181,9 @@ fun CategoriesScreen(
                         },
                         eventDismissOptionsMenu = {
                             categoriesViewModel.onEvent(CategoriesUIEvents.DismissOptionsMenu)
+                        },
+                        eventContactUs = {
+                            categoriesViewModel.onEvent(CategoriesUIEvents.ContactUs(context))
                         },
                         eventSignOff = {
                             categoriesViewModel.onEvent(CategoriesUIEvents.SignOff)

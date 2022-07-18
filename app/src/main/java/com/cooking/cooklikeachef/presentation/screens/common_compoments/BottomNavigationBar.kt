@@ -35,7 +35,7 @@ fun BottomNavigationBar(
     val categoriesValues = immutableListOf(Icons.Default.Category, R.string.categories)
     val favouritesValues = immutableListOf(Icons.Default.Favorite, R.string.favourites)
     val screens = mapOf(
-        Screens.Main.name to mainValues,
+        Screens.Home.name to mainValues,
         Screens.Categories.name to categoriesValues,
         Screens.Favourites.name to favouritesValues
     )

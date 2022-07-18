@@ -1,4 +1,4 @@
-package com.cooking.cooklikeachef.presentation.screens.main_screen.components
+package com.cooking.cooklikeachef.presentation.screens.home_screen.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

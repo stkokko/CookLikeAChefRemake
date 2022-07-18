@@ -20,12 +20,13 @@ import com.cooking.cooklikeachef.R
 fun OptionsMenu(
     backgroundColor: Color = Color.Transparent,
     iconSize: Dp = 24.dp,
-    dropdownMenuWidth: Dp = 146.dp,
+    dropdownMenuWidth: Dp = 150.dp,
     dropdownItemFontSize: TextUnit = 16.sp,
     expandedOptionsMenu: Boolean,
-    title: @Composable () -> Unit,
+    title: @Composable () -> Unit = {},
     openOptionsMenu: () -> Unit,
-    closeOptionsMenu: () -> Unit,
+    dismissOptionsMenu: () -> Unit,
+    contactUs: () -> Unit,
     logOut: () -> Unit
 ) {
     TopAppBar(
@@ -43,11 +44,11 @@ fun OptionsMenu(
                     .wrapContentHeight()
                     .width(dropdownMenuWidth),
                 expanded = expandedOptionsMenu,
-                onDismissRequest = { closeOptionsMenu() }
+                onDismissRequest = { dismissOptionsMenu() }
             ) {
 
                 DropdownMenuItem(onClick = {
-                    // TODO: send email action
+                    contactUs()
                 }) {
                     Icon(imageVector = Icons.Default.Email, contentDescription = "Contact Us icon")
                     Spacer(modifier = Modifier.width(10.dp))

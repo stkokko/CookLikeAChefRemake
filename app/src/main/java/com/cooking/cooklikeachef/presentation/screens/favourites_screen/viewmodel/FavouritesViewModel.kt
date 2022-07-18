@@ -1,14 +1,14 @@
 package com.cooking.cooklikeachef.presentation.screens.favourites_screen.viewmodel
 
+import android.content.Intent
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.State
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewModelScope
 import com.cooking.cooklikeachef.domain.use_cases.GetFavouriteRecipes
 import com.cooking.cooklikeachef.domain.use_cases.LogOut
-import com.cooking.cooklikeachef.presentation.screens.categories_screen.events.CategoriesUIEvents
 import com.cooking.cooklikeachef.presentation.screens.favourites_screen.events.FavouritesUIEvents
-import com.cooking.cooklikeachef.presentation.screens.main_screen.viewmodel.MainState
 import com.cooking.cooklikeachef.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -56,6 +56,18 @@ class FavouritesViewModel @Inject constructor(
 
             is FavouritesUIEvents.SearchFavouriteRecipeResults -> {
                 // TODO
+            }
+
+            is FavouritesUIEvents.ContactUs -> {
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_EMAIL, arrayOf("cooklikeachef96@gmail.com"))
+                    type = "message/rfc822"
+                    //type = "plain/text"
+                }
+
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                ContextCompat.startActivity(event.context, shareIntent, null)
             }
 
             is FavouritesUIEvents.SignOff -> {

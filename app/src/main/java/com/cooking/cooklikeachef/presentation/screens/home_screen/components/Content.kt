@@ -1,4 +1,4 @@
-package com.cooking.cooklikeachef.presentation.screens.main_screen.components
+package com.cooking.cooklikeachef.presentation.screens.home_screen.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,7 +25,7 @@ import androidx.navigation.NavController
 import com.cooking.cooklikeachef.R
 import com.cooking.cooklikeachef.presentation.navigation.Screens
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.OptionsMenu
-import com.cooking.cooklikeachef.presentation.screens.main_screen.viewmodel.MainState
+import com.cooking.cooklikeachef.presentation.screens.home_screen.viewmodel.HomeState
 
 @Composable
 fun Content(
@@ -37,9 +37,10 @@ fun Content(
     optionsMenuDropdownWidth: Dp = 146.dp,
     optionsMenuDropdownItemFontSize: TextUnit = 16.sp,
     navController: NavController,
-    state: State<MainState>,
+    state: State<HomeState>,
     eventDisplayOptionsMenu: () -> Unit,
     eventDismissOptionsMenu: () -> Unit,
+    eventContactUs: () -> Unit,
     eventSignOff: () -> Unit
 ) {
     Column(
@@ -74,7 +75,6 @@ fun Content(
                 )
         ) {
             OptionsMenu(
-                title = {},
                 expandedOptionsMenu = state.value.displayOptionsMenu,
                 iconSize = optionsMenuIconSize,
                 dropdownMenuWidth = optionsMenuDropdownWidth,
@@ -82,8 +82,11 @@ fun Content(
                 openOptionsMenu = {
                     eventDisplayOptionsMenu()
                 },
-                closeOptionsMenu = {
+                dismissOptionsMenu = {
                     eventDismissOptionsMenu()
+                },
+                contactUs = {
+                    eventContactUs()
                 }
             ) {
                 eventSignOff()
@@ -132,7 +135,7 @@ fun Content(
     if (!state.value.isLoggedIn) {
         LaunchedEffect(Unit) {
             navController.navigate(Screens.Login.name) {
-                popUpTo(Screens.Main.name) {
+                popUpTo(Screens.Home.name) {
                     inclusive = true
                 }
             }

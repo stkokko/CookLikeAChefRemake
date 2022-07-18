@@ -34,6 +34,7 @@ fun Content(
     state: State<FavouritesState>,
     eventDisplayOptionsMenu: () -> Unit,
     eventDismissOptionsMenu: () -> Unit,
+    eventContactUs: () -> Unit,
     eventSignOff: () -> Unit
 ) {
     Box(
@@ -53,8 +54,11 @@ fun Content(
             openOptionsMenu = {
                 eventDisplayOptionsMenu()
             },
-            closeOptionsMenu = {
+            dismissOptionsMenu = {
                 eventDismissOptionsMenu()
+            },
+            contactUs = {
+                eventContactUs()
             }
         ) {
             eventSignOff()
