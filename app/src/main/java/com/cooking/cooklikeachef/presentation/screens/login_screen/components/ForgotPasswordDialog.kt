@@ -22,17 +22,18 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.cooking.cooklikeachef.R
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomButton
-import com.cooking.cooklikeachef.presentation.screens.login_screen.events.LoginUIEvents
-import com.cooking.cooklikeachef.presentation.screens.login_screen.viewmodel.LoginViewModel
-import com.cooking.cooklikeachef.presentation.ui.theme.Cherry
-import com.cooking.cooklikeachef.presentation.ui.theme.DarkCherry
+import com.cooking.cooklikeachef.presentation.screens.login_screen.viewmodel.LoginState
 import com.cooking.cooklikeachef.presentation.ui.theme.LightCherry
 
 @Composable
-fun ForgotPasswordDialog(loginViewModel: LoginViewModel, onDismiss: () -> Unit) {
-    val state = loginViewModel.state
+fun ForgotPasswordDialog(
+    state: State<LoginState>,
+    eventDialogEmailChanged: (String) -> Unit,
+    eventResetPassword: () -> Unit,
+    onDismiss: () -> Unit
+) {
     val localFocus = LocalFocusManager.current
-    val height = if (state.value.errorMessage.isNotEmpty()) 210.dp else 190.dp
+    val height = if (state.value.errorMessageDialog.isNotEmpty()) 210.dp else 190.dp
 
     Dialog(onDismissRequest = onDismiss) {
         Column(
@@ -60,7 +61,7 @@ fun ForgotPasswordDialog(loginViewModel: LoginViewModel, onDismiss: () -> Unit) 
             TextField(
                 value = state.value.dialogEmail,
                 onValueChange = { dialogEmail ->
-                    loginViewModel.onEvent(LoginUIEvents.DialogEmailChanged(dialogEmail.trim()))
+                    eventDialogEmailChanged(dialogEmail.trim())
                 },
                 placeholder = {
                     Text(
@@ -75,7 +76,7 @@ fun ForgotPasswordDialog(loginViewModel: LoginViewModel, onDismiss: () -> Unit) 
                 ),
                 keyboardActions = KeyboardActions(onDone = {
                     localFocus.clearFocus()
-                    loginViewModel.onEvent(LoginUIEvents.ResetPassword(state.value.dialogEmail))
+                    eventResetPassword()
                 }),
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = Color.White
@@ -91,10 +92,10 @@ fun ForgotPasswordDialog(loginViewModel: LoginViewModel, onDismiss: () -> Unit) 
                 modifier = Modifier.fillMaxWidth(fraction = 0.85f)
             )
 
-            if (state.value.errorMessage.isNotEmpty()) {
+            if (state.value.errorMessageDialog.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = state.value.errorMessage,
+                    text = state.value.errorMessageDialog,
                     color = MaterialTheme.colors.primary
                 )
             }
@@ -109,9 +110,9 @@ fun ForgotPasswordDialog(loginViewModel: LoginViewModel, onDismiss: () -> Unit) 
                     modifier = Modifier.width(80.dp),
                     text = stringResource(id = R.string.send_text),
                     enabled = state.value.isDialogEmailValid,
-                    isLoading = state.value.isLoading
+                    isLoading = state.value.isResetPasswordLoading
                 ) {
-                    loginViewModel.onEvent(LoginUIEvents.ResetPassword(state.value.dialogEmail))
+                    eventResetPassword()
                 }
                 CustomButton(
                     modifier = Modifier.width(90.dp),

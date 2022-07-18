@@ -1,42 +1,23 @@
 package com.cooking.cooklikeachef.presentation.screens.login_screen
 
-import androidx.compose.foundation.clickable
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.cooking.cooklikeachef.R
-import com.cooking.cooklikeachef.presentation.navigation.Screens
-import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomButton
-import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomOutlinedTextField
+import com.cooking.cooklikeachef.presentation.screens.common_compoments.ExitAppDialog
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.LoginRegisterLayout
-import com.cooking.cooklikeachef.presentation.screens.login_screen.components.ForgotPasswordDialog
+import com.cooking.cooklikeachef.presentation.screens.login_screen.components.Content
 import com.cooking.cooklikeachef.presentation.screens.login_screen.events.LoginUIEvents
+import com.cooking.cooklikeachef.presentation.screens.login_screen.viewmodel.LoginState
 import com.cooking.cooklikeachef.presentation.screens.login_screen.viewmodel.LoginViewModel
-import com.cooking.cooklikeachef.presentation.ui.theme.SkyBlue
-import kotlin.math.log
 
 @Composable
 fun LoginScreen(
@@ -52,23 +33,108 @@ fun LoginScreen(
                     LoginForm(
                         fraction = 0.7f,
                         navController = navController,
-                        loginViewModel = loginViewModel
+                        state = loginViewModel.state,
+                        eventEmailChanged = { email ->
+                            loginViewModel.onEvent(LoginUIEvents.EmailChanged(email))
+                        },
+                        eventPasswordChanged = { password ->
+                            loginViewModel.onEvent(LoginUIEvents.PasswordChanged(password))
+                        },
+                        eventShowPassword = {
+                            loginViewModel.onEvent(LoginUIEvents.ShowPasswordClick)
+                        },
+                        eventSignIn = {
+                            loginViewModel.onEvent(
+                                LoginUIEvents.SignIn(
+                                    loginViewModel.state.value.email,
+                                    loginViewModel.state.value.password
+                                )
+                            )
+                        },
+                        eventOpenDialog = {
+                            loginViewModel.onEvent(LoginUIEvents.OpenResetPasswordDialogClicked)
+                        },
+                        eventDismissDialog = {
+                            loginViewModel.onEvent(LoginUIEvents.DismissResetPasswordDialog)
+                        },
+                        eventDialogEmailChanged = { dialogEmail ->
+                            loginViewModel.onEvent(LoginUIEvents.DialogEmailChanged(dialogEmail))
+                        },
+                        eventResetPassword = {
+                            loginViewModel.onEvent(LoginUIEvents.ResetPassword(loginViewModel.state.value.dialogEmail))
+                        }
                     )
                 }
-
                 boxWithConstraintsScope.maxHeight > 780.dp -> {
                     LoginForm(
                         fraction = 0.8f,
                         navController = navController,
-                        loginViewModel = loginViewModel
+                        state = loginViewModel.state,
+                        eventEmailChanged = { email ->
+                            loginViewModel.onEvent(LoginUIEvents.EmailChanged(email))
+                        },
+                        eventPasswordChanged = { password ->
+                            loginViewModel.onEvent(LoginUIEvents.PasswordChanged(password))
+                        },
+                        eventShowPassword = {
+                            loginViewModel.onEvent(LoginUIEvents.ShowPasswordClick)
+                        },
+                        eventSignIn = {
+                            loginViewModel.onEvent(
+                                LoginUIEvents.SignIn(
+                                    loginViewModel.state.value.email,
+                                    loginViewModel.state.value.password
+                                )
+                            )
+                        },
+                        eventOpenDialog = {
+                            loginViewModel.onEvent(LoginUIEvents.OpenResetPasswordDialogClicked)
+                        },
+                        eventDismissDialog = {
+                            loginViewModel.onEvent(LoginUIEvents.DismissResetPasswordDialog)
+                        },
+                        eventDialogEmailChanged = { dialogEmail ->
+                            loginViewModel.onEvent(LoginUIEvents.DialogEmailChanged(dialogEmail))
+                        },
+                        eventResetPassword = {
+                            loginViewModel.onEvent(LoginUIEvents.ResetPassword(loginViewModel.state.value.dialogEmail))
+                        }
                     )
                 }
-
-                boxWithConstraintsScope.maxHeight > 600.dp -> {
+                boxWithConstraintsScope.maxHeight > 620.dp -> {
                     LoginForm(
                         fraction = 0.8f,
                         navController = navController,
-                        loginViewModel = loginViewModel
+                        state = loginViewModel.state,
+                        eventEmailChanged = { email ->
+                            loginViewModel.onEvent(LoginUIEvents.EmailChanged(email))
+                        },
+                        eventPasswordChanged = { password ->
+                            loginViewModel.onEvent(LoginUIEvents.PasswordChanged(password))
+                        },
+                        eventShowPassword = {
+                            loginViewModel.onEvent(LoginUIEvents.ShowPasswordClick)
+                        },
+                        eventSignIn = {
+                            loginViewModel.onEvent(
+                                LoginUIEvents.SignIn(
+                                    loginViewModel.state.value.email,
+                                    loginViewModel.state.value.password
+                                )
+                            )
+                        },
+                        eventOpenDialog = {
+                            loginViewModel.onEvent(LoginUIEvents.OpenResetPasswordDialogClicked)
+                        },
+                        eventDismissDialog = {
+                            loginViewModel.onEvent(LoginUIEvents.DismissResetPasswordDialog)
+                        },
+                        eventDialogEmailChanged = { dialogEmail ->
+                            loginViewModel.onEvent(LoginUIEvents.DialogEmailChanged(dialogEmail))
+                        },
+                        eventResetPassword = {
+                            loginViewModel.onEvent(LoginUIEvents.ResetPassword(loginViewModel.state.value.dialogEmail))
+                        }
                     )
                 }
                 else -> {
@@ -76,11 +142,51 @@ fun LoginScreen(
                         fraction = 0.76f,
                         textSize = 14.sp,
                         navController = navController,
-                        loginViewModel = loginViewModel
+                        state = loginViewModel.state,
+                        eventEmailChanged = { email ->
+                            loginViewModel.onEvent(LoginUIEvents.EmailChanged(email))
+                        },
+                        eventPasswordChanged = { password ->
+                            loginViewModel.onEvent(LoginUIEvents.PasswordChanged(password))
+                        },
+                        eventShowPassword = {
+                            loginViewModel.onEvent(LoginUIEvents.ShowPasswordClick)
+                        },
+                        eventSignIn = {
+                            loginViewModel.onEvent(
+                                LoginUIEvents.SignIn(
+                                    loginViewModel.state.value.email,
+                                    loginViewModel.state.value.password
+                                )
+                            )
+                        },
+                        eventOpenDialog = {
+                            loginViewModel.onEvent(LoginUIEvents.OpenResetPasswordDialogClicked)
+                        },
+                        eventDismissDialog = {
+                            loginViewModel.onEvent(LoginUIEvents.DismissResetPasswordDialog)
+                        },
+                        eventDialogEmailChanged = { dialogEmail ->
+                            loginViewModel.onEvent(LoginUIEvents.DialogEmailChanged(dialogEmail))
+                        },
+                        eventResetPassword = {
+                            loginViewModel.onEvent(LoginUIEvents.ResetPassword(loginViewModel.state.value.dialogEmail))
+                        }
                     )
                 }
             }
         }
+    }
+
+    BackHandler {
+        // TODO: Should change the state and show the dialog
+//        ExitAppDialog(onExitClick = {
+//            loginViewModel.onEvent(LoginUIEvents.ExitAppClicked)
+//        }
+//        ) {
+//            loginViewModel.onEvent(LoginUIEvents.DismissExitAppDialog)
+//        }
+
     }
 }
 
@@ -89,182 +195,34 @@ private fun LoginForm(
     fraction: Float,
     textSize: TextUnit = 16.sp,
     navController: NavController,
-    loginViewModel: LoginViewModel
+    state: State<LoginState>,
+    eventEmailChanged: (String) -> Unit,
+    eventPasswordChanged: (String) -> Unit,
+    eventShowPassword: () -> Unit,
+    eventSignIn: () -> Unit,
+    eventOpenDialog: () -> Unit,
+    eventDismissDialog: () -> Unit,
+    eventDialogEmailChanged: (String) -> Unit,
+    eventResetPassword: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        LoginContent(
+        Content(
             modifier = Modifier.fillMaxWidth(fraction = fraction),
             textSize = textSize,
             navController = navController,
-            loginViewModel = loginViewModel
+            state = state,
+            eventEmailChanged = eventEmailChanged,
+            eventPasswordChanged = eventPasswordChanged,
+            eventShowPassword = eventShowPassword,
+            eventSignIn = eventSignIn,
+            eventOpenDialog = eventOpenDialog,
+            eventDismissDialog = eventDismissDialog,
+            eventDialogEmailChanged = eventDialogEmailChanged,
+            eventResetPassword = eventResetPassword
         )
-    }
-}
-
-@Composable
-private fun LoginContent(
-    modifier: Modifier,
-    textSize: TextUnit = 16.sp,
-    navController: NavController,
-    loginViewModel: LoginViewModel
-) {
-    val localFocus = LocalFocusManager.current
-    val state = loginViewModel.state
-
-    CustomOutlinedTextField(
-        value = state.value.email,
-        onValueChange = { email -> loginViewModel.onEvent(LoginUIEvents.EmailChanged(email.trim())) },
-        placeholder = "E-Mail",
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Filled.Email,
-                contentDescription = "Email Icons",
-                tint = MaterialTheme.colors.primaryVariant
-            )
-        },
-        keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Next,
-            keyboardType = KeyboardType.Email,
-            autoCorrect = false
-        ),
-        keyboardActions = KeyboardActions(
-            onNext = { localFocus.moveFocus(FocusDirection.Down) }
-        ),
-        label = "E-Mail",
-        trailingIcon = {
-            if (!state.value.isEmailValid && state.value.email.isNotEmpty()) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_error),
-                    contentDescription = "Error Icon"
-                )
-            }
-        },
-        modifier = modifier,
-        placeholderSize = textSize,
-        isError = !state.value.isEmailValid
-    )
-    Spacer(modifier = Modifier.height(4.dp))
-    CustomOutlinedTextField(
-        value = state.value.password,
-        onValueChange = { password -> loginViewModel.onEvent(LoginUIEvents.PasswordChanged(password.trim())) },
-        placeholder = "Password",
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Filled.Lock,
-                contentDescription = "Password Icon",
-                tint = MaterialTheme.colors.primaryVariant
-            )
-        },
-        trailingIcon = {
-            if (!state.value.isPasswordVisible) {
-                Icon(
-                    imageVector = Icons.Filled.VisibilityOff,
-                    contentDescription = "Password Icon",
-                    modifier = Modifier.clickable {
-                        loginViewModel.onEvent(LoginUIEvents.ShowPasswordClick)
-                    }
-                )
-            } else {
-                Icon(
-                    imageVector = Icons.Filled.Visibility,
-                    contentDescription = "Password Icon",
-                    modifier = Modifier.clickable {
-                        loginViewModel.onEvent(LoginUIEvents.ShowPasswordClick)
-                    }
-                )
-            }
-        },
-        keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Done,
-            keyboardType = KeyboardType.Password,
-            autoCorrect = false
-        ),
-        label = "Password",
-        keyboardActions = KeyboardActions(onDone = {
-            localFocus.clearFocus()
-            loginViewModel.onEvent(LoginUIEvents.SignIn(state.value.email, state.value.password))
-        }),
-        isTextVisible = state.value.isPasswordVisible,
-        modifier = modifier,
-        placeholderSize = textSize,
-        isError = !state.value.isPasswordValid,
-    )
-
-    // TODO: 2nd error message
-    if (state.value.errorMessage.isNotEmpty()) {
-        Spacer(modifier = Modifier.height(20.dp))
-        Text(
-            text = stringResource(id = R.string.error_message_login),
-            color = MaterialTheme.colors.primary
-        )
-    }
-
-    Spacer(modifier = Modifier.height(20.dp))
-    CustomButton(
-        modifier = Modifier.width(140.dp),
-        enabled = state.value.isEmailValid && state.value.isPasswordValid,
-        text = stringResource(id = R.string.login_button_text),
-        isLoading = state.value.isLoading
-    ) {
-        loginViewModel.onEvent(LoginUIEvents.SignIn(state.value.email, state.value.password))
-    }
-    Spacer(modifier = Modifier.height(20.dp))
-    Text(
-        text = stringResource(id = R.string.forgot_password_text),
-        color = colorResource(id = R.color.general_color),
-        fontSize = 12.sp,
-        modifier = Modifier.clickable {
-            loginViewModel.onEvent(LoginUIEvents.OpenDialogClicked)
-        }
-    )
-    Spacer(modifier = Modifier.height(20.dp))
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = stringResource(id = R.string.new_to_appname),
-            fontSize = textSize
-        )
-        Spacer(modifier = Modifier.width(4.dp))
-        Text(
-            text = stringResource(id = R.string.register),
-            color = SkyBlue,
-            fontSize = textSize,
-            modifier = Modifier.clickable {
-                navController.navigate(Screens.Register.name) {
-                    popUpTo(Screens.Login.name) {
-                        inclusive = true
-                    }
-                }
-            })
-    }
-
-    if (state.value.isResetPasswordSent) {
-        LaunchedEffect(Unit) {
-            loginViewModel.onEvent(LoginUIEvents.DialogDismissed)
-            // TODO: Snackbar
-        }
-    }
-
-    if (state.value.openDialog) {
-        ForgotPasswordDialog(loginViewModel = loginViewModel) {
-            loginViewModel.onEvent(LoginUIEvents.DialogDismissed)
-
-        }
-    }
-
-    if (state.value.isLoggedIn) {
-        LaunchedEffect(Unit) {
-            navController.navigate(Screens.Main.name) {
-                popUpTo(Screens.Login.name) {
-                    inclusive = true
-                }
-            }
-        }
     }
 }

@@ -17,12 +17,11 @@ import com.cooking.cooklikeachef.R
 
 @Composable
 fun ExitAppDialog(
+    onExitClick: () -> Unit = {},
     onDismiss: () -> Unit = {},
-    onExitClick: () -> Unit = {}
 ) {
 
     Dialog(onDismissRequest = onDismiss) {
-
         Column(
             modifier = Modifier
                 .fillMaxWidth(fraction = 0.95f)
@@ -33,14 +32,12 @@ fun ExitAppDialog(
                 .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Text(
                 text = stringResource(id = R.string.exit_app_message),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
             )
             Spacer(modifier = Modifier.height(10.dp))
-
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround,

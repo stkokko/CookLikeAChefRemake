@@ -15,7 +15,6 @@ class LogIn @Inject constructor(
         emit(Resource.Loading())
         try {
             val authResult = firebaseAuthRepo.logIn(email, password)
-            // TODO
             if (authResult?.user == null) emit(
                 Resource.Error(
                     null,

@@ -32,13 +32,18 @@ class MainViewModel @Inject constructor(
             when (result) {
 
                 is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
+                    _state.value = _state.value.copy(
+                        isLoading = true,
+                        latestRecipesList = emptyList(),
+                        errorMessage = ""
+                    )
                 }
 
                 is Resource.Success -> {
                     _state.value = _state.value.copy(
+                        isLoading = false,
                         latestRecipesList = result.data ?: emptyList(),
-                        isLoading = false
+                        errorMessage = ""
                     )
                 }
 
@@ -59,7 +64,7 @@ class MainViewModel @Inject constructor(
                 handleLogOut()
             }
 
-            is MainUIEvents.DisplayOptionsMenu, MainUIEvents.OptionsMenuDismissed -> {
+            is MainUIEvents.DisplayOptionsMenu, MainUIEvents.DismissOptionsMenu -> {
                 _state.value =
                     _state.value.copy(displayOptionsMenu = !_state.value.displayOptionsMenu)
             }
@@ -70,19 +75,24 @@ class MainViewModel @Inject constructor(
         logOut().onEach { result ->
             when (result) {
                 is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
+                    _state.value =
+                        _state.value.copy(isLoading = true, isLoggedIn = true, errorMessage = "")
                 }
 
                 is Resource.Success -> {
                     _state.value =
-                        _state.value.copy(isLoading = false, isLoggedIn = result.data ?: true)
+                        _state.value.copy(
+                            isLoading = false,
+                            isLoggedIn = result.data ?: true,
+                            errorMessage = ""
+                        )
                 }
 
                 is Resource.Error -> {
                     _state.value = _state.value.copy(
                         isLoading = false,
                         isLoggedIn = true,
-                        errorMessage = result.message ?: ""
+                        errorMessage = result.message ?: "An unexpected error occurred."
                     )
                 }
             }

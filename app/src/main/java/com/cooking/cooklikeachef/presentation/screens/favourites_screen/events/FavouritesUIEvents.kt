@@ -5,5 +5,5 @@ sealed class FavouritesUIEvents {
     class SearchFavouriteRecipeResults(recipe: String) : FavouritesUIEvents()
     object SignOff : FavouritesUIEvents()
     object DisplayOptionsMenu : FavouritesUIEvents()
-    object OptionsMenuDismissed : FavouritesUIEvents()
+    object DismissOptionsMenu : FavouritesUIEvents()
 }

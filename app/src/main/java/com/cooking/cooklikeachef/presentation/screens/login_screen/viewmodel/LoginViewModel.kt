@@ -10,6 +10,7 @@ import com.cooking.cooklikeachef.domain.use_cases.ResetPassword
 import com.cooking.cooklikeachef.presentation.screens.login_screen.events.LoginUIEvents
 import com.cooking.cooklikeachef.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -63,11 +64,21 @@ class LoginViewModel @Inject constructor(
                     _state.value.copy(isPasswordVisible = !_state.value.isPasswordVisible)
             }
 
-            is LoginUIEvents.DialogDismissed, LoginUIEvents.OpenDialogClicked -> {
+            is LoginUIEvents.DismissResetPasswordDialog, LoginUIEvents.OpenResetPasswordDialogClicked -> {
                 _state.value = _state.value.copy(
-                    openDialog = !_state.value.openDialog,
+                    openResetPasswordDialog = !_state.value.openResetPasswordDialog,
                     dialogEmail = "",
-                    errorMessage = ""
+                    errorMessageDialog = ""
+                )
+            }
+
+            is LoginUIEvents.ExitAppClicked -> {
+
+            }
+
+            is LoginUIEvents.OpenExitAppDialog, LoginUIEvents.DismissExitAppDialog -> {
+                _state.value = _state.value.copy(
+                    openExitAppDialog = !_state.value.openExitAppDialog
                 )
             }
         }
@@ -77,19 +88,27 @@ class LoginViewModel @Inject constructor(
         logIn(email, password).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
+                    _state.value = _state.value.copy(
+                        isLogInLoading = true,
+                        isLoggedIn = false,
+                        errorMessageLoginForm = ""
+                    )
                 }
 
                 is Resource.Success -> {
                     _state.value =
-                        _state.value.copy(isLoading = false, isLoggedIn = result.data ?: false)
+                        _state.value.copy(
+                            isLogInLoading = false,
+                            isLoggedIn = result.data ?: false,
+                            errorMessageLoginForm = ""
+                        )
                 }
 
                 is Resource.Error -> {
                     _state.value = _state.value.copy(
                         isLoggedIn = false,
-                        isLoading = false,
-                        errorMessage = result.message ?: ""
+                        isLogInLoading = false,
+                        errorMessageLoginForm = result.message ?: "An unexpected error occurred."
                     )
                 }
             }
@@ -100,22 +119,27 @@ class LoginViewModel @Inject constructor(
         resetPassword(email).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
+                    _state.value = _state.value.copy(
+                        isResetPasswordLoading = true,
+                        isResetPasswordSent = false,
+                        errorMessageDialog = ""
+                    )
                 }
 
                 is Resource.Success -> {
                     _state.value =
                         _state.value.copy(
-                            isLoading = false,
-                            isResetPasswordSent = result.data ?: false
+                            isResetPasswordLoading = false,
+                            isResetPasswordSent = result.data ?: false,
+                            errorMessageDialog = ""
                         )
                 }
 
                 is Resource.Error -> {
                     _state.value = _state.value.copy(
-                        isLoading = false,
+                        isResetPasswordLoading = false,
                         isResetPasswordSent = false,
-                        errorMessage = result.message ?: ""
+                        errorMessageDialog = result.message ?: "An unexpected error occurred."
                     )
                 }
             }

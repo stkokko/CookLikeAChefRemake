@@ -29,17 +29,23 @@ class SplashScreenViewModel @Inject constructor(
             when (result) {
 
                 is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
+                    _state.value =
+                        _state.value.copy(isLoading = true, isLoggedIn = false, errorMessage = "")
                 }
 
                 is Resource.Success -> {
                     _state.value =
-                        _state.value.copy(isLoggedIn = result.data ?: false, isLoading = false)
+                        _state.value.copy(
+                            isLoading = false,
+                            isLoggedIn = result.data ?: false,
+                            errorMessage = ""
+                        )
                 }
 
                 is Resource.Error -> {
                     _state.value = _state.value.copy(
                         isLoading = false,
+                        isLoggedIn = false,
                         errorMessage = result.message ?: "An unexpected error occurred."
                     )
                 }

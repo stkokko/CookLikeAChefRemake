@@ -62,7 +62,7 @@ class FavouritesViewModel @Inject constructor(
                 handleLogOut()
             }
 
-            is FavouritesUIEvents.DisplayOptionsMenu, FavouritesUIEvents.OptionsMenuDismissed -> {
+            is FavouritesUIEvents.DisplayOptionsMenu, FavouritesUIEvents.DismissOptionsMenu -> {
                 _state.value =
                     _state.value.copy(displayOptionsMenu = !_state.value.displayOptionsMenu)
             }
@@ -73,19 +73,24 @@ class FavouritesViewModel @Inject constructor(
         logOut().onEach { result ->
             when (result) {
                 is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
+                    _state.value =
+                        _state.value.copy(isLoading = true, isLoggedIn = false, errorMessage = "")
                 }
 
                 is Resource.Success -> {
                     _state.value =
-                        _state.value.copy(isLoading = false, isLoggedIn = result.data ?: true)
+                        _state.value.copy(
+                            isLoading = false,
+                            isLoggedIn = result.data ?: true,
+                            errorMessage = ""
+                        )
                 }
 
                 is Resource.Error -> {
                     _state.value = _state.value.copy(
                         isLoading = false,
                         isLoggedIn = true,
-                        errorMessage = result.message ?: ""
+                        errorMessage = result.message ?: "An unexpected error occurred."
                     )
                 }
             }

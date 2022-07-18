@@ -1,31 +1,15 @@
 package com.cooking.cooklikeachef.presentation.screens.main_screen
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.cooking.cooklikeachef.R
-import com.cooking.cooklikeachef.presentation.navigation.Screens
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.BottomNavigationBar
-import com.cooking.cooklikeachef.presentation.screens.common_compoments.OptionsMenu
-import com.cooking.cooklikeachef.presentation.screens.main_screen.components.LatestRecipesCard
+import com.cooking.cooklikeachef.presentation.screens.main_screen.components.Content
 import com.cooking.cooklikeachef.presentation.screens.main_screen.events.MainUIEvents
 import com.cooking.cooklikeachef.presentation.screens.main_screen.viewmodel.MainViewModel
 
@@ -47,7 +31,7 @@ fun MainScreen(
             val boxWithConstraintsScope = this
             when {
                 boxWithConstraintsScope.maxHeight > 900.dp -> {
-                    MainContent(
+                    Content(
                         modifier = Modifier
                             .width(370.dp)
                             .height(220.dp)
@@ -59,12 +43,20 @@ fun MainScreen(
                         optionsMenuDropdownWidth = 240.dp,
                         optionsMenuDropdownItemFontSize = 28.sp,
                         navController = navController,
-                        mainViewModel = mainViewModel
+                        state = mainViewModel.state,
+                        eventDisplayOptionsMenu = {
+                            mainViewModel.onEvent(MainUIEvents.DisplayOptionsMenu)
+                        },
+                        eventDismissOptionsMenu = {
+                            mainViewModel.onEvent(MainUIEvents.DismissOptionsMenu)
+                        },
+                        eventSignOff = {
+                            mainViewModel.onEvent(MainUIEvents.SignOff)
+                        }
                     )
                 }
-
                 boxWithConstraintsScope.maxHeight > 780.dp -> {
-                    MainContent(
+                    Content(
                         modifier = Modifier
                             .width(280.dp)
                             .height(150.dp)
@@ -76,12 +68,20 @@ fun MainScreen(
                         optionsMenuDropdownWidth = 200.dp,
                         optionsMenuDropdownItemFontSize = 22.sp,
                         navController = navController,
-                        mainViewModel = mainViewModel
+                        state = mainViewModel.state,
+                        eventDisplayOptionsMenu = {
+                            mainViewModel.onEvent(MainUIEvents.DisplayOptionsMenu)
+                        },
+                        eventDismissOptionsMenu = {
+                            mainViewModel.onEvent(MainUIEvents.DismissOptionsMenu)
+                        },
+                        eventSignOff = {
+                            mainViewModel.onEvent(MainUIEvents.SignOff)
+                        }
                     )
                 }
-
                 boxWithConstraintsScope.maxHeight > 620.dp -> {
-                    MainContent(
+                    Content(
                         modifier = Modifier
                             .width(200.dp)
                             .height(120.dp)
@@ -93,12 +93,20 @@ fun MainScreen(
                         optionsMenuDropdownWidth = 160.dp,
                         optionsMenuDropdownItemFontSize = 18.sp,
                         navController = navController,
-                        mainViewModel = mainViewModel
+                        state = mainViewModel.state,
+                        eventDisplayOptionsMenu = {
+                            mainViewModel.onEvent(MainUIEvents.DisplayOptionsMenu)
+                        },
+                        eventDismissOptionsMenu = {
+                            mainViewModel.onEvent(MainUIEvents.DismissOptionsMenu)
+                        },
+                        eventSignOff = {
+                            mainViewModel.onEvent(MainUIEvents.SignOff)
+                        }
                     )
                 }
-
                 else -> {
-                    MainContent(
+                    Content(
                         modifier = Modifier
                             .width(180.dp)
                             .height(100.dp)
@@ -107,122 +115,17 @@ fun MainScreen(
                         latestRecipesTextFontSize = 18.sp,
                         cardTextFontSize = 10.sp,
                         navController = navController,
-                        mainViewModel = mainViewModel
-                    )
-                }
-            }
-        }
-    }
-}
-
-// TODO should we move all composable like main content to components package?
-
-@Composable
-fun MainContent(
-    modifier: Modifier,
-    welcomeTextFontSize: TextUnit,
-    latestRecipesTextFontSize: TextUnit,
-    cardTextFontSize: TextUnit,
-    optionsMenuIconSize: Dp = 24.dp,
-    optionsMenuDropdownWidth: Dp = 146.dp,
-    optionsMenuDropdownItemFontSize: TextUnit = 16.sp,
-    navController: NavController,
-    mainViewModel: MainViewModel
-) {
-    val state = mainViewModel.state
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.home_image_background),
-            contentScale = ContentScale.Crop,
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize()
-        )
-    }
-
-    if (state.value.isLoading) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color = Color.Black.copy(alpha = 0.5f)),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            CircularProgressIndicator()
-        }
-    } else {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(
-                    start = 6.dp,
-                    bottom = 6.dp
-                )
-        ) {
-            OptionsMenu(
-                title = {},
-                expandedOptionsMenu = state.value.displayOptionsMenu,
-                iconSize = optionsMenuIconSize,
-                dropdownMenuWidth = optionsMenuDropdownWidth,
-                dropdownItemFontSize = optionsMenuDropdownItemFontSize,
-                openOptionsMenu = {
-                    mainViewModel.onEvent(MainUIEvents.DisplayOptionsMenu)
-                },
-                closeOptionsMenu = {
-                    mainViewModel.onEvent(MainUIEvents.OptionsMenuDismissed)
-                }
-            ) {
-                mainViewModel.onEvent(MainUIEvents.SignOff)
-            }
-            Text(
-                text = stringResource(id = R.string.welcome_to_appname),
-                color = Color.White,
-                fontWeight = FontWeight.Bold,
-                fontSize = welcomeTextFontSize,
-                modifier = Modifier.align(alignment = Alignment.CenterStart)
-            )
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(alignment = Alignment.BottomCenter)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.latest_recipes),
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = latestRecipesTextFontSize
-                )
-
-                if (state.value.latestRecipesList.isNotEmpty()) {
-                    LazyRow {
-                        items(state.value.latestRecipesList) { latestRecipe ->
-                            LatestRecipesCard(
-                                modifier = modifier,
-                                url = latestRecipe.imageURL,
-                                title = latestRecipe.name,
-                                textFontSize = cardTextFontSize
-                            ) {
-                                // TODO: navigate
-                            }
+                        state = mainViewModel.state,
+                        eventDisplayOptionsMenu = {
+                            mainViewModel.onEvent(MainUIEvents.DisplayOptionsMenu)
+                        },
+                        eventDismissOptionsMenu = {
+                            mainViewModel.onEvent(MainUIEvents.DismissOptionsMenu)
+                        },
+                        eventSignOff = {
+                            mainViewModel.onEvent(MainUIEvents.SignOff)
                         }
-                    }
-                }
-            }
-        }
-    }
-
-    if (state.value.errorMessage.isNotEmpty()) {
-        // TODO: Snackbar
-    }
-
-    if (!state.value.isLoggedIn) {
-        LaunchedEffect(Unit) {
-            navController.navigate(Screens.Login.name) {
-                popUpTo(Screens.Main.name) {
-                    inclusive = true
+                    )
                 }
             }
         }

@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cooking.cooklikeachef.domain.use_cases.LogOut
 import com.cooking.cooklikeachef.presentation.screens.categories_screen.events.CategoriesUIEvents
-import com.cooking.cooklikeachef.presentation.screens.main_screen.events.MainUIEvents
 import com.cooking.cooklikeachef.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -16,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CategoriesViewModel @Inject constructor(
     private val logOut: LogOut
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = mutableStateOf(CategoriesState())
     val state: State<CategoriesState> = _state
@@ -35,7 +34,7 @@ class CategoriesViewModel @Inject constructor(
                 handleLogOut()
             }
 
-            is CategoriesUIEvents.DisplayOptionsMenu, CategoriesUIEvents.OptionsMenuDismissed -> {
+            is CategoriesUIEvents.DisplayOptionsMenu, CategoriesUIEvents.DismissOptionsMenu -> {
                 _state.value =
                     _state.value.copy(displayOptionsMenu = !_state.value.displayOptionsMenu)
             }
@@ -46,19 +45,24 @@ class CategoriesViewModel @Inject constructor(
         logOut().onEach { result ->
             when (result) {
                 is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
+                    _state.value =
+                        _state.value.copy(isLoading = true, isLoggedIn = true, errorMessage = "")
                 }
 
                 is Resource.Success -> {
                     _state.value =
-                        _state.value.copy(isLoading = false, isLoggedIn = result.data ?: true)
+                        _state.value.copy(
+                            isLoading = false,
+                            isLoggedIn = result.data ?: true,
+                            errorMessage = ""
+                        )
                 }
 
                 is Resource.Error -> {
                     _state.value = _state.value.copy(
                         isLoading = false,
                         isLoggedIn = true,
-                        errorMessage = result.message ?: ""
+                        errorMessage = result.message ?: "An unexpected error occurred."
                     )
                 }
             }

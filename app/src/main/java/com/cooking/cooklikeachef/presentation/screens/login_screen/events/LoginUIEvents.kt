@@ -7,6 +7,9 @@ sealed class LoginUIEvents {
     class SignIn(val email: String, val password: String) : LoginUIEvents()
     class ResetPassword(val email: String) : LoginUIEvents()
     object ShowPasswordClick : LoginUIEvents()
-    object OpenDialogClicked : LoginUIEvents()
-    object DialogDismissed : LoginUIEvents()
+    object OpenResetPasswordDialogClicked : LoginUIEvents()
+    object DismissResetPasswordDialog : LoginUIEvents()
+    object ExitAppClicked: LoginUIEvents()
+    object OpenExitAppDialog: LoginUIEvents()
+    object DismissExitAppDialog: LoginUIEvents()
 }

@@ -1,6 +1,5 @@
 package com.cooking.cooklikeachef.presentation.screens.register_screen.viewmodel
 
-import android.util.Log
 import android.util.Patterns
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -40,7 +39,7 @@ class RegisterViewModel @Inject constructor(
             }
 
             is RegisterUIEvents.ConfirmPasswordChanged -> {
-                if (event.confirmPassword.equals(event.password))
+                if (event.confirmPassword == event.password)
                     _state.value = _state.value.copy(isConfirmPasswordValid = true)
                 else
                     _state.value = _state.value.copy(isConfirmPasswordValid = false)
@@ -67,19 +66,24 @@ class RegisterViewModel @Inject constructor(
         register(email, password).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
+                    _state.value =
+                        _state.value.copy(isLoading = true, isRegistered = false, errorMessage = "")
                 }
 
                 is Resource.Success -> {
                     _state.value =
-                        _state.value.copy(isLoading = false, isRegistered = result.data ?: false)
+                        _state.value.copy(
+                            isLoading = false,
+                            isRegistered = result.data ?: false,
+                            errorMessage = ""
+                        )
                 }
 
                 is Resource.Error -> {
                     _state.value = _state.value.copy(
                         isRegistered = false,
                         isLoading = false,
-                        errorMessage = result.message ?: ""
+                        errorMessage = result.message ?: "An unexpected error occurred."
                     )
                 }
             }
