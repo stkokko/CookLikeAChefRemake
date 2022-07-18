@@ -59,6 +59,12 @@ class RegisterViewModel @Inject constructor(
                 _state.value =
                     _state.value.copy(isConfirmPasswordVisible = !_state.value.isConfirmPasswordVisible)
             }
+
+            is RegisterUIEvents.OpenExitAppDialog, RegisterUIEvents.DismissExitAppDialog -> {
+                _state.value = _state.value.copy(
+                    openExitAppDialog = !_state.value.openExitAppDialog
+                )
+            }
         }
     }
 

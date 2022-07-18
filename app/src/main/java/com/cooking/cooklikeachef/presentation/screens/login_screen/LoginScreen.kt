@@ -1,10 +1,12 @@
 package com.cooking.cooklikeachef.presentation.screens.login_screen
 
+import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -12,7 +14,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.cooking.cooklikeachef.R
-import com.cooking.cooklikeachef.presentation.screens.common_compoments.ExitAppDialog
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.LoginRegisterLayout
 import com.cooking.cooklikeachef.presentation.screens.login_screen.components.Content
 import com.cooking.cooklikeachef.presentation.screens.login_screen.events.LoginUIEvents
@@ -24,6 +25,7 @@ fun LoginScreen(
     navController: NavController,
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
+    val activity = LocalContext.current as Activity
 
     LoginRegisterLayout(painter = painterResource(id = R.drawable.login_image_header)) {
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
@@ -51,10 +53,10 @@ fun LoginScreen(
                                 )
                             )
                         },
-                        eventOpenDialog = {
+                        eventOpenResetPasswordDialog = {
                             loginViewModel.onEvent(LoginUIEvents.OpenResetPasswordDialogClicked)
                         },
-                        eventDismissDialog = {
+                        eventDismissResetPasswordDialog = {
                             loginViewModel.onEvent(LoginUIEvents.DismissResetPasswordDialog)
                         },
                         eventDialogEmailChanged = { dialogEmail ->
@@ -62,6 +64,12 @@ fun LoginScreen(
                         },
                         eventResetPassword = {
                             loginViewModel.onEvent(LoginUIEvents.ResetPassword(loginViewModel.state.value.dialogEmail))
+                        },
+                        eventExitApp = {
+                            activity.finish()
+                        },
+                        eventDismissExitAppDialog = {
+                            loginViewModel.onEvent(LoginUIEvents.DismissExitAppDialog)
                         }
                     )
                 }
@@ -87,10 +95,10 @@ fun LoginScreen(
                                 )
                             )
                         },
-                        eventOpenDialog = {
+                        eventOpenResetPasswordDialog = {
                             loginViewModel.onEvent(LoginUIEvents.OpenResetPasswordDialogClicked)
                         },
-                        eventDismissDialog = {
+                        eventDismissResetPasswordDialog = {
                             loginViewModel.onEvent(LoginUIEvents.DismissResetPasswordDialog)
                         },
                         eventDialogEmailChanged = { dialogEmail ->
@@ -98,6 +106,12 @@ fun LoginScreen(
                         },
                         eventResetPassword = {
                             loginViewModel.onEvent(LoginUIEvents.ResetPassword(loginViewModel.state.value.dialogEmail))
+                        },
+                        eventExitApp = {
+                            activity.finish()
+                        },
+                        eventDismissExitAppDialog = {
+                            loginViewModel.onEvent(LoginUIEvents.DismissExitAppDialog)
                         }
                     )
                 }
@@ -123,10 +137,10 @@ fun LoginScreen(
                                 )
                             )
                         },
-                        eventOpenDialog = {
+                        eventOpenResetPasswordDialog = {
                             loginViewModel.onEvent(LoginUIEvents.OpenResetPasswordDialogClicked)
                         },
-                        eventDismissDialog = {
+                        eventDismissResetPasswordDialog = {
                             loginViewModel.onEvent(LoginUIEvents.DismissResetPasswordDialog)
                         },
                         eventDialogEmailChanged = { dialogEmail ->
@@ -134,6 +148,12 @@ fun LoginScreen(
                         },
                         eventResetPassword = {
                             loginViewModel.onEvent(LoginUIEvents.ResetPassword(loginViewModel.state.value.dialogEmail))
+                        },
+                        eventExitApp = {
+                            activity.finish()
+                        },
+                        eventDismissExitAppDialog = {
+                            loginViewModel.onEvent(LoginUIEvents.DismissExitAppDialog)
                         }
                     )
                 }
@@ -160,10 +180,10 @@ fun LoginScreen(
                                 )
                             )
                         },
-                        eventOpenDialog = {
+                        eventOpenResetPasswordDialog = {
                             loginViewModel.onEvent(LoginUIEvents.OpenResetPasswordDialogClicked)
                         },
-                        eventDismissDialog = {
+                        eventDismissResetPasswordDialog = {
                             loginViewModel.onEvent(LoginUIEvents.DismissResetPasswordDialog)
                         },
                         eventDialogEmailChanged = { dialogEmail ->
@@ -171,6 +191,12 @@ fun LoginScreen(
                         },
                         eventResetPassword = {
                             loginViewModel.onEvent(LoginUIEvents.ResetPassword(loginViewModel.state.value.dialogEmail))
+                        },
+                        eventExitApp = {
+                            activity.finish()
+                        },
+                        eventDismissExitAppDialog = {
+                            loginViewModel.onEvent(LoginUIEvents.DismissExitAppDialog)
                         }
                     )
                 }
@@ -179,14 +205,7 @@ fun LoginScreen(
     }
 
     BackHandler {
-        // TODO: Should change the state and show the dialog
-//        ExitAppDialog(onExitClick = {
-//            loginViewModel.onEvent(LoginUIEvents.ExitAppClicked)
-//        }
-//        ) {
-//            loginViewModel.onEvent(LoginUIEvents.DismissExitAppDialog)
-//        }
-
+        loginViewModel.onEvent(LoginUIEvents.OpenExitAppDialog)
     }
 }
 
@@ -200,10 +219,12 @@ private fun LoginForm(
     eventPasswordChanged: (String) -> Unit,
     eventShowPassword: () -> Unit,
     eventSignIn: () -> Unit,
-    eventOpenDialog: () -> Unit,
-    eventDismissDialog: () -> Unit,
+    eventOpenResetPasswordDialog: () -> Unit,
+    eventDismissResetPasswordDialog: () -> Unit,
     eventDialogEmailChanged: (String) -> Unit,
-    eventResetPassword: () -> Unit
+    eventResetPassword: () -> Unit,
+    eventExitApp: () -> Unit,
+    eventDismissExitAppDialog: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -219,10 +240,12 @@ private fun LoginForm(
             eventPasswordChanged = eventPasswordChanged,
             eventShowPassword = eventShowPassword,
             eventSignIn = eventSignIn,
-            eventOpenDialog = eventOpenDialog,
-            eventDismissDialog = eventDismissDialog,
+            eventOpenResetPasswordDialog = eventOpenResetPasswordDialog,
+            eventDismissResetPasswordDialog = eventDismissResetPasswordDialog,
             eventDialogEmailChanged = eventDialogEmailChanged,
-            eventResetPassword = eventResetPassword
+            eventResetPassword = eventResetPassword,
+            eventExitApp = eventExitApp,
+            eventDismissExitAppDialog = eventDismissExitAppDialog
         )
     }
 }

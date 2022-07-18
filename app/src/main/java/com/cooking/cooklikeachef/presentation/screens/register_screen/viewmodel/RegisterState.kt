@@ -1,8 +1,6 @@
 package com.cooking.cooklikeachef.presentation.screens.register_screen.viewmodel
 
 data class RegisterState(
-    val isRegistered: Boolean = false,
-    val errorMessage: String = "",
     val email: String = "",
     val password: String = "",
     val confirmPassword: String = "",
@@ -11,5 +9,8 @@ data class RegisterState(
     val isPasswordVisible: Boolean = false,
     val isConfirmPasswordValid: Boolean = false,
     val isConfirmPasswordVisible: Boolean = false,
-    val isLoading: Boolean = false
+    val openExitAppDialog: Boolean = false,
+    val isLoading: Boolean = false,
+    val errorMessage: String = "",
+    val isRegistered: Boolean = false,
 )

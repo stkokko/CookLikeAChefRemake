@@ -1,10 +1,12 @@
 package com.cooking.cooklikeachef.presentation.screens.register_screen
 
+import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -23,6 +25,8 @@ fun RegisterScreen(
     navController: NavController,
     registerViewModel: RegisterViewModel = hiltViewModel()
 ) {
+    val activity = LocalContext.current as Activity
+
     LoginRegisterLayout(painter = painterResource(id = R.drawable.register_background_image)) {
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
             val boxWithConstraintsScope = this
@@ -61,6 +65,12 @@ fun RegisterScreen(
                                     registerViewModel.state.value.password
                                 )
                             )
+                        },
+                        eventExitApp = {
+                            activity.finish()
+                        },
+                        eventDismissExitAppDialog = {
+                            registerViewModel.onEvent(RegisterUIEvents.DismissExitAppDialog)
                         }
                     )
                 }
@@ -98,6 +108,12 @@ fun RegisterScreen(
                                     registerViewModel.state.value.password
                                 )
                             )
+                        },
+                        eventExitApp = {
+                            activity.finish()
+                        },
+                        eventDismissExitAppDialog = {
+                            registerViewModel.onEvent(RegisterUIEvents.DismissExitAppDialog)
                         }
                     )
                 }
@@ -135,6 +151,12 @@ fun RegisterScreen(
                                     registerViewModel.state.value.password
                                 )
                             )
+                        },
+                        eventExitApp = {
+                            activity.finish()
+                        },
+                        eventDismissExitAppDialog = {
+                            registerViewModel.onEvent(RegisterUIEvents.DismissExitAppDialog)
                         }
                     )
                 }
@@ -173,6 +195,12 @@ fun RegisterScreen(
                                     registerViewModel.state.value.password
                                 )
                             )
+                        },
+                        eventExitApp = {
+                            activity.finish()
+                        },
+                        eventDismissExitAppDialog = {
+                            registerViewModel.onEvent(RegisterUIEvents.DismissExitAppDialog)
                         }
                     )
                 }
@@ -181,7 +209,7 @@ fun RegisterScreen(
     }
 
     BackHandler {
-        // TODO: Should change the state and show the dialog
+        registerViewModel.onEvent(RegisterUIEvents.OpenExitAppDialog)
     }
 }
 
@@ -196,7 +224,9 @@ private fun RegisterForm(
     eventConfirmPasswordChanged: (String) -> Unit,
     eventShowPassword: () -> Unit,
     eventShowConfirmPassword: () -> Unit,
-    eventCreateUser: () -> Unit
+    eventCreateUser: () -> Unit,
+    eventExitApp: () -> Unit,
+    eventDismissExitAppDialog: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -213,7 +243,9 @@ private fun RegisterForm(
             eventConfirmPasswordChanged = eventConfirmPasswordChanged,
             eventShowPassword = eventShowPassword,
             eventShowConfirmPassword = eventShowConfirmPassword,
-            eventCreateUser = eventCreateUser
+            eventCreateUser = eventCreateUser,
+            eventExitApp = eventExitApp,
+            eventDismissExitAppDialog = eventDismissExitAppDialog
         )
     }
 }

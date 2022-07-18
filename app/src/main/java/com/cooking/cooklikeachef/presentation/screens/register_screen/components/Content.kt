@@ -30,6 +30,7 @@ import com.cooking.cooklikeachef.R
 import com.cooking.cooklikeachef.presentation.navigation.Screens
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomButton
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomOutlinedTextField
+import com.cooking.cooklikeachef.presentation.screens.common_compoments.ExitAppDialog
 import com.cooking.cooklikeachef.presentation.screens.register_screen.viewmodel.RegisterState
 import com.cooking.cooklikeachef.presentation.ui.theme.SkyBlue
 
@@ -44,7 +45,9 @@ fun Content(
     eventConfirmPasswordChanged: (String) -> Unit,
     eventShowPassword: () -> Unit,
     eventShowConfirmPassword: () -> Unit,
-    eventCreateUser: () -> Unit
+    eventCreateUser: () -> Unit,
+    eventExitApp: () -> Unit,
+    eventDismissExitAppDialog: () -> Unit
 ) {
     val localFocus = LocalFocusManager.current
 
@@ -214,6 +217,14 @@ fun Content(
                     }
                 }
             })
+    }
+
+    if (state.value.openExitAppDialog) {
+        ExitAppDialog(onExitClick = {
+            eventExitApp()
+        }) {
+            eventDismissExitAppDialog()
+        }
     }
 
     if (state.value.isRegistered) {

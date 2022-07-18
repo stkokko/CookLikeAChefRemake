@@ -9,7 +9,6 @@ sealed class LoginUIEvents {
     object ShowPasswordClick : LoginUIEvents()
     object OpenResetPasswordDialogClicked : LoginUIEvents()
     object DismissResetPasswordDialog : LoginUIEvents()
-    object ExitAppClicked: LoginUIEvents()
     object OpenExitAppDialog: LoginUIEvents()
     object DismissExitAppDialog: LoginUIEvents()
 }

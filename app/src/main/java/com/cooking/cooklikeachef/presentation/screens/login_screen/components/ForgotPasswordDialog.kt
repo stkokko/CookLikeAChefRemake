@@ -38,11 +38,11 @@ fun ForgotPasswordDialog(
     Dialog(onDismissRequest = onDismiss) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(fraction = 0.95f)
+                .fillMaxWidth(fraction = 0.94f)
                 .height(height)// TODO when the error message is displayed, it pushes the buttons out of the dialog box
                 .background(
                     color = Color.White,
-                    shape = RoundedCornerShape(15.dp)
+                    shape = RoundedCornerShape(16.dp)
                 )
                 .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally

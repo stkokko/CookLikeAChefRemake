@@ -1,6 +1,7 @@
 package com.cooking.cooklikeachef.presentation.screens.login_screen.viewmodel
 
 import android.util.Patterns
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -10,7 +11,6 @@ import com.cooking.cooklikeachef.domain.use_cases.ResetPassword
 import com.cooking.cooklikeachef.presentation.screens.login_screen.events.LoginUIEvents
 import com.cooking.cooklikeachef.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -70,10 +70,6 @@ class LoginViewModel @Inject constructor(
                     dialogEmail = "",
                     errorMessageDialog = ""
                 )
-            }
-
-            is LoginUIEvents.ExitAppClicked -> {
-
             }
 
             is LoginUIEvents.OpenExitAppDialog, LoginUIEvents.DismissExitAppDialog -> {

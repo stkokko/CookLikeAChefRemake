@@ -24,10 +24,10 @@ fun ExitAppDialog(
     Dialog(onDismissRequest = onDismiss) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(fraction = 0.95f)
+                .fillMaxWidth(fraction = 0.94f)
                 .background(
                     color = Color.White,
-                    shape = RoundedCornerShape(15.dp)
+                    shape = RoundedCornerShape(16.dp)
                 )
                 .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -58,9 +58,6 @@ fun ExitAppDialog(
                     onDismiss()
                 }
             }
-
         }
-
     }
-
 }

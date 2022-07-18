@@ -31,6 +31,7 @@ import com.cooking.cooklikeachef.R
 import com.cooking.cooklikeachef.presentation.navigation.Screens
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomButton
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomOutlinedTextField
+import com.cooking.cooklikeachef.presentation.screens.common_compoments.ExitAppDialog
 import com.cooking.cooklikeachef.presentation.screens.login_screen.viewmodel.LoginState
 import com.cooking.cooklikeachef.presentation.ui.theme.SkyBlue
 
@@ -44,10 +45,12 @@ fun Content(
     eventPasswordChanged: (String) -> Unit,
     eventShowPassword: () -> Unit,
     eventSignIn: () -> Unit,
-    eventOpenDialog: () -> Unit,
-    eventDismissDialog: () -> Unit,
+    eventOpenResetPasswordDialog: () -> Unit,
+    eventDismissResetPasswordDialog: () -> Unit,
     eventDialogEmailChanged: (String) -> Unit,
-    eventResetPassword: () -> Unit
+    eventResetPassword: () -> Unit,
+    eventExitApp: () -> Unit,
+    eventDismissExitAppDialog: () -> Unit
 ) {
     val localFocus = LocalFocusManager.current
 
@@ -153,7 +156,7 @@ fun Content(
         color = colorResource(id = R.color.general_color),
         fontSize = 12.sp,
         modifier = Modifier.clickable {
-            eventOpenDialog()
+            eventOpenResetPasswordDialog()
         }
     )
     Spacer(modifier = Modifier.height(20.dp))
@@ -181,14 +184,22 @@ fun Content(
 
     if (state.value.isResetPasswordSent) {
         LaunchedEffect(Unit) {
-            eventDismissDialog()
+            eventDismissResetPasswordDialog()
             // TODO: Snackbar
         }
     }
 
     if (state.value.openResetPasswordDialog) {
         ForgotPasswordDialog(state, eventDialogEmailChanged, eventResetPassword) {
-            eventDismissDialog()
+            eventDismissResetPasswordDialog()
+        }
+    }
+
+    if (state.value.openExitAppDialog) {
+        ExitAppDialog(onExitClick = {
+            eventExitApp()
+        }) {
+            eventDismissExitAppDialog()
         }
     }
 
