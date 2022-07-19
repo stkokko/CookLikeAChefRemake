@@ -6,11 +6,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,7 +20,7 @@ fun FavouriteRecipesCard(url: String, title: String, onCardClicked: (Recipe) -> 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(200.dp)
+            .height(100.dp)
             .padding(4.dp)
             .clickable {
                 onCardClicked
@@ -35,16 +33,14 @@ fun FavouriteRecipesCard(url: String, title: String, onCardClicked: (Recipe) -> 
                 model = url,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                alpha = 0.6f,
+                alpha = 0.5f,
                 modifier = Modifier.fillMaxSize()
             )
             Text(
                 text = title,
-                fontSize = 16.sp,
+                fontSize = 20.sp,
                 textAlign = TextAlign.Center,
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.Medium,
-                color = Color.Black
+                modifier = Modifier.align(Alignment.Center)
             )
 
         }

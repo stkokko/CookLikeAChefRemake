@@ -5,9 +5,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cooking.cooklikeachef.presentation.screens.categories_screen.CategoriesScreen
+import com.cooking.cooklikeachef.presentation.screens.comments_screen.CommentsScreen
 import com.cooking.cooklikeachef.presentation.screens.favourites_screen.FavouritesScreen
 import com.cooking.cooklikeachef.presentation.screens.login_screen.LoginScreen
 import com.cooking.cooklikeachef.presentation.screens.home_screen.MainScreen
+import com.cooking.cooklikeachef.presentation.screens.recipe_screen.RecipeScreen
 import com.cooking.cooklikeachef.presentation.screens.register_screen.RegisterScreen
 import com.cooking.cooklikeachef.presentation.screens.splash_screen.SplashScreen
 
@@ -42,6 +44,13 @@ fun Navigation() {
             FavouritesScreen(navController = navController)
         }
 
+        composable(route = Screens.Recipe.name) {
+            RecipeScreen(navController = navController)
+        }
+
+        composable(route = Screens.Comments.name) {
+            CommentsScreen(navController = navController)
+        }
     }
 
 }

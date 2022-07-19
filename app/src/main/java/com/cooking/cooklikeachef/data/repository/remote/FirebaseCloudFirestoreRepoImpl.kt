@@ -7,12 +7,6 @@ import com.cooking.cooklikeachef.domain.repository.remote.FirebaseCloudFirestore
 import com.cooking.cooklikeachef.util.Mappers
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.getField
-import com.google.firebase.firestore.ktx.toObject
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import kotlin.Exception
@@ -37,18 +31,24 @@ class FirebaseCloudFirestoreRepoImpl @Inject constructor(
     override suspend fun getFavouriteRecipes(): List<Recipe> {
         return try {
             if (auth.currentUser != null) {
-//                val recipesDto: List<Map<String, Any>> =
-//                    db.collection("Favourites").document(auth.currentUser!!.uid).get().await()
-//                        .get("recipes") as List<Map<String, Any>>
-//
-//                val dto = recipesDto.
-//                Log.d("ImplGetFavouriteRecipes", "recipesDto: ${dto}")
-//                Log.d("ImplGetFavouriteRecipes", "recipes: ${dto[0]}")
-                emptyList()
+                val recipesDto = mutableListOf<RecipeDto>()
+                val favouriteRecipesIds =
+                    db.collection("Favourites").document(auth.currentUser!!.uid).get().await().get("recipes") as List<String>
+                Log.d("getFavouritesRecipes", "favouriteRecipesIds: ${favouriteRecipesIds}")
+                favouriteRecipesIds.forEach { id ->
+                    db.collection("Recipes").document(id).get().await().toObject(RecipeDto::class.java)?.let { recipesDto.add(it) }
+                } // TODO: at the end the list has only the last one recipe
+
+                val favouriteRecipes = recipesDto.map {
+                    Mappers.recipeDtoToModel(it)
+                }
+                Log.d("getFavouritesRecipes", "favouriteRecipes: ${recipesDto.size}")
+                favouriteRecipes
             } else {
                 emptyList()
             }
         } catch (e: Exception) {
+            Log.d("getFavouritesRecipes", "CATCH: ${e.message}")
             emptyList()
         }
     }

@@ -1,6 +1,5 @@
 package com.cooking.cooklikeachef.presentation.screens.favourites_screen.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -38,7 +37,7 @@ fun Content(
     eventContactUs: () -> Unit,
     eventSignOff: () -> Unit
 ) {
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
     ) {
@@ -68,8 +67,7 @@ fun Content(
         if (state.value.isLoading) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = Color.Black.copy(alpha = 0.5f)),
+                    .fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -97,16 +95,9 @@ fun Content(
                     letterSpacing = 2.sp,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .align(Alignment.Center)
                 )
             }
         }
-    }
-
-    if (state.value.favouriteRecipes.isNotEmpty()) {
-        Log.d("FavouritesContent", "list size if: ${state.value.favouriteRecipes.size}")
-    } else {
-        Log.d("FavouritesContent", "list size else: ${state.value.favouriteRecipes.size}")
     }
 
     if (state.value.errorMessage.isNotEmpty()) {

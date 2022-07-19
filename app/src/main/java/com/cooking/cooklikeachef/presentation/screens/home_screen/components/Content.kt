@@ -120,6 +120,7 @@ fun Content(
                                 textFontSize = cardTextFontSize
                             ) {
                                 // TODO: navigate
+                                navController.navigate(Screens.Recipe.name)
                             }
                         }
                     }

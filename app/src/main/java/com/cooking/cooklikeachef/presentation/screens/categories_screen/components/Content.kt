@@ -10,13 +10,18 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.PopupProperties
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.cooking.cooklikeachef.R
 import com.cooking.cooklikeachef.presentation.navigation.Screens
 import com.cooking.cooklikeachef.presentation.screens.categories_screen.viewmodel.CategoriesState
@@ -54,8 +59,7 @@ fun Content(
     if (state.value.isLoading) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .background(color = Color.Black.copy(alpha = 0.5f)),
+                .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -93,17 +97,21 @@ fun Content(
                 ) {
                     eventSignOff()
                 }
-                Column(
+                ConstraintLayout(
                     modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    val (text, outlinedTextField) = createRefs()
                     Text(
                         text = stringResource(id = R.string.categories),
                         fontSize = categoriesFontSize,
                         letterSpacing = 8.sp,
                         color = Color.White,
-                        modifier = Modifier.offset(y = (-12).dp)
+                        modifier = Modifier
+                            .constrainAs(text) {
+                                top.linkTo(parent.top)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                            }
                     )
                     OutlinedTextField(
                         value = state.value.searchRecipe,
@@ -131,7 +139,11 @@ fun Content(
                         ),
                         shape = RoundedCornerShape(26.dp),
                         textStyle = TextStyle(fontSize = searchTextStyleFontSize),
-                        modifier = searchFieldModifier
+                        modifier = searchFieldModifier.constrainAs(outlinedTextField) {
+                            top.linkTo(text.bottom, margin = 12.dp)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        }
                     )
                     if (state.value.searchRecipe.isNotEmpty()) {
                         eventDisplaySearchRecipeDropdown()
