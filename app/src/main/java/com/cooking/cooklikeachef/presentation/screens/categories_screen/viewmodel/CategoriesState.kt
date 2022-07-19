@@ -8,5 +8,6 @@ data class CategoriesState(
     val isLoading: Boolean = false,
     val errorMessage: String = "",
     val isLoggedIn: Boolean = true,
-    val displayOptionsMenu: Boolean = false
+    val expandedOptionsMenu: Boolean = false,
+    val expandedSearchRecipeDropdown: Boolean = false
 )

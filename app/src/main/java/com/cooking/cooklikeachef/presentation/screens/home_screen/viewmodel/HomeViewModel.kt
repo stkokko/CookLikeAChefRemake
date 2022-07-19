@@ -30,7 +30,6 @@ class HomeViewModel @Inject constructor(
 
     private fun initLatestRecipes() {
         getLatestRecipes().onEach { result ->
-
             when (result) {
 
                 is Resource.Loading -> {
@@ -66,7 +65,7 @@ class HomeViewModel @Inject constructor(
             is HomeUIEvents.ContactUs -> {
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_EMAIL, arrayOf("cooklikeachef96@gmail.com"))
+                    putExtra(Intent.EXTRA_EMAIL, arrayOf("cooklikeachef96@gmail.com")) // TODO
                     type = "message/rfc822"
                     //type = "plain/text"
                 }
@@ -81,7 +80,7 @@ class HomeViewModel @Inject constructor(
 
             is HomeUIEvents.DisplayOptionsMenu, HomeUIEvents.DismissOptionsMenu -> {
                 _state.value =
-                    _state.value.copy(displayOptionsMenu = !_state.value.displayOptionsMenu)
+                    _state.value.copy(expandedOptionsMenu = !_state.value.expandedOptionsMenu)
             }
         }
     }

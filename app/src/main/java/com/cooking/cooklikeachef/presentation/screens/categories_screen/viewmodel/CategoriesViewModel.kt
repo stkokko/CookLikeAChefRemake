@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cooking.cooklikeachef.domain.use_cases.GetRecipes
 import com.cooking.cooklikeachef.domain.use_cases.LogOut
 import com.cooking.cooklikeachef.presentation.screens.categories_screen.events.CategoriesUIEvents
 import com.cooking.cooklikeachef.util.Resource
@@ -16,20 +17,51 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CategoriesViewModel @Inject constructor(
+    private val getRecipes: GetRecipes,
     private val logOut: LogOut
 ) : ViewModel() {
 
     private val _state = mutableStateOf(CategoriesState())
     val state: State<CategoriesState> = _state
 
+    init {
+        initRecipes()
+    }
+
+    private fun initRecipes() {
+        getRecipes().onEach { result ->
+            when (result) {
+                is Resource.Loading -> {
+                    _state.value = _state.value.copy(
+                        isLoading = true,
+                        recipes = emptyList(),
+                        errorMessage = ""
+                    )
+                }
+
+                is Resource.Success -> {
+                    _state.value = _state.value.copy(
+                        isLoading = false,
+                        recipes = result.data ?: emptyList(),
+                        errorMessage = ""
+                    )
+                }
+
+                is Resource.Error -> {
+                    _state.value = _state.value.copy(
+                        isLoading = false,
+                        recipes = emptyList(),
+                        errorMessage = result.message ?: "An unexpected error occurred."
+                    )
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
     fun onEvent(event: CategoriesUIEvents) {
         when (event) {
             is CategoriesUIEvents.SearchRecipeChanged -> {
-                // TODO
-            }
-
-            is CategoriesUIEvents.SearchRecipeResults -> {
-                // TODO
+                _state.value = _state.value.copy(searchRecipe = event.recipe)
             }
 
             is CategoriesUIEvents.ContactUs -> {
@@ -50,7 +82,12 @@ class CategoriesViewModel @Inject constructor(
 
             is CategoriesUIEvents.DisplayOptionsMenu, CategoriesUIEvents.DismissOptionsMenu -> {
                 _state.value =
-                    _state.value.copy(displayOptionsMenu = !_state.value.displayOptionsMenu)
+                    _state.value.copy(expandedOptionsMenu = !_state.value.expandedOptionsMenu)
+            }
+
+            is CategoriesUIEvents.DisplaySearchRecipeDropdown, CategoriesUIEvents.DismissSearchRecipeDropdown -> {
+                _state.value =
+                    _state.value.copy(expandedSearchRecipeDropdown = !_state.value.expandedSearchRecipeDropdown)
             }
         }
     }

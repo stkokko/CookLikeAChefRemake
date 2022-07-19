@@ -4,7 +4,6 @@ import android.content.Context
 
 sealed class FavouritesUIEvents {
     class SearchFavouriteRecipeChanged(val recipe: String) : FavouritesUIEvents()
-    class SearchFavouriteRecipeResults(val recipe: String) : FavouritesUIEvents()
     class ContactUs(val context: Context) : FavouritesUIEvents()
     object SignOff : FavouritesUIEvents()
     object DisplayOptionsMenu : FavouritesUIEvents()

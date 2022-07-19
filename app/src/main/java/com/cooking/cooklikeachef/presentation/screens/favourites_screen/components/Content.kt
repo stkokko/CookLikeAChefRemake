@@ -1,5 +1,6 @@
 package com.cooking.cooklikeachef.presentation.screens.favourites_screen.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -43,7 +44,7 @@ fun Content(
     ) {
         OptionsMenu(
             backgroundColor = LightCherry,
-            expandedOptionsMenu = state.value.displayOptionsMenu,
+            expandedOptionsMenu = state.value.expandedOptionsMenu,
             iconSize = optionsMenuIconSize,
             dropdownMenuWidth = optionsMenuDropdownWidth,
             dropdownItemFontSize = optionsMenuDropdownItemFontSize,
@@ -100,6 +101,12 @@ fun Content(
                 )
             }
         }
+    }
+
+    if (state.value.favouriteRecipes.isNotEmpty()) {
+        Log.d("FavouritesContent", "list size if: ${state.value.favouriteRecipes.size}")
+    } else {
+        Log.d("FavouritesContent", "list size else: ${state.value.favouriteRecipes.size}")
     }
 
     if (state.value.errorMessage.isNotEmpty()) {

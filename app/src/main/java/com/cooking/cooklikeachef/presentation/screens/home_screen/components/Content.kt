@@ -75,7 +75,7 @@ fun Content(
                 )
         ) {
             OptionsMenu(
-                expandedOptionsMenu = state.value.displayOptionsMenu,
+                expandedOptionsMenu = state.value.expandedOptionsMenu,
                 iconSize = optionsMenuIconSize,
                 dropdownMenuWidth = optionsMenuDropdownWidth,
                 dropdownItemFontSize = optionsMenuDropdownItemFontSize,

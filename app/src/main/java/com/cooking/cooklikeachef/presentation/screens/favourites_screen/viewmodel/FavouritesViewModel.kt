@@ -29,33 +29,43 @@ class FavouritesViewModel @Inject constructor(
     }
 
     private fun initFavouriteRecipes() {
-//        getFavouriteRecipes().onEach { result ->
-//
-//            when(result) {
-//
-//                is Resource.Loading -> {
-//                    _state.value = MainState(isLoading = true)
-//                }
-//
-//                is Resource.Success -> {
-//                    _state.value = _state.value.copy(favouriteRecipesList = result.data ?: emptyList())
-//                }
-//
-//                is Resource.Error -> {
-//                    _state.value = MainState(errorMessage = result.message ?: "An unexpected error occurred.")
-//                }
-//            }
-//        }.launchIn(viewModelScope)
+        getFavouriteRecipes().onEach { result ->
+
+            when (result) {
+
+                is Resource.Loading -> {
+                    _state.value = _state.value.copy(
+                        isLoading = true,
+                        favouriteRecipes = emptyList(),
+                        errorMessage = ""
+                    )
+                }
+
+                is Resource.Success -> {
+                    _state.value =
+                        _state.value.copy(
+                            isLoading = false,
+                            favouriteRecipes = result.data ?: emptyList(),
+                            errorMessage = ""
+                        )
+                }
+
+                is Resource.Error -> {
+                    _state.value =
+                        _state.value.copy(
+                            isLoading = false,
+                            favouriteRecipes = emptyList(),
+                            errorMessage = result.message ?: "An unexpected error occurred."
+                        )
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
     fun onEvent(event: FavouritesUIEvents) {
         when (event) {
             is FavouritesUIEvents.SearchFavouriteRecipeChanged -> {
-                // TODO
-            }
-
-            is FavouritesUIEvents.SearchFavouriteRecipeResults -> {
-                // TODO
+                _state.value = _state.value.copy(searchRecipe = event.recipe)
             }
 
             is FavouritesUIEvents.ContactUs -> {
@@ -76,7 +86,7 @@ class FavouritesViewModel @Inject constructor(
 
             is FavouritesUIEvents.DisplayOptionsMenu, FavouritesUIEvents.DismissOptionsMenu -> {
                 _state.value =
-                    _state.value.copy(displayOptionsMenu = !_state.value.displayOptionsMenu)
+                    _state.value.copy(expandedOptionsMenu = !_state.value.expandedOptionsMenu)
             }
         }
     }

@@ -57,9 +57,10 @@ class AppModule {
     @Provides
     @Singleton
     fun provideCookLikeAChefFirebaseCloudFirestoreRepo(
-        db: FirebaseFirestore
+        db: FirebaseFirestore,
+        auth: FirebaseAuth
     ): FirebaseCloudFirestoreRepo {
-        return FirebaseCloudFirestoreRepoImpl(db)
+        return FirebaseCloudFirestoreRepoImpl(db, auth)
     }
 
     @Provides

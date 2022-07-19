@@ -3,10 +3,7 @@ package com.cooking.cooklikeachef.presentation.screens.categories_screen.compone
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -24,6 +21,7 @@ import com.cooking.cooklikeachef.R
 import com.cooking.cooklikeachef.presentation.navigation.Screens
 import com.cooking.cooklikeachef.presentation.screens.categories_screen.viewmodel.CategoriesState
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.OptionsMenu
+import com.cooking.cooklikeachef.presentation.screens.common_compoments.RecipeResultDropdown
 import com.cooking.cooklikeachef.presentation.ui.theme.LightCherry
 
 @Composable
@@ -47,7 +45,9 @@ fun Content(
     eventDismissOptionsMenu: () -> Unit,
     eventContactUs: () -> Unit,
     eventSignOff: () -> Unit,
-    eventSearchRecipe: (String) -> Unit
+    eventSearchRecipeChanged: (String) -> Unit,
+    eventDisplaySearchRecipeDropdown: () -> Unit,
+    eventDismissSearchRecipeDropdown: () -> Unit
 ) {
     // TODO make it more readable
 
@@ -77,7 +77,7 @@ fun Content(
                     .padding(bottom = 16.dp)
             ) {
                 OptionsMenu(
-                    expandedOptionsMenu = state.value.displayOptionsMenu,
+                    expandedOptionsMenu = state.value.expandedOptionsMenu,
                     iconSize = optionsMenuIconSize,
                     dropdownMenuWidth = optionsMenuDropdownWidth,
                     dropdownItemFontSize = optionsMenuDropdownItemFontSize,
@@ -108,7 +108,7 @@ fun Content(
                     OutlinedTextField(
                         value = state.value.searchRecipe,
                         onValueChange = { searchRecipe ->
-                            eventSearchRecipe(searchRecipe.trim())
+                            eventSearchRecipeChanged(searchRecipe.trim())
                         },
                         placeholder = {
                             Box(
@@ -133,6 +133,17 @@ fun Content(
                         textStyle = TextStyle(fontSize = searchTextStyleFontSize),
                         modifier = searchFieldModifier
                     )
+                    if (state.value.searchRecipe.isNotEmpty()) {
+                        eventDisplaySearchRecipeDropdown()
+                        RecipeResultDropdown(
+                            expandedDropdown = state.value.expandedSearchRecipeDropdown,// TODO
+                            recipes = state.value.recipes.filter { it.name.contains(state.value.searchRecipe) }
+                        ) {
+                            eventDismissSearchRecipeDropdown()
+                        }
+                    } else {
+                        eventDismissSearchRecipeDropdown()
+                    }
                 }
             }
             Row(

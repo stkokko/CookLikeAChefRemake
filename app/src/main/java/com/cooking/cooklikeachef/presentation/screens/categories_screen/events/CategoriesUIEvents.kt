@@ -4,9 +4,10 @@ import android.content.Context
 
 sealed class CategoriesUIEvents {
     class SearchRecipeChanged(val recipe: String) : CategoriesUIEvents()
-    class SearchRecipeResults(val recipe: String) : CategoriesUIEvents()
     class ContactUs(val context: Context) : CategoriesUIEvents()
     object SignOff : CategoriesUIEvents()
     object DisplayOptionsMenu : CategoriesUIEvents()
     object DismissOptionsMenu : CategoriesUIEvents()
+    object DisplaySearchRecipeDropdown : CategoriesUIEvents()
+    object DismissSearchRecipeDropdown : CategoriesUIEvents()
 }

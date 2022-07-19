@@ -65,12 +65,18 @@ fun CategoriesScreen(
                         eventSignOff = {
                             categoriesViewModel.onEvent(CategoriesUIEvents.SignOff)
                         },
-                        eventSearchRecipe = { recipe ->
+                        eventSearchRecipeChanged = { recipe ->
                             categoriesViewModel.onEvent(
                                 CategoriesUIEvents.SearchRecipeChanged(
                                     recipe
                                 )
                             )
+                        },
+                        eventDisplaySearchRecipeDropdown = {
+                            categoriesViewModel.onEvent(CategoriesUIEvents.DisplaySearchRecipeDropdown)
+                        },
+                        eventDismissSearchRecipeDropdown = {
+                            categoriesViewModel.onEvent(CategoriesUIEvents.DismissSearchRecipeDropdown)
                         }
                     )
                 }
@@ -107,12 +113,18 @@ fun CategoriesScreen(
                         eventSignOff = {
                             categoriesViewModel.onEvent(CategoriesUIEvents.SignOff)
                         },
-                        eventSearchRecipe = { recipe ->
+                        eventSearchRecipeChanged = { recipe ->
                             categoriesViewModel.onEvent(
                                 CategoriesUIEvents.SearchRecipeChanged(
                                     recipe
                                 )
                             )
+                        },
+                        eventDisplaySearchRecipeDropdown = {
+                            categoriesViewModel.onEvent(CategoriesUIEvents.DisplaySearchRecipeDropdown)
+                        },
+                        eventDismissSearchRecipeDropdown = {
+                            categoriesViewModel.onEvent(CategoriesUIEvents.DismissSearchRecipeDropdown)
                         }
                     )
                 }
@@ -150,12 +162,18 @@ fun CategoriesScreen(
                         eventSignOff = {
                             categoriesViewModel.onEvent(CategoriesUIEvents.SignOff)
                         },
-                        eventSearchRecipe = { recipe ->
+                        eventSearchRecipeChanged = { recipe ->
                             categoriesViewModel.onEvent(
                                 CategoriesUIEvents.SearchRecipeChanged(
                                     recipe
                                 )
                             )
+                        },
+                        eventDisplaySearchRecipeDropdown = {
+                            categoriesViewModel.onEvent(CategoriesUIEvents.DisplaySearchRecipeDropdown)
+                        },
+                        eventDismissSearchRecipeDropdown = {
+                            categoriesViewModel.onEvent(CategoriesUIEvents.DismissSearchRecipeDropdown)
                         }
                     )
                 }
@@ -188,12 +206,18 @@ fun CategoriesScreen(
                         eventSignOff = {
                             categoriesViewModel.onEvent(CategoriesUIEvents.SignOff)
                         },
-                        eventSearchRecipe = { recipe ->
+                        eventSearchRecipeChanged = { recipe ->
                             categoriesViewModel.onEvent(
                                 CategoriesUIEvents.SearchRecipeChanged(
                                     recipe
                                 )
                             )
+                        },
+                        eventDisplaySearchRecipeDropdown = {
+                            categoriesViewModel.onEvent(CategoriesUIEvents.DisplaySearchRecipeDropdown)
+                        },
+                        eventDismissSearchRecipeDropdown = {
+                            categoriesViewModel.onEvent(CategoriesUIEvents.DismissSearchRecipeDropdown)
                         }
                     )
                 }

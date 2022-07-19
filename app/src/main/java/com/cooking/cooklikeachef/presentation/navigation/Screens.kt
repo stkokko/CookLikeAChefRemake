@@ -6,5 +6,6 @@ enum class Screens {
     Register,
     Home,
     Categories,
-    Favourites;
+    Favourites,
+    Recipe;
 }
