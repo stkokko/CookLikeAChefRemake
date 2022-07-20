@@ -33,31 +33,29 @@ fun ForgotPasswordDialog(
     onDismiss: () -> Unit
 ) {
     val localFocus = LocalFocusManager.current
-    val height = if (state.value.errorMessageDialog.isNotEmpty()) 210.dp else 190.dp
 
     Dialog(onDismissRequest = onDismiss) {
         Column(
             modifier = Modifier
                 .fillMaxWidth(fraction = 0.94f)
-                .height(height)// TODO when the error message is displayed, it pushes the buttons out of the dialog box
+                .height(200.dp)
                 .background(
                     color = Color.White,
                     shape = RoundedCornerShape(16.dp)
                 )
                 .padding(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly
         ) {
             Text(
                 text = stringResource(id = R.string.reset_password_text),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
             )
-            Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = stringResource(id = R.string.reset_password_message),
                 fontSize = 14.sp
             )
-            Spacer(modifier = Modifier.height(6.dp))
             TextField(
                 value = state.value.dialogEmail,
                 onValueChange = { dialogEmail ->
@@ -93,21 +91,22 @@ fun ForgotPasswordDialog(
             )
 
             if (state.value.errorMessageDialog.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(6.dp))
                 Text(
                     text = state.value.errorMessageDialog,
                     color = MaterialTheme.colors.primary
                 )
             }
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(6.dp))
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 CustomButton(
-                    modifier = Modifier.width(80.dp),
+                    modifier = Modifier.width(90.dp),
                     text = stringResource(id = R.string.send_text),
                     enabled = state.value.isDialogEmailValid,
                     isLoading = state.value.isResetPasswordLoading

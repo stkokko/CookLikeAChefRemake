@@ -68,7 +68,10 @@ class LoginViewModel @Inject constructor(
                 _state.value = _state.value.copy(
                     openResetPasswordDialog = !_state.value.openResetPasswordDialog,
                     dialogEmail = "",
-                    errorMessageDialog = ""
+                    errorMessageDialog = "",
+                    isDialogEmailValid = false,
+                    isResetPasswordSent = false,
+                    isResetPasswordLoading = false
                 )
             }
 
