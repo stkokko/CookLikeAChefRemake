@@ -1,6 +1,5 @@
 package com.cooking.cooklikeachef.data.repository.remote
 
-import android.util.Log
 import com.cooking.cooklikeachef.data.remote.dto.RecipeDto
 import com.cooking.cooklikeachef.domain.model.Recipe
 import com.cooking.cooklikeachef.domain.repository.remote.FirebaseCloudFirestoreRepo
@@ -30,25 +29,26 @@ class FirebaseCloudFirestoreRepoImpl @Inject constructor(
 
     override suspend fun getFavouriteRecipes(): List<Recipe> {
         return try {
-            if (auth.currentUser != null) {
+            if (auth.currentUser != null && !auth.currentUser?.uid.isNullOrEmpty()) {
                 val recipesDto = mutableListOf<RecipeDto>()
                 val favouriteRecipesIds =
-                    db.collection("Favourites").document(auth.currentUser!!.uid).get().await().get("recipes") as List<String>
-                Log.d("getFavouritesRecipes", "favouriteRecipesIds: ${favouriteRecipesIds}")
-                favouriteRecipesIds.forEach { id ->
-                    db.collection("Recipes").document(id).get().await().toObject(RecipeDto::class.java)?.let { recipesDto.add(it) }
-                } // TODO: at the end the list has only the last one recipe
+                    db.collection("Favourites").document(auth.currentUser!!.uid).get().await()
+                        .get("recipes") as? List<String>
+                favouriteRecipesIds?.forEach { id ->
+                    db.collection("Recipes").document(id.trim()).get().await()
+                        .toObject(RecipeDto::class.java)?.let {
+                        recipesDto.add(it)
+                    }
+                }
 
                 val favouriteRecipes = recipesDto.map {
                     Mappers.recipeDtoToModel(it)
                 }
-                Log.d("getFavouritesRecipes", "favouriteRecipes: ${recipesDto.size}")
                 favouriteRecipes
             } else {
                 emptyList()
             }
         } catch (e: Exception) {
-            Log.d("getFavouritesRecipes", "CATCH: ${e.message}")
             emptyList()
         }
     }

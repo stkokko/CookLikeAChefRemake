@@ -72,9 +72,6 @@ fun CategoriesScreen(
                                 )
                             )
                         },
-                        eventDisplaySearchRecipeDropdown = {
-                            categoriesViewModel.onEvent(CategoriesUIEvents.DisplaySearchRecipeDropdown)
-                        },
                         eventDismissSearchRecipeDropdown = {
                             categoriesViewModel.onEvent(CategoriesUIEvents.DismissSearchRecipeDropdown)
                         }
@@ -119,9 +116,6 @@ fun CategoriesScreen(
                                     recipe
                                 )
                             )
-                        },
-                        eventDisplaySearchRecipeDropdown = {
-                            categoriesViewModel.onEvent(CategoriesUIEvents.DisplaySearchRecipeDropdown)
                         },
                         eventDismissSearchRecipeDropdown = {
                             categoriesViewModel.onEvent(CategoriesUIEvents.DismissSearchRecipeDropdown)
@@ -169,9 +163,6 @@ fun CategoriesScreen(
                                 )
                             )
                         },
-                        eventDisplaySearchRecipeDropdown = {
-                            categoriesViewModel.onEvent(CategoriesUIEvents.DisplaySearchRecipeDropdown)
-                        },
                         eventDismissSearchRecipeDropdown = {
                             categoriesViewModel.onEvent(CategoriesUIEvents.DismissSearchRecipeDropdown)
                         }
@@ -191,7 +182,6 @@ fun CategoriesScreen(
                             .fillMaxHeight(fraction = 0.7f)
                             .width(120.dp),
                         categoriesFontSize = 26.sp,
-                        searchPlaceholderFontSize = 16.sp,
                         navController = navController,
                         state = categoriesViewModel.state,
                         eventDisplayOptionsMenu = {
@@ -212,9 +202,6 @@ fun CategoriesScreen(
                                     recipe
                                 )
                             )
-                        },
-                        eventDisplaySearchRecipeDropdown = {
-                            categoriesViewModel.onEvent(CategoriesUIEvents.DisplaySearchRecipeDropdown)
                         },
                         eventDismissSearchRecipeDropdown = {
                             categoriesViewModel.onEvent(CategoriesUIEvents.DismissSearchRecipeDropdown)

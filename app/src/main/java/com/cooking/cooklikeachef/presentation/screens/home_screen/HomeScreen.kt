@@ -28,7 +28,7 @@ fun MainScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-        ) {
+        ) { // TODO: exit app dialog
             val boxWithConstraintsScope = this
             val context = LocalContext.current
             when {

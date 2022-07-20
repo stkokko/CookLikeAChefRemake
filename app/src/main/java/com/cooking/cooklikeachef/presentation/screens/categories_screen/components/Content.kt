@@ -10,18 +10,14 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.PopupProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
-import coil.compose.AsyncImage
 import com.cooking.cooklikeachef.R
 import com.cooking.cooklikeachef.presentation.navigation.Screens
 import com.cooking.cooklikeachef.presentation.screens.categories_screen.viewmodel.CategoriesState
@@ -37,7 +33,7 @@ fun Content(
     categoriesLeftColumnModifier: Modifier,
     categoriesRightColumnModifier: Modifier,
     categoriesFontSize: TextUnit = TextUnit.Unspecified,
-    searchPlaceholderFontSize: TextUnit = TextUnit.Unspecified,
+    searchPlaceholderFontSize: TextUnit = 16.sp,
     searchTextStyleFontSize: TextUnit = 16.sp,
     categoryCardHeight: Dp = 100.dp,
     categoryCardFontSize: TextUnit = 16.sp,
@@ -51,7 +47,6 @@ fun Content(
     eventContactUs: () -> Unit,
     eventSignOff: () -> Unit,
     eventSearchRecipeChanged: (String) -> Unit,
-    eventDisplaySearchRecipeDropdown: () -> Unit,
     eventDismissSearchRecipeDropdown: () -> Unit
 ) {
     // TODO make it more readable
@@ -98,9 +93,10 @@ fun Content(
                     eventSignOff()
                 }
                 ConstraintLayout(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
                 ) {
-                    val (text, outlinedTextField) = createRefs()
+                    val (text, outlinedTextField, dropdown) = createRefs()
                     Text(
                         text = stringResource(id = R.string.categories),
                         fontSize = categoriesFontSize,
@@ -145,16 +141,24 @@ fun Content(
                             end.linkTo(parent.end)
                         }
                     )
-                    if (state.value.searchRecipe.isNotEmpty()) {
-                        eventDisplaySearchRecipeDropdown()
-                        RecipeResultDropdown(
-                            expandedDropdown = state.value.expandedSearchRecipeDropdown,// TODO
-                            recipes = state.value.recipes.filter { it.name.contains(state.value.searchRecipe) }
+                    if (state.value.expandedSearchRecipeDropdown) {
+                        Column(
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .constrainAs(dropdown) {
+                                    top.linkTo(outlinedTextField.bottom)
+                                    start.linkTo(parent.start)
+                                    end.linkTo(parent.end)
+                                }
+                                .background(Color.Black)
                         ) {
-                            eventDismissSearchRecipeDropdown()
+                            RecipeResultDropdown(
+                                expandedDropdown = state.value.expandedSearchRecipeDropdown,
+                                recipes = state.value.recipes.filter { it.name.contains(state.value.searchRecipe) }
+                            ) {
+                                eventDismissSearchRecipeDropdown()
+                            }
                         }
-                    } else {
-                        eventDismissSearchRecipeDropdown()
                     }
                 }
             }

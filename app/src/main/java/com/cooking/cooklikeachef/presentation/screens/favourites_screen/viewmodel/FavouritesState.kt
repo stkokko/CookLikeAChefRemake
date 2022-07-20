@@ -8,5 +8,6 @@ data class FavouritesState(
     val isLoading: Boolean = false,
     val errorMessage: String = "",
     val isLoggedIn: Boolean = true,
-    val expandedOptionsMenu: Boolean = false
+    val expandedOptionsMenu: Boolean = false,
+    val expandedSearchRecipeDropdown: Boolean = false
 )

@@ -61,7 +61,16 @@ class CategoriesViewModel @Inject constructor(
     fun onEvent(event: CategoriesUIEvents) {
         when (event) {
             is CategoriesUIEvents.SearchRecipeChanged -> {
-                _state.value = _state.value.copy(searchRecipe = event.recipe)
+                if (event.recipe.isNotEmpty())
+                    _state.value = _state.value.copy(
+                        searchRecipe = event.recipe,
+                        expandedSearchRecipeDropdown = true
+                    )
+                else
+                    _state.value = _state.value.copy(
+                        searchRecipe = event.recipe,
+                        expandedSearchRecipeDropdown = false
+                    )
             }
 
             is CategoriesUIEvents.ContactUs -> {
@@ -69,7 +78,6 @@ class CategoriesViewModel @Inject constructor(
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_EMAIL, arrayOf("cooklikeachef96@gmail.com"))
                     type = "message/rfc822"
-                    //type = "plain/text"
                 }
 
                 val shareIntent = Intent.createChooser(sendIntent, null)
@@ -85,7 +93,7 @@ class CategoriesViewModel @Inject constructor(
                     _state.value.copy(expandedOptionsMenu = !_state.value.expandedOptionsMenu)
             }
 
-            is CategoriesUIEvents.DisplaySearchRecipeDropdown, CategoriesUIEvents.DismissSearchRecipeDropdown -> {
+            is CategoriesUIEvents.DismissSearchRecipeDropdown -> {
                 _state.value =
                     _state.value.copy(expandedSearchRecipeDropdown = !_state.value.expandedSearchRecipeDropdown)
             }

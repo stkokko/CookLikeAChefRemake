@@ -8,6 +8,5 @@ sealed class CategoriesUIEvents {
     object SignOff : CategoriesUIEvents()
     object DisplayOptionsMenu : CategoriesUIEvents()
     object DismissOptionsMenu : CategoriesUIEvents()
-    object DisplaySearchRecipeDropdown : CategoriesUIEvents()
     object DismissSearchRecipeDropdown : CategoriesUIEvents()
 }

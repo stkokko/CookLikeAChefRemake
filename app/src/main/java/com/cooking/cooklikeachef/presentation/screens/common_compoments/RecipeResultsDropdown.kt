@@ -24,12 +24,11 @@ fun RecipeResultDropdown(
 ) {
     // TODO: why there is space top and bottom of the dropdown...tried padding vertical 0.dp
     DropdownMenu(
-        expanded = true, // TODO
+        expanded = expandedDropdown, // TODO
         onDismissRequest = { onDismissDropdown() },
         properties = PopupProperties(focusable = false),
         modifier = Modifier
             .width(270.dp)
-            .wrapContentHeight()
             .heightIn(max = 300.dp)
     ) {
         if (recipes.isNotEmpty()) {

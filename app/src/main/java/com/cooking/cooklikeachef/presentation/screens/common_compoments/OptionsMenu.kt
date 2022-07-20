@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.Color
@@ -30,7 +31,15 @@ fun OptionsMenu(
     logOut: () -> Unit
 ) {
     TopAppBar(
-        title = { title() },
+        title = {
+            Column( // TODO: outlined text view height should be resized accordingly based on the device
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                title()
+            }
+        },
         backgroundColor = backgroundColor,
         contentColor = Color.White,
         elevation = 0.dp,

@@ -8,4 +8,6 @@ sealed class FavouritesUIEvents {
     object SignOff : FavouritesUIEvents()
     object DisplayOptionsMenu : FavouritesUIEvents()
     object DismissOptionsMenu : FavouritesUIEvents()
+    object DisplaySearchFavouriteRecipeDropdown : FavouritesUIEvents()
+    object DismissSearchFavouriteRecipeDropdown : FavouritesUIEvents()
 }

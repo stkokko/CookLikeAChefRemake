@@ -3,6 +3,7 @@ package com.cooking.cooklikeachef.presentation.screens.favourites_screen
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -34,6 +35,11 @@ fun FavouritesScreen(
             when {
                 boxWithConstraintsScope.maxHeight > 900.dp -> {
                     Content(
+                        searchFavouriteFieldModifier = Modifier
+                            .width(380.dp)
+                            .height(64.dp), // TODO: either we will change the height of the topappbar too or we are gonna have bixed height to the outlined text field and change the text and placeholder sizes accordingly
+                        searchFavouritePlaceholderFontSize = 22.sp,
+                        searchFavouriteTextStyleFontSize = 22.sp,
                         optionsMenuIconSize = 38.dp,
                         optionsMenuDropdownWidth = 240.dp,
                         optionsMenuDropdownItemFontSize = 28.sp,
@@ -50,11 +56,23 @@ fun FavouritesScreen(
                         },
                         eventSignOff = {
                             favouritesViewModel.onEvent(FavouritesUIEvents.SignOff)
+                        },
+                        eventSearchFavouriteRecipeChanged = { favouriteRecipe ->
+                            favouritesViewModel.onEvent(
+                                FavouritesUIEvents.SearchFavouriteRecipeChanged(
+                                    favouriteRecipe
+                                )
+                            )
                         }
                     )
                 }
-                boxWithConstraintsScope.maxHeight > 780.dp -> {
+                boxWithConstraintsScope.maxHeight > 780.dp -> { // TODO: for some reason the list of favRec is empty
                     Content(
+                        searchFavouriteFieldModifier = Modifier
+                            .width(350.dp)
+                            .height(60.dp),
+                        searchFavouritePlaceholderFontSize = 22.sp,
+                        searchFavouriteTextStyleFontSize = 22.sp,
                         optionsMenuIconSize = 34.dp,
                         optionsMenuDropdownWidth = 200.dp,
                         optionsMenuDropdownItemFontSize = 22.sp,
@@ -71,11 +89,23 @@ fun FavouritesScreen(
                         },
                         eventSignOff = {
                             favouritesViewModel.onEvent(FavouritesUIEvents.SignOff)
+                        },
+                        eventSearchFavouriteRecipeChanged = { favouriteRecipe ->
+                            favouritesViewModel.onEvent(
+                                FavouritesUIEvents.SearchFavouriteRecipeChanged(
+                                    favouriteRecipe
+                                )
+                            )
                         }
                     )
                 }
                 boxWithConstraintsScope.maxHeight > 620.dp -> {
                     Content(
+                        searchFavouriteFieldModifier = Modifier
+                            .width(270.dp)
+                            .height(56.dp),
+                        searchFavouritePlaceholderFontSize = 20.sp,
+                        searchFavouriteTextStyleFontSize = 20.sp,
                         optionsMenuIconSize = 26.dp,
                         optionsMenuDropdownWidth = 170.dp,
                         optionsMenuDropdownItemFontSize = 18.sp,
@@ -92,11 +122,21 @@ fun FavouritesScreen(
                         },
                         eventSignOff = {
                             favouritesViewModel.onEvent(FavouritesUIEvents.SignOff)
+                        },
+                        eventSearchFavouriteRecipeChanged = { favouriteRecipe ->
+                            favouritesViewModel.onEvent(
+                                FavouritesUIEvents.SearchFavouriteRecipeChanged(
+                                    favouriteRecipe
+                                )
+                            )
                         }
                     )
                 }
                 else -> {
                     Content(
+                        searchFavouriteFieldModifier = Modifier
+                            .width(240.dp)
+                            .height(52.dp),
                         navController = navController,
                         state = favouritesViewModel.state,
                         eventDisplayOptionsMenu = {
@@ -110,6 +150,13 @@ fun FavouritesScreen(
                         },
                         eventSignOff = {
                             favouritesViewModel.onEvent(FavouritesUIEvents.SignOff)
+                        },
+                        eventSearchFavouriteRecipeChanged = { favouriteRecipe ->
+                            favouritesViewModel.onEvent(
+                                FavouritesUIEvents.SearchFavouriteRecipeChanged(
+                                    favouriteRecipe
+                                )
+                            )
                         }
                     )
                 }
