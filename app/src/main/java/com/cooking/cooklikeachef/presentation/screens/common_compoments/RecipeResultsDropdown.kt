@@ -18,13 +18,13 @@ import com.cooking.cooklikeachef.domain.model.Recipe
 
 @Composable
 fun RecipeResultDropdown(
-    expandedDropdown: Boolean,
+    isDropdownExpanded: Boolean,
     recipes: List<Recipe>,
     onDismissDropdown: () -> Unit
 ) {
     // TODO: why there is space top and bottom of the dropdown...tried padding vertical 0.dp
     DropdownMenu(
-        expanded = expandedDropdown, // TODO
+        expanded = isDropdownExpanded,
         onDismissRequest = { onDismissDropdown() },
         properties = PopupProperties(focusable = false),
         modifier = Modifier

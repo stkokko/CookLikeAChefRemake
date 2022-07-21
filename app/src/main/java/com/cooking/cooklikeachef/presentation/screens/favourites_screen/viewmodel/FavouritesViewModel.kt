@@ -86,7 +86,7 @@ class FavouritesViewModel @Inject constructor(
 
             is FavouritesUIEvents.DisplayOptionsMenu, FavouritesUIEvents.DismissOptionsMenu -> {
                 _state.value =
-                    _state.value.copy(expandedOptionsMenu = !_state.value.expandedOptionsMenu)
+                    _state.value.copy(isOptionsMenuExpanded = !_state.value.isOptionsMenuExpanded)
             }
         }
     }

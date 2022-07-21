@@ -24,6 +24,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.cooking.cooklikeachef.R
 import com.cooking.cooklikeachef.presentation.navigation.Screens
+import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomTopAppBar
+import com.cooking.cooklikeachef.presentation.screens.common_compoments.ExitAppDialog
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.OptionsMenu
 import com.cooking.cooklikeachef.presentation.screens.home_screen.viewmodel.HomeState
 
@@ -41,7 +43,9 @@ fun Content(
     eventDisplayOptionsMenu: () -> Unit,
     eventDismissOptionsMenu: () -> Unit,
     eventContactUs: () -> Unit,
-    eventSignOff: () -> Unit
+    eventSignOff: () -> Unit,
+    eventExitApp: () -> Unit,
+    eventDismissExitAppDialog: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -74,22 +78,17 @@ fun Content(
                     bottom = 6.dp
                 )
         ) {
-            OptionsMenu(
-                expandedOptionsMenu = state.value.expandedOptionsMenu,
-                iconSize = optionsMenuIconSize,
-                dropdownMenuWidth = optionsMenuDropdownWidth,
-                dropdownItemFontSize = optionsMenuDropdownItemFontSize,
-                openOptionsMenu = {
-                    eventDisplayOptionsMenu()
-                },
-                dismissOptionsMenu = {
-                    eventDismissOptionsMenu()
-                },
-                contactUs = {
-                    eventContactUs()
+            CustomTopAppBar(modifier = Modifier.align(Alignment.TopCenter)) {
+                OptionsMenu(
+                    isOptionsMenuExpanded = state.value.isOptionsMenuExpanded,
+                    iconSize = optionsMenuIconSize,
+                    dropdownMenuWidth = optionsMenuDropdownWidth,
+                    dropdownItemFontSize = optionsMenuDropdownItemFontSize,
+                    openOptionsMenu = { eventDisplayOptionsMenu() },
+                    dismissOptionsMenu = { eventDismissOptionsMenu() },
+                    contactUs = { eventContactUs() }) {
+                    eventSignOff()
                 }
-            ) {
-                eventSignOff()
             }
             Text(
                 text = stringResource(id = R.string.welcome_to_appname),
@@ -131,6 +130,14 @@ fun Content(
 
     if (state.value.errorMessage.isNotEmpty()) {
         // TODO: Snackbar
+    }
+
+    if (state.value.isExitAppDialogOpen) {
+        ExitAppDialog(onExitClick = {
+            eventExitApp()
+        }) {
+            eventDismissExitAppDialog()
+        }
     }
 
     if (!state.value.isLoggedIn) {

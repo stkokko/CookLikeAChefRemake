@@ -1,7 +1,6 @@
 package com.cooking.cooklikeachef.presentation.screens.login_screen.viewmodel
 
 import android.util.Patterns
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -66,7 +65,7 @@ class LoginViewModel @Inject constructor(
 
             is LoginUIEvents.DismissResetPasswordDialog, LoginUIEvents.OpenResetPasswordDialogClicked -> {
                 _state.value = _state.value.copy(
-                    openResetPasswordDialog = !_state.value.openResetPasswordDialog,
+                    isResetPasswordDialogOpen = !_state.value.isResetPasswordDialogOpen,
                     dialogEmail = "",
                     errorMessageDialog = "",
                     isDialogEmailValid = false,
@@ -77,7 +76,7 @@ class LoginViewModel @Inject constructor(
 
             is LoginUIEvents.OpenExitAppDialog, LoginUIEvents.DismissExitAppDialog -> {
                 _state.value = _state.value.copy(
-                    openExitAppDialog = !_state.value.openExitAppDialog
+                    isExitAppDialogOpen = !_state.value.isExitAppDialogOpen
                 )
             }
         }

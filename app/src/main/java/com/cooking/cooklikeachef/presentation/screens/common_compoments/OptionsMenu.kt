@@ -7,7 +7,6 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.Color
@@ -19,68 +18,51 @@ import com.cooking.cooklikeachef.R
 
 @Composable
 fun OptionsMenu(
-    backgroundColor: Color = Color.Transparent,
     iconSize: Dp = 24.dp,
     dropdownMenuWidth: Dp = 150.dp,
     dropdownItemFontSize: TextUnit = 16.sp,
-    expandedOptionsMenu: Boolean,
-    title: @Composable () -> Unit = {},
+    isOptionsMenuExpanded: Boolean,
     openOptionsMenu: () -> Unit,
     dismissOptionsMenu: () -> Unit,
     contactUs: () -> Unit,
     logOut: () -> Unit
 ) {
-    TopAppBar(
-        title = {
-            Column( // TODO: outlined text view height should be resized accordingly based on the device
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                title()
-            }
-        },
-        backgroundColor = backgroundColor,
-        contentColor = Color.White,
-        elevation = 0.dp,
-        actions = {
-            IconButton(onClick = { openOptionsMenu() }) {
-                Icon(Icons.Default.MoreVert, "Option Menu icon", modifier = Modifier.size(iconSize))
-            }
-
-            DropdownMenu(
-                modifier = Modifier
-                    .wrapContentHeight()
-                    .width(dropdownMenuWidth),
-                expanded = expandedOptionsMenu,
-                onDismissRequest = { dismissOptionsMenu() }
-            ) {
-
-                DropdownMenuItem(onClick = {
-                    contactUs()
-                }) {
-                    Icon(imageVector = Icons.Default.Email, contentDescription = "Contact Us icon")
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Text(
-                        text = stringResource(id = R.string.contact_us),
-                        fontSize = dropdownItemFontSize
-                    )
-                }
-
-                DropdownMenuItem(onClick = {
-                    logOut()
-                }) {
-                    Icon(imageVector = Icons.Default.Logout, contentDescription = "Log Out icon")
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Text(
-                        text = stringResource(id = R.string.logout),
-                        fontSize = dropdownItemFontSize
-                    )
-                }
-            }
-        },
+    IconButton(onClick = { openOptionsMenu() }) {
+        Icon(
+            imageVector = Icons.Default.MoreVert,
+            tint = Color.White,
+            contentDescription = "Option Menu icon",
+            modifier = Modifier.size(iconSize)
+        )
+    }
+    DropdownMenu(
         modifier = Modifier
-            .fillMaxWidth()
             .wrapContentHeight()
-    )
+            .width(dropdownMenuWidth),
+        expanded = isOptionsMenuExpanded,
+        onDismissRequest = { dismissOptionsMenu() }
+    ) {
+
+        DropdownMenuItem(onClick = {
+            contactUs()
+        }) {
+            Icon(imageVector = Icons.Default.Email, contentDescription = "Contact Us icon")
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(
+                text = stringResource(id = R.string.contact_us),
+                fontSize = dropdownItemFontSize
+            )
+        }
+
+        DropdownMenuItem(onClick = {
+            logOut()
+        }) {
+            Icon(imageVector = Icons.Default.Logout, contentDescription = "Log Out icon")
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(
+                text = stringResource(id = R.string.logout),
+                fontSize = dropdownItemFontSize
+            )
+        }
+    }
 }

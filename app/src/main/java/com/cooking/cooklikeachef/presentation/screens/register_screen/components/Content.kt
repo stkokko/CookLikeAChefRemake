@@ -219,7 +219,7 @@ fun Content(
             })
     }
 
-    if (state.value.openExitAppDialog) {
+    if (state.value.isExitAppDialogOpen) {
         ExitAppDialog(onExitClick = {
             eventExitApp()
         }) {

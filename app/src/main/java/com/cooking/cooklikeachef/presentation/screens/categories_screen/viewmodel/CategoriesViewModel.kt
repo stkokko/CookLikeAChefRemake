@@ -64,12 +64,12 @@ class CategoriesViewModel @Inject constructor(
                 if (event.recipe.isNotEmpty())
                     _state.value = _state.value.copy(
                         searchRecipe = event.recipe,
-                        expandedSearchRecipeDropdown = true
+                        isSearchRecipeDropdownExpanded = true
                     )
                 else
                     _state.value = _state.value.copy(
                         searchRecipe = event.recipe,
-                        expandedSearchRecipeDropdown = false
+                        isSearchRecipeDropdownExpanded = false
                     )
             }
 
@@ -90,12 +90,12 @@ class CategoriesViewModel @Inject constructor(
 
             is CategoriesUIEvents.DisplayOptionsMenu, CategoriesUIEvents.DismissOptionsMenu -> {
                 _state.value =
-                    _state.value.copy(expandedOptionsMenu = !_state.value.expandedOptionsMenu)
+                    _state.value.copy(isOptionsMenuExpanded = !_state.value.isOptionsMenuExpanded)
             }
 
             is CategoriesUIEvents.DismissSearchRecipeDropdown -> {
                 _state.value =
-                    _state.value.copy(expandedSearchRecipeDropdown = !_state.value.expandedSearchRecipeDropdown)
+                    _state.value.copy(isSearchRecipeDropdownExpanded = !_state.value.isSearchRecipeDropdownExpanded)
             }
         }
     }

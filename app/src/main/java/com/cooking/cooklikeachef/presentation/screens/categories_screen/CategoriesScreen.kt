@@ -1,5 +1,6 @@
 package com.cooking.cooklikeachef.presentation.screens.categories_screen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -210,5 +211,9 @@ fun CategoriesScreen(
                 }
             }
         }
+    }
+
+    BackHandler {
+
     }
 }

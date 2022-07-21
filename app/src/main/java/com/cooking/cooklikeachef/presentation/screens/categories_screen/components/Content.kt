@@ -21,6 +21,7 @@ import androidx.navigation.NavController
 import com.cooking.cooklikeachef.R
 import com.cooking.cooklikeachef.presentation.navigation.Screens
 import com.cooking.cooklikeachef.presentation.screens.categories_screen.viewmodel.CategoriesState
+import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomTopAppBar
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.OptionsMenu
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.RecipeResultDropdown
 import com.cooking.cooklikeachef.presentation.ui.theme.LightCherry
@@ -62,7 +63,7 @@ fun Content(
         }
     } else {
         Box(modifier = Modifier.fillMaxSize()) {
-            Column(
+            ConstraintLayout(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(fraction = headerLayoutFraction)
@@ -75,89 +76,83 @@ fun Content(
                     )
                     .padding(bottom = 16.dp)
             ) {
-                OptionsMenu(
-                    expandedOptionsMenu = state.value.expandedOptionsMenu,
-                    iconSize = optionsMenuIconSize,
-                    dropdownMenuWidth = optionsMenuDropdownWidth,
-                    dropdownItemFontSize = optionsMenuDropdownItemFontSize,
-                    openOptionsMenu = {
-                        eventDisplayOptionsMenu()
-                    },
-                    dismissOptionsMenu = {
-                        eventDismissOptionsMenu()
-                    },
-                    contactUs = {
-                        eventContactUs()
+                val (customTopAppBar, text, outlinedTextField, dropdown) = createRefs()
+                CustomTopAppBar(modifier = Modifier.constrainAs(customTopAppBar) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }) {
+                    OptionsMenu(
+                        isOptionsMenuExpanded = state.value.isOptionsMenuExpanded,
+                        iconSize = optionsMenuIconSize,
+                        dropdownMenuWidth = optionsMenuDropdownWidth,
+                        dropdownItemFontSize = optionsMenuDropdownItemFontSize,
+                        openOptionsMenu = { eventDisplayOptionsMenu() },
+                        dismissOptionsMenu = { eventDismissOptionsMenu() },
+                        contactUs = { eventContactUs() }) {
+                        eventSignOff()
                     }
-                ) {
-                    eventSignOff()
                 }
-                ConstraintLayout(
+                Text(
+                    text = stringResource(id = R.string.categories),
+                    fontSize = categoriesFontSize,
+                    letterSpacing = 8.sp,
+                    color = Color.White,
                     modifier = Modifier
-                        .fillMaxSize()
-                ) {
-                    val (text, outlinedTextField, dropdown) = createRefs()
-                    Text(
-                        text = stringResource(id = R.string.categories),
-                        fontSize = categoriesFontSize,
-                        letterSpacing = 8.sp,
-                        color = Color.White,
-                        modifier = Modifier
-                            .constrainAs(text) {
-                                top.linkTo(parent.top)
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
-                            }
-                    )
-                    OutlinedTextField(
-                        value = state.value.searchRecipe,
-                        onValueChange = { searchRecipe ->
-                            eventSearchRecipeChanged(searchRecipe.trim())
-                        },
-                        placeholder = {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.search),
-                                    color = Color.LightGray,
-                                    fontSize = searchPlaceholderFontSize,
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                )
-                            }
-                        },
-                        singleLine = true,
-                        maxLines = 1,
-                        colors = TextFieldDefaults.textFieldColors(
-                            backgroundColor = Color.White
-                        ),
-                        shape = RoundedCornerShape(26.dp),
-                        textStyle = TextStyle(fontSize = searchTextStyleFontSize),
-                        modifier = searchFieldModifier.constrainAs(outlinedTextField) {
-                            top.linkTo(text.bottom, margin = 12.dp)
+                        .constrainAs(text) {
+                            top.linkTo(customTopAppBar.bottom)
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
                         }
-                    )
-                    if (state.value.expandedSearchRecipeDropdown) {
-                        Column(
+                )
+                OutlinedTextField(
+                    value = state.value.searchRecipe,
+                    onValueChange = { searchRecipe ->
+                        eventSearchRecipeChanged(searchRecipe.trim())
+                    },
+                    placeholder = {
+                        Box(
                             modifier = Modifier
-                                .wrapContentSize()
-                                .constrainAs(dropdown) {
-                                    top.linkTo(outlinedTextField.bottom)
-                                    start.linkTo(parent.start)
-                                    end.linkTo(parent.end)
-                                }
-                                .background(Color.Black)
+                                .fillMaxSize()
                         ) {
-                            RecipeResultDropdown(
-                                expandedDropdown = state.value.expandedSearchRecipeDropdown,
-                                recipes = state.value.recipes.filter { it.name.contains(state.value.searchRecipe) }
-                            ) {
-                                eventDismissSearchRecipeDropdown()
+                            Text(
+                                text = stringResource(id = R.string.search),
+                                color = Color.LightGray,
+                                fontSize = searchPlaceholderFontSize,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                            )
+                        }
+                    },
+                    singleLine = true,
+                    maxLines = 1,
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(26.dp),
+                    textStyle = TextStyle(fontSize = searchTextStyleFontSize),
+                    modifier = searchFieldModifier.constrainAs(outlinedTextField) {
+                        top.linkTo(text.bottom, margin = 12.dp)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+                )
+                if (state.value.isSearchRecipeDropdownExpanded) {
+                    Column(
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .constrainAs(dropdown) {
+                                top.linkTo(outlinedTextField.bottom)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
                             }
+                            .background(Color.Black)
+                    ) {
+                        RecipeResultDropdown(
+                            isDropdownExpanded = state.value.isSearchRecipeDropdownExpanded,
+                            recipes = state.value.recipes.filter { it.name.contains(state.value.searchRecipe) }
+                        ) {
+                            eventDismissSearchRecipeDropdown()
                         }
                     }
                 }

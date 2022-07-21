@@ -191,13 +191,13 @@ fun Content(
         }
     }
 
-    if (state.value.openResetPasswordDialog) {
+    if (state.value.isResetPasswordDialogOpen) {
         ForgotPasswordDialog(state, eventDialogEmailChanged, eventResetPassword) {
             eventDismissResetPasswordDialog()
         }
     }
 
-    if (state.value.openExitAppDialog) {
+    if (state.value.isExitAppDialogOpen) {
         ExitAppDialog(onExitClick = {
             eventExitApp()
         }) {

@@ -31,11 +31,11 @@ fun BottomNavigationBar(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoot = navBackStackEntry?.destination?.route
-    val mainValues = immutableListOf(Icons.Default.Home, R.string.home)
+    val homeValues = immutableListOf(Icons.Default.Home, R.string.home)
     val categoriesValues = immutableListOf(Icons.Default.Category, R.string.categories)
     val favouritesValues = immutableListOf(Icons.Default.Favorite, R.string.favourites)
     val screens = mapOf(
-        Screens.Home.name to mainValues,
+        Screens.Home.name to homeValues,
         Screens.Categories.name to categoriesValues,
         Screens.Favourites.name to favouritesValues
     )

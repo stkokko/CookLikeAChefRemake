@@ -7,4 +7,6 @@ sealed class HomeUIEvents {
     object SignOff : HomeUIEvents()
     object DisplayOptionsMenu : HomeUIEvents()
     object DismissOptionsMenu : HomeUIEvents()
+    object OpenExitAppDialog: HomeUIEvents()
+    object DismissExitAppDialog: HomeUIEvents()
 }

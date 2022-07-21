@@ -80,7 +80,13 @@ class HomeViewModel @Inject constructor(
 
             is HomeUIEvents.DisplayOptionsMenu, HomeUIEvents.DismissOptionsMenu -> {
                 _state.value =
-                    _state.value.copy(expandedOptionsMenu = !_state.value.expandedOptionsMenu)
+                    _state.value.copy(isOptionsMenuExpanded = !_state.value.isOptionsMenuExpanded)
+            }
+
+            is HomeUIEvents.OpenExitAppDialog, HomeUIEvents.DismissExitAppDialog -> {
+                _state.value = _state.value.copy(
+                    isExitAppDialogOpen = !_state.value.isExitAppDialogOpen
+                )
             }
         }
     }

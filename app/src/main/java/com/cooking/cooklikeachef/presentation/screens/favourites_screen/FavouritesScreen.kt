@@ -1,5 +1,6 @@
 package com.cooking.cooklikeachef.presentation.screens.favourites_screen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -162,5 +163,9 @@ fun FavouritesScreen(
                 }
             }
         }
+    }
+
+    BackHandler {
+
     }
 }

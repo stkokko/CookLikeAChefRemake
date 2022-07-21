@@ -1,6 +1,5 @@
 package com.cooking.cooklikeachef.presentation.screens.favourites_screen.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -25,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.cooking.cooklikeachef.R
 import com.cooking.cooklikeachef.presentation.navigation.Screens
+import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomTopAppBar
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.OptionsMenu
 import com.cooking.cooklikeachef.presentation.screens.favourites_screen.viewmodel.FavouritesState
 import com.cooking.cooklikeachef.presentation.ui.theme.LightCherry
@@ -49,53 +49,46 @@ fun Content(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        OptionsMenu(
-            backgroundColor = LightCherry,
-            expandedOptionsMenu = state.value.expandedOptionsMenu,
-            iconSize = optionsMenuIconSize,
-            dropdownMenuWidth = optionsMenuDropdownWidth,
-            dropdownItemFontSize = optionsMenuDropdownItemFontSize,
-            title = {
-                OutlinedTextField(
-                    value = state.value.searchRecipe,
-                    onValueChange = { searchFavouriteRecipe ->
-                        eventSearchFavouriteRecipeChanged(searchFavouriteRecipe.trim())
-                    },
-                    placeholder = {
-                        Box(
+        CustomTopAppBar(backgroundColor = LightCherry, title = {
+            OutlinedTextField(
+                value = state.value.searchRecipe,
+                onValueChange = { searchFavouriteRecipe ->
+                    eventSearchFavouriteRecipeChanged(searchFavouriteRecipe.trim())
+                },
+                placeholder = {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.search),
+                            color = Color.LightGray,
+                            fontSize = searchFavouritePlaceholderFontSize,
                             modifier = Modifier
                                 .fillMaxSize()
-                        ) {
-                            Text(
-                                text = stringResource(id = R.string.search),
-                                color = Color.LightGray,
-                                fontSize = searchFavouritePlaceholderFontSize,
-                                modifier = Modifier
-                                    .fillMaxSize()
-                            )
-                        }
-                    },
-                    singleLine = true,
-                    maxLines = 1,
-                    colors = TextFieldDefaults.textFieldColors(
-                        backgroundColor = Color.White
-                    ),
-                    shape = RoundedCornerShape(26.dp),
-                    textStyle = TextStyle(fontSize = searchFavouriteTextStyleFontSize),
-                    modifier = searchFavouriteFieldModifier
-                )
-            },
-            openOptionsMenu = {
-                eventDisplayOptionsMenu()
-            },
-            dismissOptionsMenu = {
-                eventDismissOptionsMenu()
-            },
-            contactUs = {
-                eventContactUs()
+                        )
+                    }
+                },
+                singleLine = true,
+                maxLines = 1,
+                colors = TextFieldDefaults.textFieldColors(
+                    backgroundColor = Color.White
+                ),
+                shape = RoundedCornerShape(26.dp),
+                textStyle = TextStyle(fontSize = searchFavouriteTextStyleFontSize),
+                modifier = searchFavouriteFieldModifier
+            )
+        }) {
+            OptionsMenu(
+                isOptionsMenuExpanded = state.value.isOptionsMenuExpanded,
+                iconSize = optionsMenuIconSize,
+                dropdownMenuWidth = optionsMenuDropdownWidth,
+                dropdownItemFontSize = optionsMenuDropdownItemFontSize,
+                openOptionsMenu = { eventDisplayOptionsMenu() },
+                dismissOptionsMenu = { eventDismissOptionsMenu() },
+                contactUs = { eventContactUs() }) {
+                eventSignOff()
             }
-        ) {
-            eventSignOff()
         }
 
         if (state.value.isLoading) {

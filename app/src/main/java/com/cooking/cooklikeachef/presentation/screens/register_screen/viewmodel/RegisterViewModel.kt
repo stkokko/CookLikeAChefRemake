@@ -62,7 +62,7 @@ class RegisterViewModel @Inject constructor(
 
             is RegisterUIEvents.OpenExitAppDialog, RegisterUIEvents.DismissExitAppDialog -> {
                 _state.value = _state.value.copy(
-                    openExitAppDialog = !_state.value.openExitAppDialog
+                    isExitAppDialogOpen = !_state.value.isExitAppDialogOpen
                 )
             }
         }

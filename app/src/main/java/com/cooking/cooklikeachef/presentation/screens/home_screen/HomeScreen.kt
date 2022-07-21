@@ -1,5 +1,7 @@
 package com.cooking.cooklikeachef.presentation.screens.home_screen
 
+import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -19,6 +21,8 @@ fun MainScreen(
     navController: NavController,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
+    val activity = LocalContext.current as Activity
+
     Scaffold(bottomBar = {
         BottomNavigationBar(
             navController = navController
@@ -57,6 +61,12 @@ fun MainScreen(
                         },
                         eventSignOff = {
                             homeViewModel.onEvent(HomeUIEvents.SignOff)
+                        },
+                        eventExitApp = {
+                            activity.finish()
+                        },
+                        eventDismissExitAppDialog = {
+                            homeViewModel.onEvent(HomeUIEvents.DismissExitAppDialog)
                         }
                     )
                 }
@@ -85,6 +95,12 @@ fun MainScreen(
                         },
                         eventSignOff = {
                             homeViewModel.onEvent(HomeUIEvents.SignOff)
+                        },
+                        eventExitApp = {
+                            activity.finish()
+                        },
+                        eventDismissExitAppDialog = {
+                            homeViewModel.onEvent(HomeUIEvents.DismissExitAppDialog)
                         }
                     )
                 }
@@ -113,6 +129,12 @@ fun MainScreen(
                         },
                         eventSignOff = {
                             homeViewModel.onEvent(HomeUIEvents.SignOff)
+                        },
+                        eventExitApp = {
+                            activity.finish()
+                        },
+                        eventDismissExitAppDialog = {
+                            homeViewModel.onEvent(HomeUIEvents.DismissExitAppDialog)
                         }
                     )
                 }
@@ -138,10 +160,20 @@ fun MainScreen(
                         },
                         eventSignOff = {
                             homeViewModel.onEvent(HomeUIEvents.SignOff)
+                        },
+                        eventExitApp = {
+                            activity.finish()
+                        },
+                        eventDismissExitAppDialog = {
+                            homeViewModel.onEvent(HomeUIEvents.DismissExitAppDialog)
                         }
                     )
                 }
             }
         }
+    }
+    
+    BackHandler {
+        homeViewModel.onEvent(HomeUIEvents.OpenExitAppDialog)
     }
 }

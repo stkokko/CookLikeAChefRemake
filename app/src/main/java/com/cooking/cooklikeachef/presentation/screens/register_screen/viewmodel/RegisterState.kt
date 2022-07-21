@@ -9,7 +9,7 @@ data class RegisterState(
     val isPasswordVisible: Boolean = false,
     val isConfirmPasswordValid: Boolean = false,
     val isConfirmPasswordVisible: Boolean = false,
-    val openExitAppDialog: Boolean = false,
+    val isExitAppDialogOpen: Boolean = false,
     val isLoading: Boolean = false,
     val errorMessage: String = "",
     val isRegistered: Boolean = false,

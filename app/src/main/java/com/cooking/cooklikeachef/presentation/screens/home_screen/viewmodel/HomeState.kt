@@ -7,5 +7,6 @@ data class HomeState(
     val isLoading: Boolean = false,
     val errorMessage: String = "",
     val isLoggedIn: Boolean = true,
-    val expandedOptionsMenu: Boolean = false
+    val isOptionsMenuExpanded: Boolean = false,
+    val isExitAppDialogOpen: Boolean = false,
 )
