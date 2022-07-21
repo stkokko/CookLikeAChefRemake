@@ -37,7 +37,7 @@ fun CategoriesScreen(
                     Content(
                         searchFieldModifier = Modifier
                             .width(380.dp)
-                            .height(64.dp),
+                            .height(60.dp),
                         categoriesLeftColumnModifier = Modifier
                             .fillMaxHeight()
                             .width(240.dp),
@@ -45,8 +45,8 @@ fun CategoriesScreen(
                             .fillMaxHeight(fraction = 0.76f)
                             .width(240.dp),
                         categoriesFontSize = 54.sp,
-                        searchPlaceholderFontSize = 22.sp, // TODO when search results implemented check the size
-                        searchTextStyleFontSize = 22.sp, // TODO same here for every screen
+                        searchPlaceholderFontSize = 22.sp,
+                        searchTextStyleFontSize = 22.sp,
                         categoryCardHeight = 200.dp,
                         categoryCardFontSize = 22.sp,
                         optionsMenuIconSize = 38.dp,
@@ -82,7 +82,7 @@ fun CategoriesScreen(
                     Content(
                         searchFieldModifier = Modifier
                             .width(350.dp)
-                            .height(60.dp),
+                            .height(58.dp),
                         categoriesLeftColumnModifier = Modifier
                             .fillMaxHeight()
                             .width(200.dp),

@@ -31,7 +31,7 @@ import com.cooking.cooklikeachef.presentation.screens.home_screen.viewmodel.Home
 
 @Composable
 fun Content(
-    modifier: Modifier,
+    latestRecipesCardModifier: Modifier,
     welcomeTextFontSize: TextUnit,
     latestRecipesTextFontSize: TextUnit,
     cardTextFontSize: TextUnit,
@@ -113,7 +113,7 @@ fun Content(
                     LazyRow {
                         items(state.value.latestRecipesList) { latestRecipe ->
                             LatestRecipesCard(
-                                modifier = modifier,
+                                modifier = latestRecipesCardModifier,
                                 url = latestRecipe.imageURL,
                                 title = latestRecipe.name,
                                 textFontSize = cardTextFontSize

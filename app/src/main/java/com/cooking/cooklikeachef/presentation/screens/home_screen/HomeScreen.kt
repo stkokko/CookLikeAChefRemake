@@ -32,13 +32,13 @@ fun MainScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-        ) { // TODO: exit app dialog
+        ) {
             val boxWithConstraintsScope = this
             val context = LocalContext.current
             when {
                 boxWithConstraintsScope.maxHeight > 900.dp -> {
                     Content(
-                        modifier = Modifier
+                        latestRecipesCardModifier = Modifier
                             .width(370.dp)
                             .height(220.dp)
                             .padding(end = 6.dp),
@@ -72,7 +72,7 @@ fun MainScreen(
                 }
                 boxWithConstraintsScope.maxHeight > 780.dp -> {
                     Content(
-                        modifier = Modifier
+                        latestRecipesCardModifier = Modifier
                             .width(280.dp)
                             .height(150.dp)
                             .padding(end = 6.dp),
@@ -106,7 +106,7 @@ fun MainScreen(
                 }
                 boxWithConstraintsScope.maxHeight > 620.dp -> {
                     Content(
-                        modifier = Modifier
+                        latestRecipesCardModifier = Modifier
                             .width(200.dp)
                             .height(120.dp)
                             .padding(end = 6.dp),
@@ -140,7 +140,7 @@ fun MainScreen(
                 }
                 else -> {
                     Content(
-                        modifier = Modifier
+                        latestRecipesCardModifier = Modifier
                             .width(180.dp)
                             .height(100.dp)
                             .padding(end = 6.dp),

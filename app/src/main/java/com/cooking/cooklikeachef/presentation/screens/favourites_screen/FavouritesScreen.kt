@@ -4,7 +4,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -38,7 +37,7 @@ fun FavouritesScreen(
                     Content(
                         searchFavouriteFieldModifier = Modifier
                             .width(380.dp)
-                            .height(64.dp), // TODO: either we will change the height of the topappbar too or we are gonna have bixed height to the outlined text field and change the text and placeholder sizes accordingly
+                            .height(60.dp),
                         searchFavouritePlaceholderFontSize = 22.sp,
                         searchFavouriteTextStyleFontSize = 22.sp,
                         optionsMenuIconSize = 38.dp,
@@ -71,7 +70,7 @@ fun FavouritesScreen(
                     Content(
                         searchFavouriteFieldModifier = Modifier
                             .width(350.dp)
-                            .height(60.dp),
+                            .height(58.dp),
                         searchFavouritePlaceholderFontSize = 22.sp,
                         searchFavouriteTextStyleFontSize = 22.sp,
                         optionsMenuIconSize = 34.dp,

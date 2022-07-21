@@ -34,7 +34,9 @@ fun RecipeResultDropdown(
         if (recipes.isNotEmpty()) {
             recipes.forEach { recipe ->
                 DropdownMenuItem(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        // TODO: navigate to selected recipe
+                    },
                     contentPadding = PaddingValues(0.dp),
                     modifier = Modifier
                         .fillMaxWidth()

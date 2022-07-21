@@ -26,7 +26,7 @@ fun LatestRecipesCard(
     url: String,
     title: String,
     textFontSize: TextUnit,
-    onReadMoreClicked: (Recipe) -> Unit
+    onReadMoreClicked: () -> Unit // TODO: (Recipe)
 ) {
     Card(
         modifier = modifier,
@@ -69,7 +69,7 @@ fun LatestRecipesCard(
                     fontFamily = FontFamily.SansSerif,
                     fontWeight = FontWeight.Medium,
                     color = Color.Black,
-                    modifier = Modifier.clickable { onReadMoreClicked }
+                    modifier = Modifier.clickable { onReadMoreClicked() }
                 )
             }
         }

@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.cooking.cooklikeachef.domain.use_cases.GetLatestRecipes
 import com.cooking.cooklikeachef.domain.use_cases.LogOut
 import com.cooking.cooklikeachef.presentation.screens.home_screen.events.HomeUIEvents
+import com.cooking.cooklikeachef.util.Constants
 import com.cooking.cooklikeachef.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -65,9 +66,8 @@ class HomeViewModel @Inject constructor(
             is HomeUIEvents.ContactUs -> {
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_EMAIL, arrayOf("cooklikeachef96@gmail.com")) // TODO
+                    putExtra(Intent.EXTRA_EMAIL, arrayOf(Constants.APP_EMAIL))
                     type = "message/rfc822"
-                    //type = "plain/text"
                 }
 
                 val shareIntent = Intent.createChooser(sendIntent, null)

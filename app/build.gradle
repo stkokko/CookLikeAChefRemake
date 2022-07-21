@@ -56,6 +56,8 @@ dependencies {
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0'
     implementation 'androidx.activity:activity-compose:1.5.0'
+
+    // Constraint Layout
     implementation "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha03"
 
     // Firebase
@@ -89,6 +91,10 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.39"
     kapt "com.google.dagger:hilt-compiler:2.39"
 
+    // Collapsing Toolbar
+    implementation "me.onebone:toolbar-compose:2.3.4"
+
+    // JUnit
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

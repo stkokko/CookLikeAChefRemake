@@ -54,7 +54,7 @@ fun BottomNavigationBar(
                 selected = currentRoot == screen.key, onClick = {
                     navController.navigate(screen.key) {
                         navController.graph.startDestinationRoute?.let { screen_route ->
-                            popUpTo(screen_route) { // TODO
+                            popUpTo(screen_route) { // TODO: no solution here....added BackHandler
                                 saveState = true
                             }
                             launchSingleTop = true

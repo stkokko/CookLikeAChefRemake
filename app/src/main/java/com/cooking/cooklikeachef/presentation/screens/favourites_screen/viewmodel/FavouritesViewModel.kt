@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.cooking.cooklikeachef.domain.use_cases.GetFavouriteRecipes
 import com.cooking.cooklikeachef.domain.use_cases.LogOut
 import com.cooking.cooklikeachef.presentation.screens.favourites_screen.events.FavouritesUIEvents
+import com.cooking.cooklikeachef.util.Constants
 import com.cooking.cooklikeachef.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -71,7 +72,7 @@ class FavouritesViewModel @Inject constructor(
             is FavouritesUIEvents.ContactUs -> {
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_EMAIL, arrayOf("cooklikeachef96@gmail.com"))
+                    putExtra(Intent.EXTRA_EMAIL, arrayOf(Constants.APP_EMAIL))
                     type = "message/rfc822"
                     //type = "plain/text"
                 }
