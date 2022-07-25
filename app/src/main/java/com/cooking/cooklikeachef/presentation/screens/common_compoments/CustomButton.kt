@@ -16,8 +16,6 @@ fun CustomButton(
     isLoading: Boolean = false,
     onClick: () -> Unit = {}
 ) {
-
-
     Button(
         onClick = { onClick() },
         modifier = modifier,

@@ -22,12 +22,15 @@ fun MainScreen(
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
     val activity = LocalContext.current as Activity
+    val scaffoldState = rememberScaffoldState()
 
-    Scaffold(bottomBar = {
-        BottomNavigationBar(
-            navController = navController
-        )
-    }) { innerPadding ->
+    Scaffold(
+        scaffoldState = scaffoldState,
+        bottomBar = {
+            BottomNavigationBar(
+                navController = navController
+            )
+        }) { innerPadding ->
         BoxWithConstraints(
             modifier = Modifier
                 .fillMaxSize()
@@ -38,6 +41,7 @@ fun MainScreen(
             when {
                 boxWithConstraintsScope.maxHeight > 900.dp -> {
                     Content(
+                        scaffoldState = scaffoldState,
                         latestRecipesCardModifier = Modifier
                             .width(370.dp)
                             .height(220.dp)
@@ -72,6 +76,7 @@ fun MainScreen(
                 }
                 boxWithConstraintsScope.maxHeight > 780.dp -> {
                     Content(
+                        scaffoldState = scaffoldState,
                         latestRecipesCardModifier = Modifier
                             .width(280.dp)
                             .height(150.dp)
@@ -106,6 +111,7 @@ fun MainScreen(
                 }
                 boxWithConstraintsScope.maxHeight > 620.dp -> {
                     Content(
+                        scaffoldState = scaffoldState,
                         latestRecipesCardModifier = Modifier
                             .width(200.dp)
                             .height(120.dp)
@@ -140,6 +146,7 @@ fun MainScreen(
                 }
                 else -> {
                     Content(
+                        scaffoldState = scaffoldState,
                         latestRecipesCardModifier = Modifier
                             .width(180.dp)
                             .height(100.dp)
@@ -172,7 +179,7 @@ fun MainScreen(
             }
         }
     }
-    
+
     BackHandler {
         homeViewModel.onEvent(HomeUIEvents.OpenExitAppDialog)
     }

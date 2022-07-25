@@ -109,8 +109,7 @@ fun Content(
                             url = favouriteRecipe.imageURL,
                             title = favouriteRecipe.name
                         ) {
-                            // TODO: navigate to RecipeScreen which is a
-                            // TODO: fragment in the original implementation
+                            // TODO: navigate
                         }
                     }
                 }

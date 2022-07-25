@@ -5,7 +5,7 @@ import com.cooking.cooklikeachef.domain.model.Recipe
 data class HomeState(
     val latestRecipesList: List<Recipe> = emptyList(),
     val isLoading: Boolean = false,
-    val errorMessage: String = "",
+    val errorMessageLogOut: String = "",
     val isLoggedIn: Boolean = true,
     val isOptionsMenuExpanded: Boolean = false,
     val isExitAppDialogOpen: Boolean = false,

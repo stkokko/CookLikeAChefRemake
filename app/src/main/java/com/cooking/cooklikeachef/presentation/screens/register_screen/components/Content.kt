@@ -174,7 +174,6 @@ fun Content(
         label = "Confirm Password",
         keyboardActions = KeyboardActions(onDone = {
             localFocus.clearFocus()
-            eventCreateUser()
         }),
         isTextVisible = state.value.isConfirmPasswordVisible,
         modifier = modifier,

@@ -23,10 +23,9 @@ import com.cooking.cooklikeachef.domain.model.Recipe
 @Composable
 fun LatestRecipesCard(
     modifier: Modifier,
-    url: String,
-    title: String,
+    latestRecipe: Recipe,
     textFontSize: TextUnit,
-    onReadMoreClicked: () -> Unit // TODO: (Recipe)
+    onReadMoreClicked: (String) -> Unit
 ) {
     Card(
         modifier = modifier,
@@ -40,7 +39,7 @@ fun LatestRecipesCard(
                     .fillMaxHeight()
             ) {
                 AsyncImage(
-                    model = url,
+                    model = latestRecipe.imageURL,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
@@ -55,7 +54,7 @@ fun LatestRecipesCard(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = title,
+                    text = latestRecipe.name,
                     fontSize = textFontSize,
                     textAlign = TextAlign.Center,
                     fontFamily = FontFamily.SansSerif,
@@ -69,7 +68,7 @@ fun LatestRecipesCard(
                     fontFamily = FontFamily.SansSerif,
                     fontWeight = FontWeight.Medium,
                     color = Color.Black,
-                    modifier = Modifier.clickable { onReadMoreClicked() }
+                    modifier = Modifier.clickable { onReadMoreClicked(latestRecipe.id) }
                 )
             }
         }

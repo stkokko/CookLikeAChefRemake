@@ -36,24 +36,21 @@ class HomeViewModel @Inject constructor(
                 is Resource.Loading -> {
                     _state.value = _state.value.copy(
                         isLoading = true,
-                        latestRecipesList = emptyList(),
-                        errorMessage = ""
+                        latestRecipesList = emptyList()
                     )
                 }
 
                 is Resource.Success -> {
                     _state.value = _state.value.copy(
                         isLoading = false,
-                        latestRecipesList = result.data ?: emptyList(),
-                        errorMessage = ""
+                        latestRecipesList = result.data ?: emptyList()
                     )
                 }
 
                 is Resource.Error -> {
                     _state.value = _state.value.copy(
                         isLoading = false,
-                        latestRecipesList = emptyList(),
-                        errorMessage = result.message ?: "An unexpected error occurred."
+                        latestRecipesList = emptyList()
                     )
                 }
             }
@@ -96,7 +93,11 @@ class HomeViewModel @Inject constructor(
             when (result) {
                 is Resource.Loading -> {
                     _state.value =
-                        _state.value.copy(isLoading = true, isLoggedIn = true, errorMessage = "")
+                        _state.value.copy(
+                            isLoading = true,
+                            isLoggedIn = true,
+                            errorMessageLogOut = ""
+                        )
                 }
 
                 is Resource.Success -> {
@@ -104,7 +105,7 @@ class HomeViewModel @Inject constructor(
                         _state.value.copy(
                             isLoading = false,
                             isLoggedIn = result.data ?: true,
-                            errorMessage = ""
+                            errorMessageLogOut = ""
                         )
                 }
 
@@ -112,7 +113,7 @@ class HomeViewModel @Inject constructor(
                     _state.value = _state.value.copy(
                         isLoading = false,
                         isLoggedIn = true,
-                        errorMessage = result.message ?: "An unexpected error occurred."
+                        errorMessageLogOut = result.message ?: "An unexpected error occurred."
                     )
                 }
             }

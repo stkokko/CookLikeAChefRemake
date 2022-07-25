@@ -66,7 +66,7 @@ fun FavouritesScreen(
                         }
                     )
                 }
-                boxWithConstraintsScope.maxHeight > 780.dp -> { // TODO: for some reason the list of favRec is empty
+                boxWithConstraintsScope.maxHeight > 780.dp -> {
                     Content(
                         searchFavouriteFieldModifier = Modifier
                             .width(350.dp)

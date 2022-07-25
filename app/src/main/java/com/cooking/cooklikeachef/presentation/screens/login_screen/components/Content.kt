@@ -4,10 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.SnackbarHost
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -35,11 +32,12 @@ import com.cooking.cooklikeachef.presentation.screens.common_compoments.CustomOu
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.ExitAppDialog
 import com.cooking.cooklikeachef.presentation.screens.login_screen.viewmodel.LoginState
 import com.cooking.cooklikeachef.presentation.ui.theme.SkyBlue
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 
 @Composable
 fun Content(
     modifier: Modifier,
+    scaffoldState: ScaffoldState,
     textSize: TextUnit = 16.sp,
     navController: NavController,
     state: State<LoginState>,
@@ -127,7 +125,6 @@ fun Content(
         label = "Password",
         keyboardActions = KeyboardActions(onDone = {
             localFocus.clearFocus()
-            eventSignIn()
         }),
         isTextVisible = state.value.isPasswordVisible,
         modifier = modifier,
@@ -186,8 +183,13 @@ fun Content(
 
     if (state.value.isResetPasswordSent) {
         LaunchedEffect(Unit) {
+            // TODO: works fine but dialog's default background makes it faded
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = "An email sent to reset your password",
+                duration = SnackbarDuration.Short
+            )
+            delay(1500L)
             eventDismissResetPasswordDialog()
-            // TODO: Snackbar
         }
     }
 

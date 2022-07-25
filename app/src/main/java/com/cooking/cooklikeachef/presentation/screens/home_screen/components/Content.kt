@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,6 +33,7 @@ import com.cooking.cooklikeachef.presentation.screens.home_screen.viewmodel.Home
 
 @Composable
 fun Content(
+    scaffoldState: ScaffoldState,
     latestRecipesCardModifier: Modifier,
     welcomeTextFontSize: TextUnit,
     latestRecipesTextFontSize: TextUnit,
@@ -111,14 +114,14 @@ fun Content(
 
                 if (state.value.latestRecipesList.isNotEmpty()) {
                     LazyRow {
+                        // TODO: what if the list is empty
                         items(state.value.latestRecipesList) { latestRecipe ->
                             LatestRecipesCard(
                                 modifier = latestRecipesCardModifier,
-                                url = latestRecipe.imageURL,
-                                title = latestRecipe.name,
+                                latestRecipe = latestRecipe,
                                 textFontSize = cardTextFontSize
-                            ) {
-                                // TODO: navigate
+                            ) { recipeId ->
+                                // TODO: navigate passing id of object
                                 navController.navigate(Screens.Recipe.name)
                             }
                         }
@@ -128,8 +131,13 @@ fun Content(
         }
     }
 
-    if (state.value.errorMessage.isNotEmpty()) {
-        // TODO: Snackbar
+    if (state.value.errorMessageLogOut.isNotEmpty()) {
+        LaunchedEffect(Unit) {
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = state.value.errorMessageLogOut,
+                duration = SnackbarDuration.Short
+            )
+        }
     }
 
     if (state.value.isExitAppDialogOpen) {

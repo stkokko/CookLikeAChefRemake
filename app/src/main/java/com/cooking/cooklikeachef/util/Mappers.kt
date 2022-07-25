@@ -13,12 +13,13 @@ object Mappers {
         }
 
         return Recipe(
+            id = recipeDto.id,
             name = recipeDto.name,
             category = recipeDto.category,
             imageURL = recipeDto.imageURL,
             ingredients = ingredients,
             steps = recipeDto.steps,
-            comment = recipeDto.comment,
+            comments = recipeDto.comments,
             language = recipeDto.language,
             timestamp = recipeDto.timestamp
         )

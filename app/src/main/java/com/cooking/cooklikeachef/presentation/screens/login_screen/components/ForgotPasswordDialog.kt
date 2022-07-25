@@ -74,7 +74,6 @@ fun ForgotPasswordDialog(
                 ),
                 keyboardActions = KeyboardActions(onDone = {
                     localFocus.clearFocus()
-                    eventResetPassword()
                 }),
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = Color.White

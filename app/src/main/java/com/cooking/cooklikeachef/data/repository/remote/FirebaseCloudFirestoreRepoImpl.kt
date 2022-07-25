@@ -1,6 +1,7 @@
 package com.cooking.cooklikeachef.data.repository.remote
 
 import com.cooking.cooklikeachef.data.remote.dto.RecipeDto
+import com.cooking.cooklikeachef.domain.model.Comment
 import com.cooking.cooklikeachef.domain.model.Recipe
 import com.cooking.cooklikeachef.domain.repository.remote.FirebaseCloudFirestoreRepo
 import com.cooking.cooklikeachef.util.Mappers
@@ -17,7 +18,20 @@ class FirebaseCloudFirestoreRepoImpl @Inject constructor(
 
     override suspend fun getRecipes(): List<Recipe> {
         return try {
-            val recipesDto = db.collection("Recipes").get().await().toObjects(RecipeDto::class.java)
+            val result = db.collection("Recipes").get().await()
+            val recipesDto = result.map {
+                RecipeDto(
+                    id = it.id,
+                    name = it.data["name"] as? String ?: "",
+                    category = it.data["category"] as? String ?: "",
+                    imageURL = it.data["imageURL"] as? String ?: "",
+                    ingredients = it.data["ingredients"] as? Map<String, List<String>> ?: emptyMap(),
+                    steps = it.data["steps"] as? String ?: "",
+                    comments = it.data["comments"] as? List<Comment> ?: emptyList(),
+                    language = it.data["language"] as? String ?: "",
+                    timestamp = it.data["timestamp"] as? String ?: ""
+                )
+            }
             val recipes = recipesDto.map {
                 Mappers.recipeDtoToModel(it)
             }
@@ -37,8 +51,8 @@ class FirebaseCloudFirestoreRepoImpl @Inject constructor(
                 favouriteRecipesIds?.forEach { id ->
                     db.collection("Recipes").document(id.trim()).get().await()
                         .toObject(RecipeDto::class.java)?.let {
-                        recipesDto.add(it)
-                    }
+                            recipesDto.add(it)
+                        }
                 }
 
                 val favouriteRecipes = recipesDto.map {

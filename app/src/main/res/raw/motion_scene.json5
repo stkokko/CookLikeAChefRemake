@@ -1,0 +1,293 @@
+{
+  ConstraintSets: {
+    start: {
+      toolbar: {
+        width: 'spread',
+        height: 280,
+        start: [
+          'parent',
+          'start'
+        ],
+        end: [
+          'parent',
+          'end'
+        ],
+        top: [
+          'parent',
+          'top'
+        ],
+        custom: {
+          roundValue: 12,
+          backgroundColor: "#FFFFFFFF"
+        }
+      },
+      toolbar_image: {
+        width: 'spread',
+        height: 'spread',
+        start: [
+          'toolbar',
+          'start'
+        ],
+        end: [
+          'toolbar',
+          'end'
+        ],
+        top: [
+          'toolbar',
+          'top'
+        ],
+        bottom: [
+          'toolbar',
+          'bottom'
+        ],
+        custom: {
+          roundValue: 16
+        },
+        alpha: 1
+      },
+      content: {
+        start: [
+          'parent',
+          'start'
+        ],
+        end: [
+          'parent',
+          'end'
+        ],
+        top: [
+          'toolbar',
+          'bottom',
+          20
+        ]
+      },
+      title: {
+        start: [
+          'toolbar',
+          'start',
+          16
+        ],
+        bottom: [
+          'toolbar',
+          'bottom',
+          16
+        ],
+        custom: {
+          textSize: 24
+        }
+      },
+      arrow_back: {
+        start: [
+          'toolbar',
+          'start',
+          12
+        ],
+        top: [
+          'toolbar',
+          'top',
+          12
+        ]
+      },
+      fab: {
+        width: 48,
+        height: 48,
+        end: [
+          'parent',
+          'end',
+          20
+        ],
+        top: [
+          'toolbar',
+          'bottom'
+        ],
+        bottom: [
+          'toolbar',
+          'bottom'
+        ],
+        alpha: 1
+      }
+    },
+    end: {
+      toolbar: {
+        width: 'spread',
+        height: 64,
+        start: [
+          'parent',
+          'start'
+        ],
+        end: [
+          'parent',
+          'end'
+        ],
+        top: [
+          'parent',
+          'top'
+        ],
+        custom: {
+          roundValue: 12,
+          backgroundColor: '#BA3B46'
+        }
+      },
+      toolbar_image: {
+        width: 'spread',
+        height: 'spread',
+        start: [
+          'toolbar',
+          'start'
+        ],
+        end: [
+          'toolbar',
+          'end'
+        ],
+        top: [
+          'toolbar',
+          'top'
+        ],
+        bottom: [
+          'toolbar',
+          'bottom'
+        ],
+        custom: {
+          roundValue: 16
+        },
+        alpha: 0
+      },
+      content: {
+        start: [
+          'parent',
+          'start'
+        ],
+        end: [
+          'parent',
+          'end'
+        ],
+        top: [
+          'toolbar',
+          'bottom',
+          20
+        ]
+      },
+      title: {
+        start: [
+          'toolbar',
+          'start'
+        ],
+        end: [
+          'toolbar',
+          'end'
+        ],
+        top: [
+          'toolbar',
+          'top'
+        ],
+        bottom: [
+          'toolbar',
+          'bottom'
+        ],
+        custom: {
+          textSize: 18
+        }
+      },
+      arrow_back: {
+        start: [
+          'toolbar',
+          'start',
+          12
+        ],
+        top: [
+          'toolbar',
+          'top'
+        ],
+        bottom: [
+          'toolbar',
+          'bottom'
+        ]
+      },
+      fab: {
+        width: 0,
+        height: 0,
+        end: [
+          'parent',
+          'end',
+          20
+        ],
+        top: [
+          'toolbar',
+          'bottom'
+        ],
+        bottom: [
+          'toolbar',
+          'bottom'
+        ],
+        alpha: 0
+      }
+    }
+  },
+  Transitions: {
+    default: {
+      from: 'start',
+      to: 'end',
+      duration: 3000,
+      staggered: 0.4,
+      onSwipe: {
+        anchor: 'toolbar',
+        maxVelocity: 3,
+        maxAccel: 2,
+        direction: 'up',
+        side: 'bottom',
+        touchUp: 'autocomplete',
+        mode: 'velocity'
+      },
+      //      KeyFrames: {
+      //        KeyPositions: [
+      //          {
+      //            target: [
+      //              'a'
+      //            ],
+      //            frames: [
+      //              25,
+      //              50,
+      //              75
+      //            ],
+      //            percentX: [
+      //              0.4,
+      //              0.8,
+      //              0.1
+      //            ],
+      //            percentY: [
+      //              0.4,
+      //              0.8,
+      //              0.3
+      //            ]
+      //          }
+      //        ],
+      //        KeyCycles: [
+      //          {
+      //            target: [
+      //              'a'
+      //            ],
+      //            frames: [
+      //              0,
+      //              50,
+      //              100
+      //            ],
+      //            period: [
+      //              0,
+      //              2,
+      //              0
+      //            ],
+      //            rotationX: [
+      //              0,
+      //              45,
+      //              0
+      //            ],
+      //            rotationY: [
+      //              0,
+      //              45,
+      //              0
+      //            ],
+      //          }
+      //        ]
+      //      }
+    }
+  }
+}
