@@ -20,28 +20,28 @@ import coil.compose.AsyncImage
 import com.cooking.cooklikeachef.domain.model.Recipe
 
 @Composable
-fun FavouriteRecipesCard(url: String, title: String, onCardClicked: (Recipe) -> Unit) {
+fun FavouriteRecipesCard(favouriteRecipe: Recipe, onCardClicked: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
             .padding(4.dp)
             .clickable {
-                onCardClicked
+                onCardClicked(favouriteRecipe.id)
             },
         elevation = 4.dp,
         shape = RoundedCornerShape(12.dp),
     ) {
         Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(0.5f))) {
             AsyncImage(
-                model = url,
+                model = favouriteRecipe.imageURL,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 alpha = 0.7f,
                 modifier = Modifier.fillMaxSize()
             )
             Text(
-                text = title,
+                text = favouriteRecipe.name,
                 fontSize = 22.sp,
                 fontStyle = FontStyle.Italic,
                 textAlign = TextAlign.Center,

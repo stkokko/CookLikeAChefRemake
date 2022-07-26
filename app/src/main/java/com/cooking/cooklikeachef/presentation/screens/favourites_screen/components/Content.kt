@@ -4,10 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -31,6 +28,7 @@ import com.cooking.cooklikeachef.presentation.ui.theme.LightCherry
 
 @Composable
 fun Content(
+    scaffoldState: ScaffoldState,
     searchFavouriteFieldModifier: Modifier,
     searchFavouritePlaceholderFontSize: TextUnit = 16.sp,
     searchFavouriteTextStyleFontSize: TextUnit = 16.sp,
@@ -106,28 +104,38 @@ fun Content(
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(state.value.favouriteRecipes) { favouriteRecipe ->
                         FavouriteRecipesCard(
-                            url = favouriteRecipe.imageURL,
-                            title = favouriteRecipe.name
-                        ) {
-                            // TODO: navigate
+                            favouriteRecipe = favouriteRecipe
+                        ) { recipeId ->
+                            // TODO: navigate passing id of object
+                            navController.navigate(Screens.Recipe.name)
                         }
                     }
                 }
             } else {
-                Text(
-                    text = stringResource(id = R.string.list_is_empty),
-                    textAlign = TextAlign.Center,
-                    fontSize = 22.sp,
-                    letterSpacing = 2.sp,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                )
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.list_is_empty),
+                        textAlign = TextAlign.Center,
+                        fontSize = 24.sp,
+                        letterSpacing = 2.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                }
             }
         }
     }
 
-    if (state.value.errorMessage.isNotEmpty()) {
-        // TODO: Snackbar
+    if (state.value.errorMessageLogOut.isNotEmpty()) {
+        LaunchedEffect(Unit) {
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = state.value.errorMessageLogOut,
+                duration = SnackbarDuration.Short
+            )
+        }
     }
 
     if (!state.value.isLoggedIn) {

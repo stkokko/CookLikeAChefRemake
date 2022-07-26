@@ -1,5 +1,6 @@
 package com.cooking.cooklikeachef.presentation.screens.comments_screen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
@@ -13,6 +14,8 @@ fun CommentsScreen(navController: NavController) {
         )
     }) { innerPadding ->
 
+        BackHandler {
 
+        }
     }
 }

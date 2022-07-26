@@ -114,7 +114,6 @@ fun Content(
 
                 if (state.value.latestRecipesList.isNotEmpty()) {
                     LazyRow {
-                        // TODO: what if the list is empty
                         items(state.value.latestRecipesList) { latestRecipe ->
                             LatestRecipesCard(
                                 modifier = latestRecipesCardModifier,
@@ -124,6 +123,15 @@ fun Content(
                                 // TODO: navigate passing id of object
                                 navController.navigate(Screens.Recipe.name)
                             }
+                        }
+                    }
+                } else {
+                    LazyRow {
+                        items (count = 4) {
+                            LatestRecipesCard(
+                                modifier = latestRecipesCardModifier,
+                                isError = true
+                            )
                         }
                     }
                 }

@@ -20,11 +20,15 @@ fun CategoriesScreen(
     navController: NavController,
     categoriesViewModel: CategoriesViewModel = hiltViewModel()
 ) {
-    Scaffold(bottomBar = {
-        BottomNavigationBar(
-            navController = navController
-        )
-    }) { innerPadding ->
+    val scaffoldState = rememberScaffoldState()
+
+    Scaffold(
+        scaffoldState = scaffoldState,
+        bottomBar = {
+            BottomNavigationBar(
+                navController = navController
+            )
+        }) { innerPadding ->
         BoxWithConstraints(
             modifier = Modifier
                 .fillMaxSize()
@@ -35,6 +39,7 @@ fun CategoriesScreen(
             when {
                 boxWithConstraintsScope.maxHeight > 900.dp -> {
                     Content(
+                        scaffoldState = scaffoldState,
                         searchFieldModifier = Modifier
                             .width(380.dp)
                             .height(60.dp),
@@ -80,6 +85,7 @@ fun CategoriesScreen(
                 }
                 boxWithConstraintsScope.maxHeight > 780.dp -> {
                     Content(
+                        scaffoldState = scaffoldState,
                         searchFieldModifier = Modifier
                             .width(350.dp)
                             .height(58.dp),
@@ -125,6 +131,7 @@ fun CategoriesScreen(
                 }
                 boxWithConstraintsScope.maxHeight > 620.dp -> {
                     Content(
+                        scaffoldState = scaffoldState,
                         headerLayoutFraction = 0.40f,
                         categoriesContainerFraction = 0.64f,
                         searchFieldModifier = Modifier
@@ -171,6 +178,7 @@ fun CategoriesScreen(
                 }
                 else -> {
                     Content(
+                        scaffoldState = scaffoldState,
                         headerLayoutFraction = 0.34f,
                         categoriesContainerFraction = 0.68f,
                         searchFieldModifier = Modifier

@@ -6,7 +6,7 @@ data class FavouritesState(
     val favouriteRecipes: List<Recipe> = emptyList(),
     val searchRecipe: String = "",
     val isLoading: Boolean = false,
-    val errorMessage: String = "",
+    val errorMessageLogOut: String = "",
     val isLoggedIn: Boolean = true,
     val isOptionsMenuExpanded: Boolean = false,
     val isSearchRecipeDropdownExpanded: Boolean = false

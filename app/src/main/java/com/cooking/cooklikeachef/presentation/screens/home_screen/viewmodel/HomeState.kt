@@ -8,5 +8,5 @@ data class HomeState(
     val errorMessageLogOut: String = "",
     val isLoggedIn: Boolean = true,
     val isOptionsMenuExpanded: Boolean = false,
-    val isExitAppDialogOpen: Boolean = false,
+    val isExitAppDialogOpen: Boolean = false
 )

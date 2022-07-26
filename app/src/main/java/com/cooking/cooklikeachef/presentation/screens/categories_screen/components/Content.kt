@@ -28,6 +28,7 @@ import com.cooking.cooklikeachef.presentation.ui.theme.LightCherry
 
 @Composable
 fun Content(
+    scaffoldState: ScaffoldState,
     headerLayoutFraction: Float = 0.34f,
     categoriesContainerFraction: Float = 0.7f,
     searchFieldModifier: Modifier,
@@ -221,8 +222,13 @@ fun Content(
         }
     }
 
-    if (state.value.errorMessage.isNotEmpty()) {
-        // TODO: Snackbar
+    if (state.value.errorMessageLogOut.isNotEmpty()) {
+        LaunchedEffect(Unit) {
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = state.value.errorMessageLogOut,
+                duration = SnackbarDuration.Short
+            )
+        }
     }
 
     if (!state.value.isLoggedIn) {

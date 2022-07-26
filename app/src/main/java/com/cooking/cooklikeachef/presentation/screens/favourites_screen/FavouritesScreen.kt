@@ -3,6 +3,7 @@ package com.cooking.cooklikeachef.presentation.screens.favourites_screen
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -20,11 +21,15 @@ fun FavouritesScreen(
     navController: NavController,
     favouritesViewModel: FavouritesViewModel = hiltViewModel()
 ) {
-    Scaffold(bottomBar = {
-        BottomNavigationBar(
-            navController = navController
-        )
-    }) { innerPadding ->
+    val scaffoldState = rememberScaffoldState()
+
+    Scaffold(
+        scaffoldState = scaffoldState,
+        bottomBar = {
+            BottomNavigationBar(
+                navController = navController
+            )
+        }) { innerPadding ->
         BoxWithConstraints(
             modifier = Modifier
                 .fillMaxSize()
@@ -35,6 +40,7 @@ fun FavouritesScreen(
             when {
                 boxWithConstraintsScope.maxHeight > 900.dp -> {
                     Content(
+                        scaffoldState = scaffoldState,
                         searchFavouriteFieldModifier = Modifier
                             .width(380.dp)
                             .height(60.dp),
@@ -68,6 +74,7 @@ fun FavouritesScreen(
                 }
                 boxWithConstraintsScope.maxHeight > 780.dp -> {
                     Content(
+                        scaffoldState = scaffoldState,
                         searchFavouriteFieldModifier = Modifier
                             .width(350.dp)
                             .height(58.dp),
@@ -101,6 +108,7 @@ fun FavouritesScreen(
                 }
                 boxWithConstraintsScope.maxHeight > 620.dp -> {
                     Content(
+                        scaffoldState = scaffoldState,
                         searchFavouriteFieldModifier = Modifier
                             .width(270.dp)
                             .height(56.dp),
@@ -134,6 +142,7 @@ fun FavouritesScreen(
                 }
                 else -> {
                     Content(
+                        scaffoldState = scaffoldState,
                         searchFavouriteFieldModifier = Modifier
                             .width(240.dp)
                             .height(52.dp),

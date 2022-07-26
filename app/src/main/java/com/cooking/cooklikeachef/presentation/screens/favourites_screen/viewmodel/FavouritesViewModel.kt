@@ -38,7 +38,8 @@ class FavouritesViewModel @Inject constructor(
                     _state.value = _state.value.copy(
                         isLoading = true,
                         favouriteRecipes = emptyList(),
-                        errorMessage = ""
+                        // TODO: need error message for not getting back any favourite recipe
+                        // TODO : due to an error? errorMessage = ""
                     )
                 }
 
@@ -47,7 +48,8 @@ class FavouritesViewModel @Inject constructor(
                         _state.value.copy(
                             isLoading = false,
                             favouriteRecipes = result.data ?: emptyList(),
-                            errorMessage = ""
+                            // TODO: need error message for not getting back any favourite recipe
+                            // TODO : due to an error? errorMessage = ""
                         )
                 }
 
@@ -56,7 +58,8 @@ class FavouritesViewModel @Inject constructor(
                         _state.value.copy(
                             isLoading = false,
                             favouriteRecipes = emptyList(),
-                            errorMessage = result.message ?: "An unexpected error occurred."
+                            // TODO: need error message for not getting back any favourite recipe
+                            // TODO : due to an error? errorMessage = result.message ?: "An unexpected error occurred."
                         )
                 }
             }
@@ -74,7 +77,6 @@ class FavouritesViewModel @Inject constructor(
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_EMAIL, arrayOf(Constants.APP_EMAIL))
                     type = "message/rfc822"
-                    //type = "plain/text"
                 }
 
                 val shareIntent = Intent.createChooser(sendIntent, null)
@@ -89,6 +91,8 @@ class FavouritesViewModel @Inject constructor(
                 _state.value =
                     _state.value.copy(isOptionsMenuExpanded = !_state.value.isOptionsMenuExpanded)
             }
+
+
         }
     }
 
@@ -97,7 +101,11 @@ class FavouritesViewModel @Inject constructor(
             when (result) {
                 is Resource.Loading -> {
                     _state.value =
-                        _state.value.copy(isLoading = true, isLoggedIn = false, errorMessage = "")
+                        _state.value.copy(
+                            isLoading = true,
+                            isLoggedIn = false,
+                            errorMessageLogOut = ""
+                        )
                 }
 
                 is Resource.Success -> {
@@ -105,7 +113,7 @@ class FavouritesViewModel @Inject constructor(
                         _state.value.copy(
                             isLoading = false,
                             isLoggedIn = result.data ?: true,
-                            errorMessage = ""
+                            errorMessageLogOut = ""
                         )
                 }
 
@@ -113,7 +121,7 @@ class FavouritesViewModel @Inject constructor(
                     _state.value = _state.value.copy(
                         isLoading = false,
                         isLoggedIn = true,
-                        errorMessage = result.message ?: "An unexpected error occurred."
+                        errorMessageLogOut = result.message ?: "An unexpected error occurred."
                     )
                 }
             }
