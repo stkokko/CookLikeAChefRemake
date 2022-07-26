@@ -42,8 +42,7 @@
         ],
         custom: {
           roundValue: 16
-        },
-        alpha: 1
+        }
       },
       title: {
         start: [
@@ -87,8 +86,7 @@
         bottom: [
           'toolbar',
           'bottom'
-        ],
-        alpha: 1
+        ]
       }
     },
     end: {
@@ -133,8 +131,7 @@
         ],
         custom: {
           roundValue: 16
-        },
-        alpha: 0
+        }
       },
       title: {
         start: [
@@ -187,8 +184,7 @@
         bottom: [
           'toolbar',
           'bottom'
-        ],
-        alpha: 0
+        ]
       }
     }
   },
@@ -201,9 +197,10 @@
         KeyAttributes: [
           {
             target: [
-              'fab'
+              'toolbar_image'
             ],
             frames: [
+              0,
               20,
               40,
               60,
@@ -211,10 +208,49 @@
               100
             ],
             alpha: [
+              1.0,
               0.8,
               0.6,
               0.4,
               0.2,
+              0.0
+            ]
+          },
+          {
+            target: [
+              'title'
+            ],
+            frames: [
+              0,
+              25,
+              50,
+              75,
+              100
+            ],
+            translationX: [
+              0,
+              10,
+              20,
+              10,
+              0
+            ]
+          },
+          {
+            target: [
+              'fab'
+            ],
+            frames: [
+              0,
+              20,
+              40,
+              60,
+              100
+            ],
+            alpha: [
+              1.0,
+              0.6,
+              0.3,
+              0.0,
               0.0
             ]
           }
