@@ -120,7 +120,10 @@ fun Content(
                                 latestRecipe = latestRecipe,
                                 textFontSize = cardTextFontSize
                             ) { recipeId ->
-                                // TODO: navigate passing id of object
+                                navController.currentBackStackEntry?.savedStateHandle?.set(
+                                    key = "id",
+                                    value = recipeId
+                                )
                                 navController.navigate(Screens.Recipe.name)
                             }
                         }

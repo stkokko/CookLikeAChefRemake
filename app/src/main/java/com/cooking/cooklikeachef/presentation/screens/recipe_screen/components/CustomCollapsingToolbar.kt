@@ -3,7 +3,6 @@ package com.cooking.cooklikeachef.presentation.screens.recipe_screen.components
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
@@ -23,18 +22,19 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.constraintlayout.compose.MotionLayout
 import androidx.constraintlayout.compose.MotionScene
 import androidx.constraintlayout.compose.layoutId
+import coil.compose.AsyncImage
 import com.cooking.cooklikeachef.R
+import com.cooking.cooklikeachef.domain.model.Recipe
 import com.cooking.cooklikeachef.presentation.ui.theme.Cherry
 
 @OptIn(ExperimentalMotionApi::class)
 @Composable
-fun CustomCollapsingToolbar(lazyScrollState: LazyListState) {
+fun CustomCollapsingToolbar(lazyScrollState: LazyListState, recipe: Recipe) {
     val context = LocalContext.current
     val motionScene = remember {
         context.resources.openRawResource(R.raw.motion_scene).readBytes().decodeToString()
@@ -42,11 +42,11 @@ fun CustomCollapsingToolbar(lazyScrollState: LazyListState) {
 
     val progress by animateFloatAsState(
         targetValue = if (lazyScrollState.firstVisibleItemIndex in 0..4) 0f else 1f,
-        tween(3000)
+        tween(1500)
     )
     val motionHeight by animateDpAsState(
         targetValue = if (lazyScrollState.firstVisibleItemIndex in 0..4) 280.dp else 64.dp,
-        tween(3000)
+        tween(1500)
     )
 
     MotionLayout(
@@ -78,9 +78,8 @@ fun CustomCollapsingToolbar(lazyScrollState: LazyListState) {
                 .layoutId("toolbar")
         )
 
-        Image(
-            painter = painterResource(id = R.drawable.recipe_image_example_2),
-            contentDescription = null,
+        AsyncImage(
+            model = recipe.imageURL, contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .clip(imageRoundedShape)
@@ -88,7 +87,7 @@ fun CustomCollapsingToolbar(lazyScrollState: LazyListState) {
         )
 
         Text(
-            text = "RECIPE NAME",
+            text = recipe.name,
             color = Color.White,
             fontSize = titleProperties.value.fontSize("textSize"),
             modifier = Modifier

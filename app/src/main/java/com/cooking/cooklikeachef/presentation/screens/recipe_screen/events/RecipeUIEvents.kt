@@ -4,4 +4,5 @@ import com.cooking.cooklikeachef.domain.model.Recipe
 
 sealed class RecipeUIEvents {
     class UpdateFavourites(val recipe: Recipe) : RecipeUIEvents()
+    class GetRecipeById(val recipeId: String) : RecipeUIEvents()
 }

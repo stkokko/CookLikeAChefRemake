@@ -45,7 +45,8 @@ fun Navigation() {
         }
 
         composable(route = Screens.Recipe.name) {
-            RecipeScreen(navController = navController)
+            val recipeId = navController.previousBackStackEntry?.savedStateHandle?.get<String>("id")
+            recipeId?.let { id -> RecipeScreen(navController = navController, recipeId = id) }
         }
 
         composable(route = Screens.Comments.name) {

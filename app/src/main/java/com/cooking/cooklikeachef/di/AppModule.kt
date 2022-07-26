@@ -79,6 +79,12 @@ class AppModule {
 
     @Provides
     @Singleton
+    fun provideGetRecipeUseCase(firebaseCloudFirestoreRepo: FirebaseCloudFirestoreRepo): GetRecipe {
+        return GetRecipe(firebaseCloudFirestoreRepo)
+    }
+
+    @Provides
+    @Singleton
     fun provideGetLatestRecipesUseCase(firebaseCloudFirestoreRepo: FirebaseCloudFirestoreRepo): GetLatestRecipes {
         return GetLatestRecipes(firebaseCloudFirestoreRepo)
     }

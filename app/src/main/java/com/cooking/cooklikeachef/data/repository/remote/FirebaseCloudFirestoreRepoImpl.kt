@@ -1,5 +1,6 @@
 package com.cooking.cooklikeachef.data.repository.remote
 
+import android.util.Log
 import com.cooking.cooklikeachef.data.remote.dto.RecipeDto
 import com.cooking.cooklikeachef.domain.model.Comment
 import com.cooking.cooklikeachef.domain.model.Recipe
@@ -38,6 +39,16 @@ class FirebaseCloudFirestoreRepoImpl @Inject constructor(
             recipes
         } catch (e: Exception) {
             emptyList()
+        }
+    }
+
+    override suspend fun getRecipe(recipeId: String): Recipe? {
+        return try {
+            val recipeDto = db.collection("Recipes").document(recipeId).get().await().toObject(RecipeDto::class.java)
+            val recipe = recipeDto?.let { Mappers.recipeDtoToModel(it) }
+            recipe
+        } catch (e: Exception) {
+            null
         }
     }
 
