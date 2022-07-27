@@ -11,9 +11,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.cooking.cooklikeachef.R
 import com.cooking.cooklikeachef.presentation.screens.common_compoments.RecipeBottomNavigationBar
 import com.cooking.cooklikeachef.presentation.screens.recipe_screen.view_model.RecipeViewModel
 import com.cooking.cooklikeachef.presentation.screens.recipe_screen.components.CustomCollapsingToolbar
@@ -25,6 +30,7 @@ fun RecipeScreen(
     recipeId: String,
     recipeViewModel: RecipeViewModel = hiltViewModel()
 ) {
+    // TODO: check the !! (3 of them)
     val lazyScrollState = rememberLazyListState()
     val state = recipeViewModel.state
 
@@ -45,38 +51,67 @@ fun RecipeScreen(
             }
         } else {
             Scaffold(topBar = {
-                CustomCollapsingToolbar(lazyScrollState, state.value.recipe!!) // TODO
+                CustomCollapsingToolbar(lazyScrollState, state.value.recipe!!)
             }, bottomBar = {
                 RecipeBottomNavigationBar(
                     navController = navController
                 )
             }) { innerPadding ->
-                LazyColumn(
+                Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(innerPadding),
-                    state = lazyScrollState
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    items(count = 40) {
-                        Text(text = "Ingredient")
+
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth(fraction = 0.9f)
+                            .fillMaxHeight(),
+                        state = lazyScrollState
+                    ) {
+//                        items(count = 40) {
+//                            Text(text = "Ingredient")
+//                        }
+
+                        item {
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text(
+                                text = stringResource(id = R.string.ingredients),
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Medium,
+                                letterSpacing = 0.5.sp
+                            )
+                            Spacer(modifier = Modifier.height(10.dp))
+                        }
+
+                        itemsIndexed(state.value.recipe!!.ingredients) { index, ingredient ->
+                            Text(
+                                text = "${index + 1}. ${
+                                    ingredient.name.trim().replaceFirstChar { it.uppercase() }
+                                } (${ingredient.quantity})",
+                                fontStyle = FontStyle.Italic
+                            )
+                            if (state.value.recipe!!.ingredients.size == index + 1)
+                                Spacer(modifier = Modifier.height(16.dp))
+                            else
+                                Spacer(modifier = Modifier.height(2.dp))
+                        }
+                        item {
+                            Text(
+                                text = stringResource(id = R.string.steps),
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Medium,
+                                letterSpacing = 0.5.sp
+                            )
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Text(
+                                text = state.value.recipe!!.steps,
+                                fontStyle = FontStyle.Italic
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                        }
                     }
-                    
-//                    item {
-//                        Spacer(modifier = Modifier.height(16.dp))
-//                        Text(text = "Ingredients")
-//                        Spacer(modifier = Modifier.height(10.dp))
-//                    }
-//                    // TODO
-//                    itemsIndexed(state.value.recipe!!.ingredients) { index, ingredient ->
-//                        Text(text = "$index $ingredient")
-//                        Spacer(modifier = Modifier.height(2.dp))
-//                    }
-//                    item {
-//                        Spacer(modifier = Modifier.height(8.dp))
-//                        Text(text = "Steps")
-//                        Spacer(modifier = Modifier.height(10.dp))
-//                        Text(text = state.value.recipe!!.steps)// TODO
-//                    }
 
                 }
             }

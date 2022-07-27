@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.constraintlayout.compose.MotionLayout
@@ -42,11 +43,11 @@ fun CustomCollapsingToolbar(lazyScrollState: LazyListState, recipe: Recipe) {
 
     val progress by animateFloatAsState(
         targetValue = if (lazyScrollState.firstVisibleItemIndex in 0..4) 0f else 1f,
-        tween(1500)
+        tween(durationMillis = 1200)
     )
     val motionHeight by animateDpAsState(
         targetValue = if (lazyScrollState.firstVisibleItemIndex in 0..4) 280.dp else 64.dp,
-        tween(1500)
+        tween(durationMillis = 1200)
     )
 
     MotionLayout(
@@ -57,24 +58,24 @@ fun CustomCollapsingToolbar(lazyScrollState: LazyListState, recipe: Recipe) {
             .height(motionHeight)
     ) {
 
-        val boxProperties = motionProperties(id = "toolbar")
-        val boxRoundedShape = RoundedCornerShape(
-            bottomStart = boxProperties.value.int("roundValue").dp,
-            bottomEnd = boxProperties.value.int("roundValue").dp
+        val toolbarProperties = motionProperties(id = "toolbar")
+        val toolbarRoundedShape = RoundedCornerShape(
+            bottomStart = toolbarProperties.value.int("roundValue").dp,
+            bottomEnd = toolbarProperties.value.int("roundValue").dp
         )
 
-        val imageProperties = motionProperties(id = "toolbar_image")
-        val imageRoundedShape = RoundedCornerShape(
-            bottomStart = imageProperties.value.int("roundValue").dp,
-            bottomEnd = imageProperties.value.int("roundValue").dp
+        val recipeImageProperties = motionProperties(id = "recipe_image")
+        val recipeImageRoundedShape = RoundedCornerShape(
+            bottomStart = recipeImageProperties.value.int("roundValue").dp,
+            bottomEnd = recipeImageProperties.value.int("roundValue").dp
         )
 
-        val titleProperties = motionProperties(id = "title")
+        val recipeNameProperties = motionProperties(id = "recipe_name")
 
         Box(
             modifier = Modifier
-                .clip(boxRoundedShape)
-                .background(color = boxProperties.value.color("backgroundColor"))
+                .clip(toolbarRoundedShape)
+                .background(color = toolbarProperties.value.color("backgroundColor"))
                 .layoutId("toolbar")
         )
 
@@ -82,17 +83,18 @@ fun CustomCollapsingToolbar(lazyScrollState: LazyListState, recipe: Recipe) {
             model = recipe.imageURL, contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .clip(imageRoundedShape)
-                .layoutId("toolbar_image")
+                .clip(recipeImageRoundedShape)
+                .layoutId("recipe_image")
         )
 
         Text(
             text = recipe.name,
             color = Color.White,
-            fontSize = titleProperties.value.fontSize("textSize"),
+            fontWeight = FontWeight(recipeNameProperties.value.int("fontWeight")),
+            fontSize = recipeNameProperties.value.fontSize("fontSize"),
             modifier = Modifier
                 .wrapContentSize()
-                .layoutId("title")
+                .layoutId("recipe_name")
         )
 
         IconButton(

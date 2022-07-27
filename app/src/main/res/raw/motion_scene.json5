@@ -21,7 +21,7 @@
           backgroundColor: "#FFFFFFFF"
         }
       },
-      toolbar_image: {
+      recipe_image: {
         width: 'spread',
         height: 'spread',
         start: [
@@ -44,7 +44,7 @@
           roundValue: 16
         }
       },
-      title: {
+      recipe_name: {
         start: [
           'toolbar',
           'start',
@@ -56,7 +56,8 @@
           16
         ],
         custom: {
-          textSize: 24
+          fontSize: 24,
+          fontWeight: 500
         }
       },
       arrow_back: {
@@ -110,7 +111,7 @@
           backgroundColor: '#BA3B46'
         }
       },
-      toolbar_image: {
+      recipe_image: {
         width: 'spread',
         height: 'spread',
         start: [
@@ -133,7 +134,7 @@
           roundValue: 16
         }
       },
-      title: {
+      recipe_name: {
         start: [
           'toolbar',
           'start'
@@ -151,7 +152,8 @@
           'bottom'
         ],
         custom: {
-          textSize: 18
+          fontSize: 16,
+          fontWeight: 400
         }
       },
       arrow_back: {
@@ -197,7 +199,7 @@
         KeyAttributes: [
           {
             target: [
-              'toolbar_image'
+              'recipe_image'
             ],
             frames: [
               0,
@@ -218,7 +220,7 @@
           },
           {
             target: [
-              'title'
+              'recipe_name'
             ],
             frames: [
               0,
