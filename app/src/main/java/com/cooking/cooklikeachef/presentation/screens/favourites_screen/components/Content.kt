@@ -105,8 +105,11 @@ fun Content(
                     items(state.value.favouriteRecipes) { favouriteRecipe ->
                         FavouriteRecipesCard(
                             favouriteRecipe = favouriteRecipe
-                        ) { recipeId ->
-                            // TODO: navigate passing id of object
+                        ) { favouriteRecipeId ->
+                            navController.currentBackStackEntry?.savedStateHandle?.set(
+                                key = "id",
+                                value = favouriteRecipeId
+                            )
                             navController.navigate(Screens.Recipe.name)
                         }
                     }

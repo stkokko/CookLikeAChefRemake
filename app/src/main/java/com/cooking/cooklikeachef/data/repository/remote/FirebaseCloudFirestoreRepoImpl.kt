@@ -1,6 +1,5 @@
 package com.cooking.cooklikeachef.data.repository.remote
 
-import android.util.Log
 import com.cooking.cooklikeachef.data.remote.dto.RecipeDto
 import com.cooking.cooklikeachef.domain.model.Comment
 import com.cooking.cooklikeachef.domain.model.Recipe
@@ -26,7 +25,8 @@ class FirebaseCloudFirestoreRepoImpl @Inject constructor(
                     name = it.data["name"] as? String ?: "",
                     category = it.data["category"] as? String ?: "",
                     imageURL = it.data["imageURL"] as? String ?: "",
-                    ingredients = it.data["ingredients"] as? Map<String, List<String>> ?: emptyMap(),
+                    ingredients = it.data["ingredients"] as? Map<String, List<String>>
+                        ?: emptyMap(),
                     steps = it.data["steps"] as? String ?: "",
                     comments = it.data["comments"] as? List<Comment> ?: emptyList(),
                     language = it.data["language"] as? String ?: "",
@@ -44,7 +44,8 @@ class FirebaseCloudFirestoreRepoImpl @Inject constructor(
 
     override suspend fun getRecipe(recipeId: String): Recipe? {
         return try {
-            val recipeDto = db.collection("Recipes").document(recipeId).get().await().toObject(RecipeDto::class.java)
+            val recipeDto = db.collection("Recipes").document(recipeId).get().await()
+                .toObject(RecipeDto::class.java)
             val recipe = recipeDto?.let { Mappers.recipeDtoToModel(it) }
             recipe
         } catch (e: Exception) {
@@ -60,10 +61,22 @@ class FirebaseCloudFirestoreRepoImpl @Inject constructor(
                     db.collection("Favourites").document(auth.currentUser!!.uid).get().await()
                         .get("recipes") as? List<String>
                 favouriteRecipesIds?.forEach { id ->
-                    db.collection("Recipes").document(id.trim()).get().await()
-                        .toObject(RecipeDto::class.java)?.let {
-                            recipesDto.add(it)
-                        }
+                    val snapshot = db.collection("Recipes").document(id.trim()).get().await()
+                    recipesDto.add(
+                        RecipeDto(
+                            id = id.trim(),
+                            name = snapshot.data?.get("name") as? String ?: "",
+                            category = snapshot.data?.get("category") as? String ?: "",
+                            imageURL = snapshot.data?.get("imageURL") as? String ?: "",
+                            ingredients = snapshot.data?.get("ingredients") as? Map<String, List<String>>
+                                ?: emptyMap(),
+                            steps = snapshot.data?.get("steps") as? String ?: "",
+                            comments = snapshot.data?.get("comments") as? List<Comment>
+                                ?: emptyList(),
+                            language = snapshot.data?.get("language") as? String ?: "",
+                            timestamp = snapshot.data?.get("timestamp") as? String ?: ""
+                        )
+                    )
                 }
 
                 val favouriteRecipes = recipesDto.map {

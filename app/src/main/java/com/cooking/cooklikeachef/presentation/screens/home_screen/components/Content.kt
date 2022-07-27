@@ -119,10 +119,10 @@ fun Content(
                                 modifier = latestRecipesCardModifier,
                                 latestRecipe = latestRecipe,
                                 textFontSize = cardTextFontSize
-                            ) { recipeId ->
+                            ) { latestRecipeId ->
                                 navController.currentBackStackEntry?.savedStateHandle?.set(
                                     key = "id",
-                                    value = recipeId
+                                    value = latestRecipeId
                                 )
                                 navController.navigate(Screens.Recipe.name)
                             }
