@@ -38,8 +38,7 @@ class FavouritesViewModel @Inject constructor(
                     _state.value = _state.value.copy(
                         isLoading = true,
                         favouriteRecipes = emptyList(),
-                        // TODO: need error message for not getting back any favourite recipe
-                        // TODO : due to an error? errorMessage = ""
+                        errorMessageFavouriteRecipes = ""
                     )
                 }
 
@@ -48,8 +47,7 @@ class FavouritesViewModel @Inject constructor(
                         _state.value.copy(
                             isLoading = false,
                             favouriteRecipes = result.data ?: emptyList(),
-                            // TODO: need error message for not getting back any favourite recipe
-                            // TODO : due to an error? errorMessage = ""
+                            errorMessageFavouriteRecipes = ""
                         )
                 }
 
@@ -58,8 +56,8 @@ class FavouritesViewModel @Inject constructor(
                         _state.value.copy(
                             isLoading = false,
                             favouriteRecipes = emptyList(),
-                            // TODO: need error message for not getting back any favourite recipe
-                            // TODO : due to an error? errorMessage = result.message ?: "An unexpected error occurred."
+                            errorMessageFavouriteRecipes = result.message
+                                ?: "An unexpected error occurred."
                         )
                 }
             }

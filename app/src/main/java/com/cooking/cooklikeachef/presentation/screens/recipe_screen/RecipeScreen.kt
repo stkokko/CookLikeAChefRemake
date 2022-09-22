@@ -1,10 +1,12 @@
 package com.cooking.cooklikeachef.presentation.screens.recipe_screen
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -57,6 +59,7 @@ fun RecipeScreen(
                     navController = navController
                 )
             }) { innerPadding ->
+                // TODO: get rid of column
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -67,13 +70,10 @@ fun RecipeScreen(
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth(fraction = 0.9f)
-                            .fillMaxHeight(),
+                            .fillMaxHeight()
+                            .animateContentSize(),
                         state = lazyScrollState
                     ) {
-//                        items(count = 40) {
-//                            Text(text = "Ingredient")
-//                        }
-
                         item {
                             Spacer(modifier = Modifier.height(16.dp))
                             Text(
@@ -86,6 +86,16 @@ fun RecipeScreen(
                         }
 
                         itemsIndexed(state.value.recipe!!.ingredients) { index, ingredient ->
+//                            if (index == 0) {
+//                                Spacer(modifier = Modifier.height(16.dp))
+//                                Text(
+//                                    text = stringResource(id = R.string.ingredients),
+//                                    fontSize = 18.sp,
+//                                    fontWeight = FontWeight.Medium,
+//                                    letterSpacing = 0.5.sp
+//                                )
+//                                Spacer(modifier = Modifier.height(10.dp))
+//                            }
                             Text(
                                 text = "${index + 1}. ${
                                     ingredient.name.trim().replaceFirstChar { it.uppercase() }
@@ -97,6 +107,7 @@ fun RecipeScreen(
                             else
                                 Spacer(modifier = Modifier.height(2.dp))
                         }
+
                         item {
                             Text(
                                 text = stringResource(id = R.string.steps),

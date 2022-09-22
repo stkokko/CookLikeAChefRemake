@@ -7,6 +7,7 @@ data class CategoriesState(
     val searchRecipe: String = "",
     val isLoading: Boolean = false,
     val errorMessageLogOut: String = "",
+    val errorMessageRecipes: String = "",
     val isLoggedIn: Boolean = true,
     val isOptionsMenuExpanded: Boolean = false,
     val isSearchRecipeDropdownExpanded: Boolean = false

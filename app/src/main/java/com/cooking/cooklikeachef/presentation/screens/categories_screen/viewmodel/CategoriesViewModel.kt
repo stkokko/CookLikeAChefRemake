@@ -36,7 +36,7 @@ class CategoriesViewModel @Inject constructor(
                     _state.value = _state.value.copy(
                         isLoading = true,
                         recipes = emptyList(),
-                        // TODO: will we have error message for recipes? errorMessage = ""
+                        errorMessageRecipes = ""
                     )
                 }
 
@@ -44,7 +44,7 @@ class CategoriesViewModel @Inject constructor(
                     _state.value = _state.value.copy(
                         isLoading = false,
                         recipes = result.data ?: emptyList(),
-                        // TODO: will we have error message for recipes? errorMessage = ""
+                        errorMessageRecipes = ""
                     )
                 }
 
@@ -52,8 +52,7 @@ class CategoriesViewModel @Inject constructor(
                     _state.value = _state.value.copy(
                         isLoading = false,
                         recipes = emptyList(),
-                        // TODO: will we have error message for recipes? errorMessage = ""
-                        // TODO: errorMessage = result.message ?: "An unexpected error occurred."
+                        errorMessageRecipes = result.message ?: "An unexpected error occurred."
                     )
                 }
             }

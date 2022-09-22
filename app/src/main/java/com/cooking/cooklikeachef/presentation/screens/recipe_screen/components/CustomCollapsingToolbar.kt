@@ -1,5 +1,6 @@
 package com.cooking.cooklikeachef.presentation.screens.recipe_screen.components
 
+import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -14,9 +15,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -41,13 +40,15 @@ fun CustomCollapsingToolbar(lazyScrollState: LazyListState, recipe: Recipe) {
         context.resources.openRawResource(R.raw.motion_scene).readBytes().decodeToString()
     }
 
+    Log.d("CustomCollapsingToolbar", "offset: ${lazyScrollState.firstVisibleItemScrollOffset}")
+
     val progress by animateFloatAsState(
-        targetValue = if (lazyScrollState.firstVisibleItemIndex in 0..4) 0f else 1f,
-        tween(durationMillis = 1200)
+        targetValue = if (lazyScrollState.isScrollInProgress) 1f else 0f,
+        animationSpec = tween(durationMillis = 800)
     )
     val motionHeight by animateDpAsState(
-        targetValue = if (lazyScrollState.firstVisibleItemIndex in 0..4) 280.dp else 64.dp,
-        tween(durationMillis = 1200)
+        targetValue = if (lazyScrollState.isScrollInProgress) 64.dp else 280.dp,
+        animationSpec = tween(durationMillis = 800)
     )
 
     MotionLayout(
@@ -122,4 +123,22 @@ fun CustomCollapsingToolbar(lazyScrollState: LazyListState, recipe: Recipe) {
             )
         }
     }
+}
+
+@Composable
+private fun LazyListState.isScrollingUp(): Boolean {
+    var previousIndex by remember(this) { mutableStateOf(firstVisibleItemIndex) }
+    var previousScrollOffset by remember(this) { mutableStateOf(firstVisibleItemScrollOffset) }
+    return remember(this) {
+        derivedStateOf {
+            if (previousIndex != firstVisibleItemIndex) {
+                previousIndex <= firstVisibleItemIndex
+            } else {
+                previousScrollOffset < firstVisibleItemScrollOffset
+            }.also {
+                previousIndex = firstVisibleItemIndex
+                previousScrollOffset = firstVisibleItemScrollOffset
+            }
+        }
+    }.value
 }

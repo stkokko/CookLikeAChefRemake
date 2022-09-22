@@ -7,6 +7,7 @@ data class FavouritesState(
     val searchRecipe: String = "",
     val isLoading: Boolean = false,
     val errorMessageLogOut: String = "",
+    val errorMessageFavouriteRecipes: String = "",
     val isLoggedIn: Boolean = true,
     val isOptionsMenuExpanded: Boolean = false,
     val isSearchRecipeDropdownExpanded: Boolean = false
